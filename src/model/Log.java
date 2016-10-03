@@ -7,9 +7,10 @@ public class Log implements Serializable
 	//操作对象
 	public static final int PAPER = 1;
 	public static final int NOTE = 2;
-	public static final int TOREAD = 3;
-	public static final int READ = 4;
-	public static final int STUDIED = 5;
+	public static final int USER = 3;
+	public static final int TOREAD = 4;
+	public static final int READ = 5;
+	public static final int STUDIED = 6;
 	//操作类型
 	public static final int ADD = 1;
 	public static final int DELETE = 2;
