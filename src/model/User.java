@@ -1,6 +1,7 @@
 package model;
 import java.io.Serializable;
 import java.util.Collection;
+
 /**
  * 用户的model，保存用户的相关信息
  */
@@ -18,11 +19,11 @@ public class User implements Serializable
 	private String token;
 	private int id;
 	//论文信息
-	private Collection<Paper> toReadPapers;
-	private Collection<Paper> readPapers;
-	private Collection<Paper> studiedPapers;
+	private Collection<Integer> toReadPapers;
+	private Collection<Integer> readPapers;
+	private Collection<Integer> studiedPapers;
 	//阅读笔记
-	private Collection<Note> notes;// FIXME: 这种实现方式并不好
+	private Collection<Integer> notes;
 	//研究分类树
 	private TagTree tagTree;
 	private class TagTree
@@ -92,27 +93,27 @@ public class User implements Serializable
 	{
 		this.id = id;
 	}
-	public Collection<Paper> getToReadPapers()
+	public Collection<Integer> getToReadPapers()
 	{
 		return toReadPapers;
 	}
-	public void setToReadPapers(Collection<Paper> toReadPapers)
+	public void setToReadPapers(Collection<Integer> toReadPapers)
 	{
 		this.toReadPapers = toReadPapers;
 	}
-	public Collection<Paper> getReadPapers()
+	public Collection<Integer> getReadPapers()
 	{
 		return readPapers;
 	}
-	public void setReadPapers(Collection<Paper> readPapers)
+	public void setReadPapers(Collection<Integer> readPapers)
 	{
 		this.readPapers = readPapers;
 	}
-	public Collection<Paper> getStudiedPapers()
+	public Collection<Integer> getStudiedPapers()
 	{
 		return studiedPapers;
 	}
-	public void setStudiedPapers(Collection<Paper> studiedPapers)
+	public void setStudiedPapers(Collection<Integer> studiedPapers)
 	{
 		this.studiedPapers = studiedPapers;
 	}
@@ -140,11 +141,11 @@ public class User implements Serializable
 	{
 		this.blogURL = blogURL;
 	}
-	public Collection<Note> getNotes()
+	public Collection<Integer> getNotes()
 	{
 		return notes;
 	}
-	public void setNotes(Collection<Note> notes)
+	public void setNotes(Collection<Integer> notes)
 	{
 		this.notes = notes;
 	}

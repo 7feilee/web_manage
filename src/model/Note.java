@@ -6,7 +6,7 @@ public class Note implements Serializable
 {
 	private int id;
 	private User author;
-	private Date pubiishDate;
+	private Date pubiishTime;
 	private String noteURI;
 	private Boolean isPrivate;
 	
@@ -18,13 +18,13 @@ public class Note implements Serializable
 	{
 		this.author = author;
 	}
-	public Date getPubiishDate()
+	public Date getPubiishTime()
 	{
-		return pubiishDate;
+		return pubiishTime;
 	}
-	public void setPubiishDate(Date pubiishDate)
+	public void setPubiishTime(Date pubiishTime)
 	{
-		this.pubiishDate = pubiishDate;
+		this.pubiishTime = pubiishTime;
 	}
 	public String getNoteURI()
 	{
