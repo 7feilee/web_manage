@@ -21,7 +21,7 @@ public class Login extends ActionSupport
 		Integer state;
 		// TODO: 输入验证
 		state = service.login(username,password);
-		if(state == 0)
+		if(state == 1)
 			return SUCCESS;
 		else
 			return ERROR;
