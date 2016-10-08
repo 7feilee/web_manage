@@ -29,7 +29,7 @@
             <s:property value="title"/>
           </a>
         </td>
-        <td style='vertical-align: middle;'><s:property value="authors"/></td>
+        <td style='vertical-align: middle;'><s:property value="authors"/></td><%-- fixme --%>
         <td style='vertical-align: middle;'><s:property value="publishDate"/></td>
         <td style='vertical-align: middle;'>
           <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<s:property value="ISBN"/>">

@@ -14,7 +14,7 @@ public class ListPapers extends ActionSupport
 		service = new Service();
 	}
 	@Override
-	public String execute()
+	public String execute() throws Exception
 	{
 		papers = service.getPapers();
 		if(papers!=null)

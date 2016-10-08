@@ -16,7 +16,7 @@ public class Login extends ActionSupport
 		service = new Service();
 	}
 	@Override
-	public String execute()
+	public String execute() throws Exception
 	{
 		Integer state;
 		// TODO: 输入验证

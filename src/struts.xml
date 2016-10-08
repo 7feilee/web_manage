@@ -14,7 +14,7 @@
       <result name="success">paperlist.jsp</result>
     </action>
     <action name="showPaperDetails" class="web.action.ShowPaperDetails">
-      <result name="success"></result>
+      <result name="success">paper.jsp</result>
     </action>
   </package>
 </struts>
