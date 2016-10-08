@@ -4,7 +4,5 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = false;%>
 <%@ include file="includes/header.jsp"%>
-<div class="container">
   hello world!
-</div>
 <%@ include file="includes/footer.jsp"%>

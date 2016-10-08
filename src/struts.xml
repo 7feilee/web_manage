@@ -10,5 +10,11 @@
     <action name="login" class="web.action.Login">
       <result name="success">index.jsp</result>
     </action>
+    <action name="listPapers" class="web.action.ListPapers">
+      <result name="success">paperlist.jsp</result>
+    </action>
+    <action name="showPaperDetails" class="web.action.ShowPaperDetails">
+      <result name="success"></result>
+    </action>
   </package>
 </struts>
