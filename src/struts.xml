@@ -10,5 +10,8 @@
     <action name="login" class="web.action.Login">
       <result name="success">index.jsp</result>
     </action>
+    <action name="register" class="web.action.Register">
+      <result name="success">index.jsp</result>
+    </action>
   </package>
 </struts>

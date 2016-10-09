@@ -32,4 +32,15 @@ public class Service
 				return 1;
 		return 0;
 	}
+
+    public Integer foundNewUser(String username, String password, String token) {
+		user =userDao.getUserByUsername(username);
+		if (user == null)
+			return 0;
+		else
+			userDao.foundNewUser(username,password,token);
+		return 1;
+    }
+
+
 }

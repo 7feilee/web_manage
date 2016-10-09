@@ -51,4 +51,9 @@ public class UserDao
 			return null;
 		}
 	}
+
+    public User foundNewUser(String username, String password, String token) {
+		User user=new User();
+		return user;
+    }
 }
