@@ -3,7 +3,7 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = true;%>
-<%@ include file="includes/header.jsp"%>
+<%@ include file="includes/header.jsp" %>
 <div class="col-md-9">
   <s:if test="%{papers.isEmpty()}">
   <h4 class="text-center">数据库中没有论文╮（╯＿╰）╭</h4>
@@ -12,13 +12,13 @@
   <table class="table table-bordered table-striped table-hover">
     <thead>
     <tr>
-      <th style='vertical-align: middle;'>篇名
+      <th style='vertical-align: middle;' width="50%">篇名
         <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top"
               title="点击书名查看详情"></span>
       </th>
-      <th style='vertical-align: middle;'>作者</th>
-      <th style='vertical-align: middle;'>发表时间</th>
-      <th style='vertical-align: middle;'>收藏</th>
+      <th style='vertical-align: middle;' width="20%">作者</th>
+      <th style='vertical-align: middle;' width="20%">发表时间</th>
+      <th style='vertical-align: middle;' width="10%">收藏</th>
     </tr>
     </thead>
     <tbody>
@@ -29,7 +29,8 @@
             <s:property value="title"/>
           </a>
         </td>
-        <td style='vertical-align: middle;'><s:property value="authors"/></td><%-- fixme --%>
+        <td style='vertical-align: middle;'><s:property value="authors"/></td>
+          <%-- fixme --%>
         <td style='vertical-align: middle;'><s:property value="publishDate"/></td>
         <td style='vertical-align: middle;'>
           <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<s:property value="ISBN"/>">
@@ -41,4 +42,4 @@
     </tbody>
   </table>
   </s:else>
-<%@ include file="includes/footer.jsp"%>
+  <%@ include file="includes/footer.jsp" %>

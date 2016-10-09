@@ -3,6 +3,7 @@ package web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import model.*;
 import service.*;
+
 import java.util.Collection;
 public class ListPapers extends ActionSupport
 {
@@ -17,7 +18,7 @@ public class ListPapers extends ActionSupport
 	public String execute() throws Exception
 	{
 		papers = service.getPapers();
-		if(papers!=null)
+		if (papers != null)
 			return SUCCESS;
 		return ERROR;
 	}

@@ -3,6 +3,7 @@ package web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Paper;
 import service.Service;
+
 import java.text.SimpleDateFormat;
 public class ShowPaperDetails extends ActionSupport
 {
@@ -20,9 +21,9 @@ public class ShowPaperDetails extends ActionSupport
 	public String execute() throws Exception
 	{
 		paper = service.getPaperById(id);
-		if(paper!=null)
+		if (paper != null)
 		{
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dateStr = sdf.format(paper.getPublishDate());
 			return SUCCESS;
 		}

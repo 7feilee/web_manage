@@ -3,7 +3,7 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = false;%>
-<%@ include file="includes/header.jsp"%>
+<%@ include file="includes/header.jsp" %>
 <table class="table table-bordered table-striped table-hover">
   <thead>
   <tr>
@@ -38,6 +38,6 @@
 </table>
 <h5 class="page-header">摘要</h5>
 <blockquote>
-  <p><s:property value="paper.abstrct"/> </p>
+  <p><s:property value="paper.abstrct"/></p>
 </blockquote>
-<%@ include file="includes/footer.jsp"%>
+<%@ include file="includes/footer.jsp" %>

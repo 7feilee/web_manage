@@ -3,6 +3,6 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = false;%>
-<%@ include file="includes/header.jsp"%>
-  hello world!
-<%@ include file="includes/footer.jsp"%>
+<%@ include file="includes/header.jsp" %>
+hello world!
+<%@ include file="includes/footer.jsp" %>

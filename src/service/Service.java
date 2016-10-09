@@ -23,11 +23,11 @@ public class Service
 		note = new Note();
 		log = new Log();
 	}
-
+	
 	public int login(String username, String password)
 	{
 		user = userDao.getUserByUsername(username);
-		if(user != null)
+		if (user != null)
 			if (password.equals(user.getPassword()))
 				return 1;
 		return 0;
