@@ -9,7 +9,7 @@ public class Register extends ActionSupport{
     private String password;
     private String token;
     private int id;
-    Register()
+    public Register()
     {
         super();
         service1 = new Service();
@@ -19,7 +19,7 @@ public class Register extends ActionSupport{
     {
         Integer state;
         // TODO: 输入验证
-        state = service1.foundNewUser(username,password,token);
+        state = service1.addNewUser(username,password,token);
         if(state == 1)
             return SUCCESS;
         else

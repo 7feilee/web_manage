@@ -2,6 +2,8 @@ package service;
 import dao.*;
 import model.*;
 
+import java.util.Collection;
+
 public class Service
 {
 	private UserDao userDao;
@@ -33,14 +35,17 @@ public class Service
 		return 0;
 	}
 
-    public Integer foundNewUser(String username, String password, String token) {
+    public Integer addNewUser(String username, String password, String token) {
 		user =userDao.getUserByUsername(username);
 		if (user == null)
 			return 0;
 		else
-			userDao.foundNewUser(username,password,token);
+			userDao.insertNewUser(username,password,token);
 		return 1;
     }
 
+	public Collection<Paper> getPapers(){
+		return null;
+	}
 
 }

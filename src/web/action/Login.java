@@ -10,7 +10,7 @@ public class Login extends ActionSupport
 	private String username;
 	private String password;
 	private Service service;
-	Login()
+	public Login()
 	{
 		super();
 		service = new Service();
