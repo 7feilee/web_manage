@@ -16,5 +16,8 @@
     <action name="showPaperDetails" class="web.action.ShowPaperDetails">
       <result name="success">paper.jsp</result>
     </action>
+    <action name="register" class="web.action.Register">
+      <result name="success">index.jsp</result>
+    </action>
   </package>
 </struts>

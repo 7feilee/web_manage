@@ -33,7 +33,7 @@
         <td style='vertical-align: middle;'><s:property value="publishDate"/></td>
         <td style='vertical-align: middle;'>
           <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<s:property value="ISBN"/>">
-            <span class="glyphicon glyphicon-remove"></span>&nbsp;todo
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;todo<!--todo-->
           </button>
         </td>
       </tr>
