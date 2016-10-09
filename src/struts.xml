@@ -5,6 +5,8 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+  <constant name="struts.devMode" value="true"/>
+  
   <include file="struts-default.xml"/>
   <package name="actions" extends="struts-default">
     <action name="login" class="web.action.Login">
