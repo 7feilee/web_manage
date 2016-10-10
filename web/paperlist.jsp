@@ -26,15 +26,15 @@
       <tr>
         <td style='vertical-align: middle;'>
           <a href='<s:url action="showPaperDetails"><s:param name="id" value="id" /></s:url>'>
-            <s:property value="title"/>
+            <s:property value="%{title}"/>
           </a>
         </td>
-        <td style='vertical-align: middle;'><s:property value="authors"/></td>
-          <%-- fixme --%>
-        <td style='vertical-align: middle;'><s:property value="publishDate"/></td>
+        <td style='vertical-align: middle;'><s:iterator value="authors" var="author"><s:property
+            value="%{#author}"/>,</s:iterator></td>
+        <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
         <td style='vertical-align: middle;'>
-          <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<s:property value="ISBN"/>">
-            <span class="glyphicon glyphicon-remove"></span>&nbsp;todo<!--todo-->
+          <button class="btn btn-sm btn-danger">
+            todo<!--todo-->
           </button>
         </td>
       </tr>
