@@ -54,6 +54,8 @@ public class UserDao
 
     public User insertNewUser(String username, String password, String token) {
 		User user=new User();
+
+
 		return user;
     }
 }

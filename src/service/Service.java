@@ -3,6 +3,7 @@ import dao.*;
 import model.*;
 
 import java.util.Collection;
+import java.util.List;
 
 public class Service
 {
@@ -45,7 +46,12 @@ public class Service
     }
 
 	public Collection<Paper> getPapers(){
-		return null;
+		List<Paper> papers=paperDao.getAllPapers();
+		return papers;
 	}
 
+	public Paper getPaperById(int id){
+		Paper paper=paperDao.getPaperById(id);
+		return paper;
+	}
 }
