@@ -36,13 +36,14 @@ public class Service
 		return 0;
 	}
 
-    public Integer addNewUser(String username, String password, String token) {
+    public Integer addNewUser(String username, String password) {
 		user =userDao.getUserByUsername(username);
-		if (user == null)
-			return 0;
+		if (user == null){
+            userDao.insertNewUser(username,password);
+            return 1;
+		}
 		else
-			userDao.insertNewUser(username,password,token);
-		return 1;
+			return 0;
     }
 
 	public Collection<Paper> getPapers(){
@@ -54,4 +55,12 @@ public class Service
 		Paper paper=paperDao.getPaperById(id);
 		return paper;
 	}
+
+    public User getUserById(int id){
+        user = userDao.getUserById(id);
+        if(user != null)
+            return user;
+        else
+            return null;
+    }
 }

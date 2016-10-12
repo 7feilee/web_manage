@@ -14,7 +14,7 @@ public class PaperDao
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "zzyadmin");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "19951224");
             stmt = conn.createStatement();
         }
         catch (SQLException e)
@@ -31,28 +31,65 @@ public class PaperDao
 
     public List<Paper> getAllPapers(){
         List<Paper> papers=null;
-        String sql="";
+        String sql="select * from paper";
         try {
             ResultSet rs = stmt.executeQuery(sql);
+            Paper paper=new Paper();
             while(rs.next()){
-                Paper paper=new Paper();
-
-
-
-
-
-                papers.add(paper);
+                paper.setId(rs.getInt("id"));
+                paper.setTitle(rs.getString("title"));
+                paper.setPublishDate(rs.getDate("publishDate"));
+                List<String> author=null;
+                author.add(rs.getString("author1"));
+                if (rs.getString("author2")!="")
+                    author.add(rs.getString("author2"));
+                else if (rs.getString("author3")!="")
+                    author.add(rs.getString("author3"));
+                paper.setAuthors(author);
             }
-
+            papers.add(paper);
 
         }
         catch(SQLException e){
+            System.err.println("MySQL查询错误@dao.UserDao.getUserById");
+            e.printStackTrace();
             return null;
         }
         return papers;
     }
 
     public Paper getPaperById(int id){
-        return null;
+        String sql="select * from paper where id='"+id+"'";
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            Paper paper=new Paper();
+            if(rs.next()){
+                paper.setId(rs.getInt("id"));
+                paper.setTitle(rs.getString("title"));
+                paper.setPublishDate(rs.getDate("publishDate"));
+                List<String> author=null;
+                author.add(rs.getString("author1"));
+                if (rs.getString("author2")!="")
+                    author.add(rs.getString("author2"));
+                else if (rs.getString("author3")!="")
+                    author.add(rs.getString("author3"));
+                paper.setAuthors(author);
+                paper.setAbstct(rs.getString("abstct"));
+                paper.setFileURI(rs.getString("fileURL"));
+                List<String> keyword=null;
+                author.add(rs.getString("keyword1"));
+                if (rs.getString("keyword2")!="")
+                    author.add(rs.getString("keyword2"));
+                else if (rs.getString("keyword3")!="")
+                    author.add(rs.getString("keyword3"));
+                paper.setKeywords(keyword);
+            }
+            return paper;
+        }
+        catch(SQLException e){
+            System.err.println("MySQL查询错误@dao.UserDao.getUserById");
+            e.printStackTrace();
+            return null;
+        }
     }
 }

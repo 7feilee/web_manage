@@ -19,7 +19,7 @@ public class Register extends ActionSupport{
     {
         Integer state;
         // TODO: 输入验证
-        state = service1.addNewUser(username,password,token);
+        state = service1.addNewUser(username,password);
         if(state == 1)
             return SUCCESS;
         else
