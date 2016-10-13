@@ -13,7 +13,7 @@ public class UserDao
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "zzyadmin");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "19951224");
 			stmt = conn.createStatement();
 		}
 		catch (SQLException e)
@@ -46,9 +46,46 @@ public class UserDao
 		}
 		catch (SQLException e)
 		{
+
 			System.err.println("MySQL查询错误@dao.UserDao.getUserByUsername");
 			e.printStackTrace();
 			return null;
 		}
 	}
+
+	public User getUserById(int id)
+	{
+		String sql = "select * from user WHERE id='" + id + "';";
+		try
+		{
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next())
+			{
+				User user = new User();
+				user.setUsername(rs.getString("username"));
+				user.setPassword(rs.getString("password"));
+				user.setId(rs.getInt(1));
+				return user;
+			}
+			else
+				return null;
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.UserDao.getUserById");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+    public int insertNewUser(String username, String password) {
+		String sql = "INSERT INTO user('username', 'password') VALUES ('"+username+"','"+password+"')";
+		try {
+			stmt.execute(sql);
+			return 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+    }
 }
