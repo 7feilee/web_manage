@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+
   <include file="struts-default.xml"/>
+  <constant name="struts.devMode" value="true"/>
+  <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+
   <package name="actions" extends="struts-default">
     <action name="login" class="web.action.Login">
       <result name="success">index.jsp</result>
     </action>
+    <action name="listPapers" class="web.action.ListPapers">
+      <result name="success">paperlist.jsp</result>
+    </action>
+    <action name="showPaperDetails" class="web.action.ShowPaperDetails">
+      <result name="success">paper.jsp</result>
+    </action>
+    <action name="register" class="web.action.Register">
+      <result name="success">index.jsp</result>
+    </action>
+    <action name="userDetails" class="web.action.ShowUserDetails">
+      <result name="success">user.jsp</result>
+    </action>
   </package>
+
 </struts>

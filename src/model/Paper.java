@@ -13,7 +13,7 @@ public class Paper implements Serializable
 	private Collection<String> authors;
 	private String fileURI;
 	private Collection<String> keywords;
-	private String abstct;
+	private String absrtct;
 	private Date publishDate;
 	
 	public int getId()
@@ -56,13 +56,13 @@ public class Paper implements Serializable
 	{
 		this.keywords = keywords;
 	}
-	public String getAbstct()
+	public String getAbsrtct()
 	{
-		return abstct;
+		return absrtct;
 	}
-	public void setAbstct(String abstct)
+	public void setAbsrtct(String absrtct)
 	{
-		this.abstct = abstct;
+		this.absrtct = absrtct;
 	}
 	public Date getPublishDate()
 	{

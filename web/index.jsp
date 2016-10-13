@@ -2,9 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-
-<%@ include file="includes/header.jsp"%>
-<div class="container">
-  hello world!
-</div>
-<%@ include file="includes/footer.jsp"%>
+<% Boolean useDatatable = false;%>
+<%@ include file="includes/header.jsp" %>
+hello world!
+<%@ include file="includes/footer.jsp" %>

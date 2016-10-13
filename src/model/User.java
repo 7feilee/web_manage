@@ -19,24 +19,13 @@ public class User implements Serializable
 	private String token;
 	private int id;
 	//论文信息
-	private Collection<Integer> toReadPapers;
-	private Collection<Integer> readPapers;
-	private Collection<Integer> studiedPapers;
+	private Collection<Paper> toReadPapers;
+	private Collection<Paper> readPapers;
+	private Collection<Paper> studiedPapers;
 	//阅读笔记
-	private Collection<Integer> notes;
+	private Collection<Note> notes;
 	//研究分类树
 	private TagTree tagTree;
-	private class TagTree
-	{
-		private class TagTreeNode
-		{
-			Collection<Paper> papers;
-			Collection<TagTreeNode> chlids;
-		}
-		TagTreeNode root;
-		//TODO: tag tree 
-	}
-	
 	public TagTree getTagTree()
 	{
 		return tagTree;
@@ -93,30 +82,6 @@ public class User implements Serializable
 	{
 		this.id = id;
 	}
-	public Collection<Integer> getToReadPapers()
-	{
-		return toReadPapers;
-	}
-	public void setToReadPapers(Collection<Integer> toReadPapers)
-	{
-		this.toReadPapers = toReadPapers;
-	}
-	public Collection<Integer> getReadPapers()
-	{
-		return readPapers;
-	}
-	public void setReadPapers(Collection<Integer> readPapers)
-	{
-		this.readPapers = readPapers;
-	}
-	public Collection<Integer> getStudiedPapers()
-	{
-		return studiedPapers;
-	}
-	public void setStudiedPapers(Collection<Integer> studiedPapers)
-	{
-		this.studiedPapers = studiedPapers;
-	}
 	public String getBio()
 	{
 		return bio;
@@ -141,12 +106,46 @@ public class User implements Serializable
 	{
 		this.blogURL = blogURL;
 	}
-	public Collection<Integer> getNotes()
+	public Collection<Note> getNotes()
 	{
 		return notes;
 	}
-	public void setNotes(Collection<Integer> notes)
+	public void setNotes(Collection<Note> notes)
 	{
 		this.notes = notes;
+	}
+	public Collection<Paper> getStudiedPapers()
+	{
+		return studiedPapers;
+	}
+	public void setStudiedPapers(Collection<Paper> studiedPapers)
+	{
+		this.studiedPapers = studiedPapers;
+	}
+	public Collection<Paper> getReadPapers()
+	{
+		return readPapers;
+	}
+	public void setReadPapers(Collection<Paper> readPapers)
+	{
+		this.readPapers = readPapers;
+	}
+	public Collection<Paper> getToReadPapers()
+	{
+		return toReadPapers;
+	}
+	public void setToReadPapers(Collection<Paper> toReadPapers)
+	{
+		this.toReadPapers = toReadPapers;
+	}
+	private class TagTree
+	{
+		TagTreeNode root;
+		private class TagTreeNode
+		{
+			Collection<Paper> papers;
+			Collection<TagTreeNode> chlids;
+		}
+		//TODO: tag tree
 	}
 }
