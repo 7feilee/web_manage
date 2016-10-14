@@ -1,36 +1,25 @@
 package dao;
 import model.*;
 import java.sql.*;
-import java.util.List;
+import java.util.*;
 
 public class PaperDao
 {
     private Statement stmt;
-
+    Dao dao;
     /**构造方法，进行数据库的连接*/
     public PaperDao()
     {
-        Connection conn;
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "19951224");
-            stmt = conn.createStatement();
-        }
-        catch (SQLException e)
-        {
-            System.err.println("MySQL连接错误@dao.UserDao");
-            e.printStackTrace();
-        }
-        catch (Exception e)
-        {
-            System.err.println("MySQL驱动程序错误@dao.UserDao");
-            e.printStackTrace();
-        }
+        Dao dao=new Dao();
+        stmt=dao.newDao();
     }
 
-    public List<Paper> getAllPapers(){
-        List<Paper> papers=null;
+    protected void finalize(){
+        dao.closeDao();
+    }
+
+    public Collection<Paper> getAllPapers(){
+        Collection<Paper> papers=new LinkedList<Paper>();
         String sql="select * from paper";
         try {
             ResultSet rs = stmt.executeQuery(sql);
@@ -39,11 +28,11 @@ public class PaperDao
                 paper.setId(rs.getInt("id"));
                 paper.setTitle(rs.getString("title"));
                 paper.setPublishDate(rs.getDate("publishDate"));
-                List<String> author=null;
+                Collection<String> author=new LinkedList<String>();
                 author.add(rs.getString("author1"));
-                if (rs.getString("author2")!="")
+                if (rs.getString("author2")!=null)
                     author.add(rs.getString("author2"));
-                else if (rs.getString("author3")!="")
+                else if (rs.getString("author3")!=null)
                     author.add(rs.getString("author3"));
                 paper.setAuthors(author);
             }
@@ -51,7 +40,7 @@ public class PaperDao
 
         }
         catch(SQLException e){
-            System.err.println("MySQL查询错误@dao.UserDao.getUserById");
+            System.err.println("MySQL查询错误@dao.PaperDao.getAllPapers");
             e.printStackTrace();
             return null;
         }
@@ -67,27 +56,27 @@ public class PaperDao
                 paper.setId(rs.getInt("id"));
                 paper.setTitle(rs.getString("title"));
                 paper.setPublishDate(rs.getDate("publishDate"));
-                List<String> author=null;
+                Collection<String> author=new LinkedList<String>();
                 author.add(rs.getString("author1"));
-                if (rs.getString("author2")!="")
+                if (rs.getString("author2")!=null)
                     author.add(rs.getString("author2"));
-                else if (rs.getString("author3")!="")
+                else if (rs.getString("author3")!=null)
                     author.add(rs.getString("author3"));
                 paper.setAuthors(author);
-                paper.setAbstct(rs.getString("abstct"));
+                paper.setAbsrtct(rs.getString("abstct"));
                 paper.setFileURI(rs.getString("fileURL"));
-                List<String> keyword=null;
-                author.add(rs.getString("keyword1"));
-                if (rs.getString("keyword2")!="")
-                    author.add(rs.getString("keyword2"));
-                else if (rs.getString("keyword3")!="")
-                    author.add(rs.getString("keyword3"));
+                Collection<String> keyword=new LinkedList<String>();
+                keyword.add(rs.getString("keyword1"));
+                if (rs.getString("keyword2")!=null)
+                    keyword.add(rs.getString("keyword2"));
+                else if (rs.getString("keyword3")!=null)
+                    keyword.add(rs.getString("keyword3"));
                 paper.setKeywords(keyword);
             }
             return paper;
         }
         catch(SQLException e){
-            System.err.println("MySQL查询错误@dao.UserDao.getUserById");
+            System.err.println("MySQL查询错误@dao.PaperDao.getPaperById");
             e.printStackTrace();
             return null;
         }

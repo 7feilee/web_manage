@@ -2,7 +2,10 @@ package service;
 import dao.*;
 import model.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Service
@@ -47,13 +50,11 @@ public class Service
     }
 
 	public Collection<Paper> getPapers(){
-		List<Paper> papers=paperDao.getAllPapers();
-		return papers;
+		return paperDao.getAllPapers();
 	}
 
 	public Paper getPaperById(int id){
-		Paper paper=paperDao.getPaperById(id);
-		return paper;
+		return paperDao.getPaperById(id);
 	}
 
     public User getUserById(int id){
@@ -62,5 +63,13 @@ public class Service
             return user;
         else
             return null;
+    }
+
+    public int updatePaperState(int user_id, int paper_id ,int state){
+        return userDao.updatePaperState(user_id,paper_id,state);
+    }
+
+    public Collection<Paper> getPaperByState(int user_id, int state) {
+        return userDao.getPaperByState(user_id,state);
     }
 }
