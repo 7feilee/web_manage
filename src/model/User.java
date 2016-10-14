@@ -25,7 +25,18 @@ public class User implements Serializable
 	//阅读笔记
 	private Collection<Note> notes;
 	//研究分类树
+	private class TagTree
+	{
+		TagTreeNode root;
+		private class TagTreeNode
+		{
+			Collection<Paper> papers;
+			Collection<TagTreeNode> chlids;
+		}
+		//TODO: tag tree
+	}
 	private TagTree tagTree;
+	
 	public TagTree getTagTree()
 	{
 		return tagTree;
@@ -138,14 +149,5 @@ public class User implements Serializable
 	{
 		this.toReadPapers = toReadPapers;
 	}
-	private class TagTree
-	{
-		TagTreeNode root;
-		private class TagTreeNode
-		{
-			Collection<Paper> papers;
-			Collection<TagTreeNode> chlids;
-		}
-		//TODO: tag tree
-	}
+
 }

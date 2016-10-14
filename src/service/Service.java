@@ -1,10 +1,7 @@
 package service;
 import dao.*;
 import model.*;
-
 import java.util.Collection;
-import java.util.List;
-
 public class Service
 {
 	private UserDao userDao;
@@ -47,7 +44,7 @@ public class Service
     }
 
 	public Collection<Paper> getPapers(){
-		List<Paper> papers=paperDao.getAllPapers();
+		Collection<Paper> papers=paperDao.getAllPapers();
 		return papers;
 	}
 

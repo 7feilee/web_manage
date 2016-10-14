@@ -1,7 +1,8 @@
 package dao;
 import model.*;
 import java.sql.*;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedList;
 
 public class PaperDao
 {
@@ -29,26 +30,28 @@ public class PaperDao
         }
     }
 
-    public List<Paper> getAllPapers(){
-        List<Paper> papers=null;
+    public Collection<Paper> getAllPapers()
+    {
+        Collection<Paper> papers = new LinkedList<>();
         String sql="select * from paper";
-        try {
+        try
+        {
             ResultSet rs = stmt.executeQuery(sql);
             Paper paper=new Paper();
-            while(rs.next()){
+            while(rs.next())
+            {
                 paper.setId(rs.getInt("id"));
                 paper.setTitle(rs.getString("title"));
                 paper.setPublishDate(rs.getDate("publishDate"));
-                List<String> author=null;
+                Collection<String> author=new LinkedList<>();
                 author.add(rs.getString("author1"));
-                if (rs.getString("author2")!="")
+                if (rs.getString("author2")!=null)
                     author.add(rs.getString("author2"));
-                else if (rs.getString("author3")!="")
+                else if (rs.getString("author3")!=null)
                     author.add(rs.getString("author3"));
                 paper.setAuthors(author);
             }
             papers.add(paper);
-
         }
         catch(SQLException e){
             System.err.println("MySQL查询错误@dao.UserDao.getUserById");
@@ -67,21 +70,23 @@ public class PaperDao
                 paper.setId(rs.getInt("id"));
                 paper.setTitle(rs.getString("title"));
                 paper.setPublishDate(rs.getDate("publishDate"));
-                List<String> author=null;
+                
+                Collection<String> author=new LinkedList<>();
                 author.add(rs.getString("author1"));
-                if (rs.getString("author2")!="")
+                if (rs.getString("author2")!=null)
                     author.add(rs.getString("author2"));
-                else if (rs.getString("author3")!="")
+                else if (rs.getString("author3")!=null)
                     author.add(rs.getString("author3"));
                 paper.setAuthors(author);
                 paper.setAbstct(rs.getString("abstct"));
                 paper.setFileURI(rs.getString("fileURL"));
-                List<String> keyword=null;
-                author.add(rs.getString("keyword1"));
-                if (rs.getString("keyword2")!="")
-                    author.add(rs.getString("keyword2"));
-                else if (rs.getString("keyword3")!="")
-                    author.add(rs.getString("keyword3"));
+                
+                Collection<String> keyword=new LinkedList<>();
+                keyword.add(rs.getString("keyword1"));
+                if (rs.getString("keyword2")!=null)
+                    keyword.add(rs.getString("keyword2"));
+                else if (rs.getString("keyword3")!=null)
+                    keyword.add(rs.getString("keyword3"));
                 paper.setKeywords(keyword);
             }
             return paper;

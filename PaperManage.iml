@@ -28,7 +28,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Struts 2-2.3.20.1" level="project" />
-    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.0.37" level="application_server_libraries" />
+    <orderEntry type="library" name="Struts 2-2.3.20.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.37" level="application_server_libraries" />
   </component>
 </module>

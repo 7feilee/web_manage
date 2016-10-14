@@ -81,11 +81,10 @@ public class UserDao
     public int insertNewUser(String username, String password) {
 		String sql = "INSERT INTO user('username', 'password') VALUES ('"+username+"','"+password+"')";
 		try {
-			stmt.execute(sql);
-			return 1;
+			return stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
+			return -1;
 		}
     }
 }

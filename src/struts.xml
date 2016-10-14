@@ -25,9 +25,6 @@
     <action name="userDetails" class="web.action.ShowUserDetails">
       <result name="success">user.jsp</result>
     </action>
-    <action name="register" class="web.action.Register">
-      <result name="success">index.jsp</result>
-    </action>
   </package>
 
 </struts>

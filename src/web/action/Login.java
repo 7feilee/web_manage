@@ -1,9 +1,6 @@
 package web.action;
 import com.opensymphony.xwork2.ActionSupport;
-import model.*;
 import service.*;
-
-import java.io.Serializable;
 
 public class Login extends ActionSupport
 {

@@ -1,7 +1,6 @@
 package web.action;
 import com.opensymphony.xwork2.ActionSupport;
-import model.*;
-import service.*;
+import service.Service;
 
 public class Register extends ActionSupport{
     private Service service1;
