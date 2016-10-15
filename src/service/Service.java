@@ -7,10 +7,6 @@ public class Service
 	private UserDao userDao;
 	private PaperDao paperDao;
 	private NoteDao noteDao;
-	private User user;
-	private Paper paper;
-	private Note note;
-	private Log log;
 	
 	public Service()
 	{
@@ -18,15 +14,11 @@ public class Service
 		userDao = new UserDao();
 		paperDao = new PaperDao();
 		noteDao = new NoteDao();
-		user = new User();
-		paper = new Paper();
-		note = new Note();
-		log = new Log();
 	}
 	
 	public int login(String username, String password)
 	{
-		user = userDao.getUserByUsername(username);
+		User user = userDao.getUserByUsername(username);
 		if (user != null)
 			if (password.equals(user.getPassword()))
 				return user.getId();
@@ -34,7 +26,7 @@ public class Service
 	}
 
     public Integer addNewUser(String username, String password) {
-		user =userDao.getUserByUsername(username);
+		User user =userDao.getUserByUsername(username);
 		if (user == null){
             userDao.insertNewUser(username,password);
             return 1;
@@ -54,10 +46,6 @@ public class Service
 	}
 
     public User getUserById(int id){
-        user = userDao.getUserById(id);
-        if(user != null)
-            return user;
-        else
-            return null;
+	    return userDao.getUserById(id);
     }
 }

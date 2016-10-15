@@ -1,10 +1,12 @@
 package web.action;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import model.User;
 import org.apache.struts2.ServletActionContext;
 import service.*;
 import utils.Security;
+
+import javax.servlet.http.Cookie;
 public class Login extends ActionSupport
 {
 	private String username;
@@ -25,6 +27,16 @@ public class Login extends ActionSupport
 		uid = service.login(username, password);
 		if (uid > 0)
 		{
+			//设置session
+			ServletActionContext.getRequest().getSession().setAttribute("uid", uid);
+			//设置cookie
+			Cookie uidCookie = new Cookie("uid", uid.toString());
+			uidCookie.setMaxAge(60*60*24*30);
+			ServletActionContext.getResponse().addCookie(uidCookie);
+			Cookie utokenCookie = new Cookie("utoken", token);
+			utokenCookie.setMaxAge(60*60*24*30);
+			ServletActionContext.getResponse().addCookie(utokenCookie);
+			//请求重定向
 			ServletActionContext.getResponse().sendRedirect("showUserDetails?id="+uid.toString());
 			return SUCCESS;
 		}
