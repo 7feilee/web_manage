@@ -29,7 +29,7 @@ public class Service
 		user = userDao.getUserByUsername(username);
 		if (user != null)
 			if (password.equals(user.getPassword()))
-				return 1;
+				return user.getId();
 		return 0;
 	}
 

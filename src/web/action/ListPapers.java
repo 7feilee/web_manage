@@ -3,7 +3,6 @@ package web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Paper;
 import service.Service;
-
 import java.util.Collection;
 public class ListPapers extends ActionSupport
 {

@@ -1,11 +1,15 @@
 package web.action;
-import com.opensymphony.xwork2.ActionSupport;
-import service.*;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
+import service.*;
+import utils.Security;
 public class Login extends ActionSupport
 {
 	private String username;
 	private String password;
+	private String token;
 	private Service service;
 	public Login()
 	{
@@ -15,13 +19,20 @@ public class Login extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		Integer state;
+		Integer uid;
 		// TODO: 输入验证
-		state = service.login(username, password);
-		if (state == 1)
+		token = Security.MD5(username + password);
+		uid = service.login(username, password);
+		if (uid > 0)
+		{
+			ServletActionContext.getResponse().sendRedirect("showUserDetails?id="+uid.toString());
 			return SUCCESS;
+		}
 		else
+		{
+			ServletActionContext.getRequest().setAttribute("err", true);
 			return ERROR;
+		}
 	}
 	
 	public String getUsername()
@@ -39,5 +50,13 @@ public class Login extends ActionSupport
 	public void setPassword(String password)
 	{
 		this.password = password;
+	}
+	public String getToken()
+	{
+		return token;
+	}
+	public void setToken(String token)
+	{
+		this.token = token;
 	}
 }
