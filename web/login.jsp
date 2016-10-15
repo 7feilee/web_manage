@@ -20,21 +20,35 @@
         label="密码"
         name="password"
         cssClass="input-sm"/>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <label class="checkbox" for="login_autoLogin" >
+          <input type="checkbox" name="autoLogin" id="login_autoLogin"
+                 checked="checked" data-toggle="checkbox">
+          自动登录
+          <i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="请不要在公用电脑上勾选此选项"></i>
+        </label>
+      </div>
+    </div>
     <s:submit value="登录" cssClass="btn btn-primary btn-lg btn-block"/>
   </s:form>
   <%
-    if(err != null && err)
+    if (err != null && err)
     {
   %>
   <div class="alert alert-danger alert-dismissable" style="margin-top: 10px">
     <button type="button" class="close" data-dismiss="alert"
-            aria-hidden="true">
-      &times;
-    </button>
+            aria-hidden="true">&times;</button>
     用户名或密码错误！
-    </div>
+  </div>
   <%
     }
   %>
 </div>
+<script>
+  $(function () {
+    $(':checkbox').radiocheck();
+    $('[data-toggle="tooltip"]').tooltip();
+  })
+</script>
 <%@ include file="includes/footer.jsp" %>

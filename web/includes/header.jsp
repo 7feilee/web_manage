@@ -64,6 +64,7 @@
   <%
     }
   %>
+  <link href="resources/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -75,19 +76,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="javascript:void(0);">logo</a>
+      <a class="navbar-brand" href="/index.jsp">logo</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-01">
       <ul class="nav navbar-nav">
-        <li><a href="javascript:void(0);">论文</a></li>
-        <li><a href="javascript:void(0);">日志</a></li>
+        <li><a href="<s:url action="listPapers"/>">论文</a></li>
+        <li><a href="javascript:void(0);">动态</a></li>
         <li><a href="javascript:void(0);">笔记</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="javascript:void(0);"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-        <li><a href="javascript:void(0);"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+        <li><a href="/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+        <li><a href="/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
       </ul>
-    </div><!-- /.navbar-collapse -->
+    </div><!-- navbar-collapse -->
   </div>
 </nav>
 <div class="container">

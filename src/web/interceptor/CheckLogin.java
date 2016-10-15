@@ -13,12 +13,13 @@ public class CheckLogin extends MethodFilterInterceptor
 	@Override
 	public String doIntercept(ActionInvocation actionInvocation) throws Exception
 	{
-		Object obj = ServletActionContext.getRequest().getSession().getAttribute("uid");
+		Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
 		if(obj == null)
 		{
 			//session方式失败，转用cookie方式
 			Cookie[] cookies = ServletActionContext.getRequest().getCookies();
 			String token = null;
+			User user = null;
 			if(cookies != null)
 			{
 				Service service = new Service();
@@ -26,7 +27,7 @@ public class CheckLogin extends MethodFilterInterceptor
 				{
 					if (cookie.getName().equals("uid"))
 					{
-						User user = service.getUserById(Integer.valueOf(cookie.getValue()));
+						user = service.getUserById(Integer.valueOf(cookie.getValue()));
 						if (user != null)
 						{
 							if(token == null)
@@ -34,7 +35,10 @@ public class CheckLogin extends MethodFilterInterceptor
 							else
 							{
 								if(token.equals(Security.MD5(user.getUsername() + user.getPassword())))
+								{
+									ServletActionContext.getRequest().getSession().setAttribute("user", user);
 									return actionInvocation.invoke();
+								}
 								else
 									return "input";
 							}
@@ -49,7 +53,10 @@ public class CheckLogin extends MethodFilterInterceptor
 						else
 						{
 							if(token.equals(cookie.getValue()))
+							{
+								ServletActionContext.getRequest().getSession().setAttribute("user", user);
 								return actionInvocation.invoke();
+							}
 							else
 								return "input";
 						}
@@ -58,7 +65,6 @@ public class CheckLogin extends MethodFilterInterceptor
 			}
 			return "input";
 		}
-		//4.用户登录了，放行
 		return actionInvocation.invoke();
 	}
 }

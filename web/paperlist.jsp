@@ -4,11 +4,10 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
-<div class="col-md-9">
-  <s:if test="%{papers.isEmpty()}">
+<s:if test="%{papers.isEmpty()}">
   <h4 class="text-center">数据库中没有论文╮（╯＿╰）╭</h4>
-  </s:if>
-  <s:else>
+</s:if>
+<s:else>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     <tr>
@@ -41,5 +40,5 @@
     </s:iterator>
     </tbody>
   </table>
-  </s:else>
-  <%@ include file="includes/footer.jsp" %>
+</s:else>
+<%@ include file="includes/footer.jsp" %>

@@ -13,6 +13,7 @@ public class Login extends ActionSupport
 	private String password;
 	private String token;
 	private Service service;
+	private boolean autoLogin;
 	public Login()
 	{
 		super();
@@ -28,7 +29,8 @@ public class Login extends ActionSupport
 		if (uid > 0)
 		{
 			//设置session
-			ServletActionContext.getRequest().getSession().setAttribute("uid", uid);
+			User user = service.getUserById(uid);
+			ServletActionContext.getRequest().getSession().setAttribute("user", user);
 			//设置cookie
 			Cookie uidCookie = new Cookie("uid", uid.toString());
 			uidCookie.setMaxAge(60*60*24*30);
@@ -70,5 +72,13 @@ public class Login extends ActionSupport
 	public void setToken(String token)
 	{
 		this.token = token;
+	}
+	public boolean isAutoLogin()
+	{
+		return autoLogin;
+	}
+	public void setAutoLogin(boolean autoLogin)
+	{
+		this.autoLogin = autoLogin;
 	}
 }
