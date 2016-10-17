@@ -11,9 +11,8 @@ public class Login extends ActionSupport
 {
 	private String username;
 	private String password;
-	private String token;
 	private Service service;
-	private boolean autoLogin;
+	private String autoLogin;
 	public Login()
 	{
 		super();
@@ -24,7 +23,6 @@ public class Login extends ActionSupport
 	{
 		Integer uid;
 		// TODO: 输入验证
-		token = Security.MD5(username + password);
 		uid = service.login(username, password);
 		if (uid > 0)
 		{
@@ -32,12 +30,16 @@ public class Login extends ActionSupport
 			User user = service.getUserById(uid);
 			ServletActionContext.getRequest().getSession().setAttribute("user", user);
 			//设置cookie
-			Cookie uidCookie = new Cookie("uid", uid.toString());
-			uidCookie.setMaxAge(60*60*24*30);
-			ServletActionContext.getResponse().addCookie(uidCookie);
-			Cookie utokenCookie = new Cookie("utoken", token);
-			utokenCookie.setMaxAge(60*60*24*30);
-			ServletActionContext.getResponse().addCookie(utokenCookie);
+			if(autoLogin!=null && autoLogin.equals("on"))
+			{
+				String token = Security.MD5(username + password);
+				Cookie uidCookie = new Cookie("uid", uid.toString());
+				uidCookie.setMaxAge(60 * 60 * 24 * 30);
+				ServletActionContext.getResponse().addCookie(uidCookie);
+				Cookie utokenCookie = new Cookie("utoken", token);
+				utokenCookie.setMaxAge(60 * 60 * 24 * 30);
+				ServletActionContext.getResponse().addCookie(utokenCookie);
+			}
 			//请求重定向
 			ServletActionContext.getResponse().sendRedirect("showUserDetails?id="+uid.toString());
 			return SUCCESS;
@@ -65,19 +67,11 @@ public class Login extends ActionSupport
 	{
 		this.password = password;
 	}
-	public String getToken()
-	{
-		return token;
-	}
-	public void setToken(String token)
-	{
-		this.token = token;
-	}
-	public boolean isAutoLogin()
+	public String isAutoLogin()
 	{
 		return autoLogin;
 	}
-	public void setAutoLogin(boolean autoLogin)
+	public void setAutoLogin(String autoLogin)
 	{
 		this.autoLogin = autoLogin;
 	}

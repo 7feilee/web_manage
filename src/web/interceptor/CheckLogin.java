@@ -6,6 +6,7 @@ import model.User;
 import org.apache.struts2.ServletActionContext;
 import service.Service;
 import utils.Security;
+
 import javax.servlet.http.Cookie;
 public class CheckLogin extends MethodFilterInterceptor
 {
@@ -14,13 +15,13 @@ public class CheckLogin extends MethodFilterInterceptor
 	public String doIntercept(ActionInvocation actionInvocation) throws Exception
 	{
 		Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
-		if(obj == null)
+		if (obj == null)
 		{
 			//session方式失败，转用cookie方式
 			Cookie[] cookies = ServletActionContext.getRequest().getCookies();
 			String token = null;
 			User user = null;
-			if(cookies != null)
+			if (cookies != null)
 			{
 				Service service = new Service();
 				for (Cookie cookie : cookies)
@@ -30,11 +31,11 @@ public class CheckLogin extends MethodFilterInterceptor
 						user = service.getUserById(Integer.valueOf(cookie.getValue()));
 						if (user != null)
 						{
-							if(token == null)
+							if (token == null)
 								token = Security.MD5(user.getUsername() + user.getPassword());
 							else
 							{
-								if(token.equals(Security.MD5(user.getUsername() + user.getPassword())))
+								if (token.equals(Security.MD5(user.getUsername() + user.getPassword())))
 								{
 									ServletActionContext.getRequest().getSession().setAttribute("user", user);
 									return actionInvocation.invoke();
@@ -46,13 +47,13 @@ public class CheckLogin extends MethodFilterInterceptor
 						else
 							return "input";
 					}
-					else if(cookie.getName().equals("utoken"))
+					else if (cookie.getName().equals("utoken"))
 					{
-						if(token == null)
+						if (token == null)
 							token = cookie.getValue();
 						else
 						{
-							if(token.equals(cookie.getValue()))
+							if (token.equals(cookie.getValue()))
 							{
 								ServletActionContext.getRequest().getSession().setAttribute("user", user);
 								return actionInvocation.invoke();
@@ -65,6 +66,9 @@ public class CheckLogin extends MethodFilterInterceptor
 			}
 			return "input";
 		}
-		return actionInvocation.invoke();
+		else
+		{
+			return actionInvocation.invoke();
+		}
 	}
 }

@@ -36,13 +36,11 @@ public class Service
     }
 
 	public Collection<Paper> getPapers(){
-		Collection<Paper> papers=paperDao.getAllPapers();
-		return papers;
+		return paperDao.getAllPapers();
 	}
 
 	public Paper getPaperById(int id){
-		Paper paper=paperDao.getPaperById(id);
-		return paper;
+		return paperDao.getPaperById(id);
 	}
 
     public User getUserById(int id){
