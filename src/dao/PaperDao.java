@@ -7,32 +7,20 @@ import java.util.LinkedList;
 public class PaperDao
 {
     private Statement stmt;
-
+    Dao dao;
     /**构造方法，进行数据库的连接*/
     public PaperDao()
     {
-        Connection conn;
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://123.207.154.130:3306/papermanage", "root", "coding");
-            stmt = conn.createStatement();
-        }
-        catch (SQLException e)
-        {
-            System.err.println("MySQL连接错误@dao.UserDao");
-            e.printStackTrace();
-        }
-        catch (Exception e)
-        {
-            System.err.println("MySQL驱动程序错误@dao.UserDao");
-            e.printStackTrace();
-        }
+        Dao dao=new Dao();
+        stmt=dao.newDao();
     }
 
-    public Collection<Paper> getAllPapers()
-    {
-        Collection<Paper> papers = new LinkedList<>();
+    protected void finalize(){
+        dao.closeDao();
+    }
+
+    public Collection<Paper> getAllPapers(){
+        Collection<Paper> papers=new LinkedList<Paper>();
         String sql="select * from paper";
         try
         {
@@ -54,7 +42,7 @@ public class PaperDao
             papers.add(paper);
         }
         catch(SQLException e){
-            System.err.println("MySQL查询错误@dao.UserDao.getUserById");
+            System.err.println("MySQL查询错误@dao.PaperDao.getAllPapers");
             e.printStackTrace();
             return null;
         }
@@ -70,17 +58,15 @@ public class PaperDao
                 paper.setId(rs.getInt("id"));
                 paper.setTitle(rs.getString("title"));
                 paper.setPublishDate(rs.getDate("publishDate"));
-                
-                Collection<String> author=new LinkedList<>();
+                Collection<String> author=new LinkedList<>();r
                 author.add(rs.getString("author1"));
                 if (rs.getString("author2")!=null)
                     author.add(rs.getString("author2"));
                 else if (rs.getString("author3")!=null)
                     author.add(rs.getString("author3"));
                 paper.setAuthors(author);
-                paper.setAbstct(rs.getString("abstct"));
+                paper.setAbsrtct(rs.getString("abstct"));
                 paper.setFileURI(rs.getString("fileURL"));
-                
                 Collection<String> keyword=new LinkedList<>();
                 keyword.add(rs.getString("keyword1"));
                 if (rs.getString("keyword2")!=null)
@@ -92,7 +78,7 @@ public class PaperDao
             return paper;
         }
         catch(SQLException e){
-            System.err.println("MySQL查询错误@dao.UserDao.getUserById");
+            System.err.println("MySQL查询错误@dao.PaperDao.getPaperById");
             e.printStackTrace();
             return null;
         }

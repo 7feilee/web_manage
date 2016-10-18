@@ -2,6 +2,11 @@ package service;
 import dao.*;
 import model.*;
 import java.util.Collection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 public class Service
 {
 	private UserDao userDao;
@@ -45,5 +50,13 @@ public class Service
 
     public User getUserById(int id){
 	    return userDao.getUserById(id);
+    }
+
+    public int updatePaperState(int user_id, int paper_id ,int state){
+        return userDao.updatePaperState(user_id,paper_id,state);
+    }
+
+    public Collection<Paper> getPaperByState(int user_id, int state) {
+        return userDao.getPaperByState(user_id,state);
     }
 }
