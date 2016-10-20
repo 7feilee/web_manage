@@ -51,7 +51,7 @@ public class PaperDao
     }
 
     public Paper getPaperById(int id){
-        String sql="select * from paper where id='"+id+"'";
+        String sql="select * from paper where id='"+id+"';";
         try {
             ResultSet rs = stmt.executeQuery(sql);
             Paper paper=new Paper();
@@ -67,7 +67,7 @@ public class PaperDao
                     author.add(rs.getString("author3"));
                 paper.setAuthors(author);
                 paper.setAbstct(rs.getString("abstct"));
-                paper.setFileURI(rs.getString("fileURL"));
+                paper.setFileURI(rs.getString("fileURI"));
                 Collection<String> keyword=new LinkedList<>();
                 keyword.add(rs.getString("keyword1"));
                 if (rs.getString("keyword2")!=null)

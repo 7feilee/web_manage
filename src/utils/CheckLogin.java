@@ -1,18 +1,15 @@
-package web.interceptor;
+package utils;
 
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 import model.User;
 import org.apache.struts2.ServletActionContext;
+import org.jetbrains.annotations.NotNull;
 import service.Service;
-import utils.Security;
 
 import javax.servlet.http.Cookie;
-public class CheckLogin extends MethodFilterInterceptor
+public class CheckLogin
 {
-	
-	@Override
-	public String doIntercept(ActionInvocation actionInvocation) throws Exception
+	@NotNull
+	public static Boolean checkLogin()
 	{
 		Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
 		if (obj == null)
@@ -38,14 +35,14 @@ public class CheckLogin extends MethodFilterInterceptor
 								if (token.equals(Security.MD5(user.getUsername() + user.getPassword())))
 								{
 									ServletActionContext.getRequest().getSession().setAttribute("user", user);
-									return actionInvocation.invoke();
+									return true;
 								}
 								else
-									return "input";
+									return false;
 							}
 						}
 						else
-							return "input";
+							return false;
 					}
 					else if (cookie.getName().equals("utoken"))
 					{
@@ -56,19 +53,19 @@ public class CheckLogin extends MethodFilterInterceptor
 							if (token.equals(cookie.getValue()))
 							{
 								ServletActionContext.getRequest().getSession().setAttribute("user", user);
-								return actionInvocation.invoke();
+								return true;
 							}
 							else
-								return "input";
+								return false;
 						}
 					}
 				}
 			}
-			return "input";
+			return false;
 		}
 		else
 		{
-			return actionInvocation.invoke();
+			return true;
 		}
 	}
 }

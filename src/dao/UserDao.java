@@ -165,7 +165,7 @@ public class UserDao
 					author.add(rs.getString("author3"));
 				paper.setAuthors(author);
 				paper.setAbstct(rs.getString("abstct"));
-				paper.setFileURI(rs.getString("fileURL"));
+				paper.setFileURI(rs.getString("fileURI"));
 				Collection<String> keyword=new LinkedList<String>();
 				keyword.add(rs.getString("keyword1"));
 				if (rs.getString("keyword2")!=null)
