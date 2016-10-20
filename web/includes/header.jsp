@@ -1,3 +1,5 @@
+<%@ page import="utils.CheckLogin" %>
+<%@ page import="model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
@@ -23,7 +25,7 @@
   <link rel="stylesheet" href="resources/libs/flatui/css/flat-ui.min.css" type="text/css"/>
   <script type="text/javascript" src="resources/libs/flatui/js/flat-ui.min.js"></script>
   <%
-    if(useDatatable)
+    if (useDatatable)
     {
   %>
   <link rel="stylesheet" type="text/css" href="resources/libs/datatables/css/dataTables.bootstrap.min.css">
@@ -85,9 +87,24 @@
         <li><a href="javascript:void(0);">笔记</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <%
+          if (CheckLogin.checkLogin())
+          {
+            User user = (User) request.getSession().getAttribute("user");
+        %>
+        <li><a href="<s:url action="showUserDetails">
+                       <s:param name="id">${user.id}</s:param>
+                     </s:url>"><span class="glyphicon glyphicon-user"></span>&nbsp;
+          ${user.username}
+          </a></li>
+        <%
+          } else {
+        %>
         <li><a href="/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
         <li><a href="/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+        <%
+          }
+        %>
       </ul>
     </div><!-- navbar-collapse -->
   </div>

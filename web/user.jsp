@@ -5,8 +5,8 @@
 <% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
 <div class="col-md-4">
-  <div>
-    <img src="<s:property value="user.imgURI"/>"/>
+  <div style="width: 100%">
+    <img src="${pageContext.request.contextPath}/resources/img/user/icon-user-default.png"/>
   </div>
   <h2 class="page-header"><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/></h2>
   <s:if test="%{user.bio != null}">
@@ -66,7 +66,7 @@
     </div>
     <div id="read" class="tab-pane fade">
       <s:if test="%{user.readPapers.isEmpty()}">
-        <h4 class="text-center">你并没有想读的论文</h4>
+        <h4 class="text-center">你并没有读过的论文</h4>
       </s:if>
       <s:else>
         <table class="table table-bordered table-striped table-hover">
@@ -105,7 +105,7 @@
     </div>
     <div id="studied" class="tab-pane fade">
       <s:if test="%{user.studiedPapers.isEmpty()}">
-        <h4 class="text-center">你并没有想读的论文</h4>
+        <h4 class="text-center">你并没有精读过的论文</h4>
       </s:if>
       <s:else>
         <table class="table table-bordered table-striped table-hover">
