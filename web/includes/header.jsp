@@ -90,12 +90,11 @@
         <%
           if (CheckLogin.checkLogin())
           {
-            User user = (User) request.getSession().getAttribute("user");
         %>
         <li><a href="<s:url action="showUserDetails">
-                       <s:param name="id">${user.id}</s:param>
+                       <s:param name="id">${sessionScope.user.id}</s:param>
                      </s:url>"><span class="glyphicon glyphicon-user"></span>&nbsp;
-          ${user.username}
+          ${sessionScope.user.username}
           </a></li>
         <%
           } else {

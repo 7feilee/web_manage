@@ -14,14 +14,14 @@
 <div class="col-md-9">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h2 class="panel-title">
+      <h1 class="panel-title">
         <%
           if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
             out.print("我");
           else
             out.print("ta");
         %>的论文
-      </h2>
+      </h1>
     </div>
     <div class="panel-body">
       <ul id="myTab" class="nav nav-tabs">
@@ -157,14 +157,14 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h2 class="panel-title">
+      <h1 class="panel-title">
       <%
         if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
           out.print("我");
         else
           out.print("ta");
       %>的动态
-      </h2>
+      </h1>
     </div>
     <div class="panel-body">
       todo
@@ -172,14 +172,14 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h2 class="panel-title">
+      <h1 class="panel-title">
         <%
           if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
             out.print("我");
           else
             out.print("ta");
         %>的笔记
-      </h2>
+      </h1>
     </div>
     <div class="panel-body">
       todo....
