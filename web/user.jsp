@@ -5,9 +5,7 @@
 <% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
 <div class="col-md-4">
-  <div style="width: 100%">
-    <img src="${pageContext.request.contextPath}/resources/img/user/icon-user-default.png"/>
-  </div>
+    <img src="${pageContext.request.contextPath}/resources/img/user/icon-user-default.png" class="img-responsive"/>
   <h2 class="page-header"><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/></h2>
   <s:if test="%{user.bio != null}">
     <div class="text-muted"><s:property value="%{user.bio}"/></div>
@@ -26,7 +24,7 @@
   <div id="myTabContent" class="tab-content">
     <div id="toRead" class="tab-pane fade in active">
       <s:if test="%{user.toReadPapers.isEmpty()}">
-        <h4 class="text-center">你并没有想读的论文</h4>
+        <h4 class="text-center">你并没有计划读的论文</h4>
       </s:if>
       <s:else>
         <table class="table table-bordered table-striped table-hover">
@@ -66,7 +64,7 @@
     </div>
     <div id="read" class="tab-pane fade">
       <s:if test="%{user.readPapers.isEmpty()}">
-        <h4 class="text-center">你并没有读过的论文</h4>
+        <h4 class="text-center">你并没有已粗读的论文</h4>
       </s:if>
       <s:else>
         <table class="table table-bordered table-striped table-hover">
@@ -105,7 +103,7 @@
     </div>
     <div id="studied" class="tab-pane fade">
       <s:if test="%{user.studiedPapers.isEmpty()}">
-        <h4 class="text-center">你并没有精读过的论文</h4>
+        <h4 class="text-center">你并没有已精读的论文</h4>
       </s:if>
       <s:else>
         <table class="table table-bordered table-striped table-hover">
