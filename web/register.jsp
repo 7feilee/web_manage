@@ -17,6 +17,7 @@
         name="password"
         cssClass="input-sm"/>
     <s:submit value="注册" cssClass="btn btn-primary btn-lg btn-block"/>
+    
   </s:form>
 </div>
 <%@ include file="includes/footer.jsp" %>

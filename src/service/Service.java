@@ -2,15 +2,16 @@ package service;
 import dao.*;
 import model.*;
 import java.util.Collection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 public class Service
 {
 	private UserDao userDao;
 	private PaperDao paperDao;
 	private NoteDao noteDao;
-	private User user;
-	private Paper paper;
-	private Note note;
-	private Log log;
 	
 	public Service()
 	{
@@ -18,23 +19,19 @@ public class Service
 		userDao = new UserDao();
 		paperDao = new PaperDao();
 		noteDao = new NoteDao();
-		user = new User();
-		paper = new Paper();
-		note = new Note();
-		log = new Log();
 	}
 	
 	public int login(String username, String password)
 	{
-		user = userDao.getUserByUsername(username);
+		User user = userDao.getUserByUsername(username);
 		if (user != null)
 			if (password.equals(user.getPassword()))
-				return 1;
+				return user.getId();
 		return 0;
 	}
 
     public Integer addNewUser(String username, String password) {
-		user =userDao.getUserByUsername(username);
+		User user =userDao.getUserByUsername(username);
 		if (user == null){
             userDao.insertNewUser(username,password);
             return 1;
@@ -44,20 +41,22 @@ public class Service
     }
 
 	public Collection<Paper> getPapers(){
-		Collection<Paper> papers=paperDao.getAllPapers();
-		return papers;
+		return paperDao.getAllPapers();
 	}
 
 	public Paper getPaperById(int id){
-		Paper paper=paperDao.getPaperById(id);
-		return paper;
+		return paperDao.getPaperById(id);
 	}
 
     public User getUserById(int id){
-        user = userDao.getUserById(id);
-        if(user != null)
-            return user;
-        else
-            return null;
+	    return userDao.getUserById(id);
+    }
+
+    public int updatePaperState(int user_id, int paper_id ,int state){
+        return userDao.updatePaperState(user_id,paper_id,state);
+    }
+
+    public Collection<Paper> getPaperByState(int user_id, int state) {
+        return userDao.getPaperByState(user_id,state);
     }
 }

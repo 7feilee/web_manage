@@ -4,14 +4,27 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-
   <include file="struts-default.xml"/>
   <constant name="struts.devMode" value="true"/>
   <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
 
   <package name="actions" extends="struts-default">
+
+    <interceptors>
+      <interceptor name="checkLogin" class="web.interceptor.CheckLogin" />
+      <interceptor-stack name="myDefaultStack">
+        <interceptor-ref name="defaultStack"/>
+        <interceptor-ref name="checkLogin"/>
+      </interceptor-stack>
+    </interceptors>
+    <!--default-interceptor-ref name="myDefaultStack"/-->
+    <global-results>
+      <result name="input">login.jsp</result>
+    </global-results>
+
     <action name="login" class="web.action.Login">
-      <result name="success">index.jsp</result>
+      <result name="success"/>
+      <result name="error">login.jsp</result>
     </action>
     <action name="listPapers" class="web.action.ListPapers">
       <result name="success">paperlist.jsp</result>
@@ -22,9 +35,11 @@
     <action name="register" class="web.action.Register">
       <result name="success">index.jsp</result>
     </action>
-    <action name="userDetails" class="web.action.ShowUserDetails">
+    <action name="showUserDetails" class="web.action.ShowUserDetails">
+      <interceptor-ref name="myDefaultStack">
+        <param name="checkLogin.includeMethods">login</param>
+      </interceptor-ref>
       <result name="success">user.jsp</result>
     </action>
   </package>
-
 </struts>

@@ -1,12 +1,18 @@
 package web.action;
-import com.opensymphony.xwork2.ActionSupport;
-import service.*;
 
+import com.opensymphony.xwork2.ActionSupport;
+import model.User;
+import org.apache.struts2.ServletActionContext;
+import service.*;
+import utils.Security;
+
+import javax.servlet.http.Cookie;
 public class Login extends ActionSupport
 {
 	private String username;
 	private String password;
 	private Service service;
+	private String autoLogin;
 	public Login()
 	{
 		super();
@@ -15,13 +21,34 @@ public class Login extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		Integer state;
+		Integer uid;
 		// TODO: 输入验证
-		state = service.login(username, password);
-		if (state == 1)
+		uid = service.login(username, password);
+		if (uid > 0)
+		{
+			//设置session
+			User user = service.getUserById(uid);
+			ServletActionContext.getRequest().getSession().setAttribute("user", user);
+			//设置cookie
+			if(autoLogin!=null && autoLogin.equals("on"))
+			{
+				String token = Security.MD5(username + password);
+				Cookie uidCookie = new Cookie("uid", uid.toString());
+				uidCookie.setMaxAge(60 * 60 * 24 * 30);
+				ServletActionContext.getResponse().addCookie(uidCookie);
+				Cookie utokenCookie = new Cookie("utoken", token);
+				utokenCookie.setMaxAge(60 * 60 * 24 * 30);
+				ServletActionContext.getResponse().addCookie(utokenCookie);
+			}
+			//请求重定向
+			ServletActionContext.getResponse().sendRedirect("showUserDetails?id="+uid.toString());
 			return SUCCESS;
+		}
 		else
+		{
+			ServletActionContext.getRequest().setAttribute("err", true);
 			return ERROR;
+		}
 	}
 	
 	public String getUsername()
@@ -39,5 +66,13 @@ public class Login extends ActionSupport
 	public void setPassword(String password)
 	{
 		this.password = password;
+	}
+	public String isAutoLogin()
+	{
+		return autoLogin;
+	}
+	public void setAutoLogin(String autoLogin)
+	{
+		this.autoLogin = autoLogin;
 	}
 }

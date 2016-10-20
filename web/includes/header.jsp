@@ -11,7 +11,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="率怀一">
-  <title>hello world</title>
+  <title>文献管理系统</title>
   <link rel="shortcut icon" href="resources/img/favicon.ico" type="image/x-icon"/>
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
   <!--[if lt IE 9]>
@@ -64,9 +64,10 @@
   <%
     }
   %>
+  <link href="resources/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<nav class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
@@ -75,19 +76,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="javascript:void(0);">logo</a>
+      <a class="navbar-brand" href="/index.jsp">logo</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-01">
       <ul class="nav navbar-nav">
-        <li><a href="javascript:void(0);">论文</a></li>
-        <li><a href="javascript:void(0);">日志</a></li>
+        <li><a href="<s:url action="listPapers"/>">论文</a></li>
+        <li><a href="javascript:void(0);">动态</a></li>
         <li><a href="javascript:void(0);">笔记</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="javascript:void(0);"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-        <li><a href="javascript:void(0);"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+        
+        <li><a href="/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+        <li><a href="/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
       </ul>
-    </div><!-- /.navbar-collapse -->
+    </div><!-- navbar-collapse -->
   </div>
 </nav>
 <div class="container">
