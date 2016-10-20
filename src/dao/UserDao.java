@@ -36,9 +36,9 @@ public class UserDao
 				user.setImgURI(rs.getString("imgURI"));
 				user.setEmail(rs.getString("email"));
 				user.setName(rs.getString("name"));
-				Collection<Paper> toReadPapers=getPaperByState(user.getId(),0);
-				Collection<Paper> readPapers=getPaperByState(user.getId(),2);
-				Collection<Paper> studiedPapers=getPaperByState(user.getId(),1);
+				user.setToReadPapers(getPaperByState(user.getId(),0));
+				user.setReadPapers(getPaperByState(user.getId(),2));
+				user.setStudiedPapers(getPaperByState(user.getId(),1));
 				return user;
 			}
 			else
@@ -70,9 +70,9 @@ public class UserDao
 				user.setImgURI(rs.getString("imgURI"));
 				user.setEmail(rs.getString("email"));
 				user.setName(rs.getString("name"));
-				Collection<Paper> toReadPapers=getPaperByState(user.getId(),0);
-				Collection<Paper> readPapers=getPaperByState(user.getId(),2);
-				Collection<Paper> studiedPapers=getPaperByState(user.getId(),1);
+				user.setToReadPapers(getPaperByState(user.getId(),0));
+				user.setReadPapers(getPaperByState(user.getId(),2));
+				user.setStudiedPapers(getPaperByState(user.getId(),1));
 				return user;
 			}
 			else
@@ -164,7 +164,7 @@ public class UserDao
 				else if (rs.getString("author3")!=null)
 					author.add(rs.getString("author3"));
 				paper.setAuthors(author);
-				paper.setAbsrtct(rs.getString("abstct"));
+				paper.setAbstct(rs.getString("abstct"));
 				paper.setFileURI(rs.getString("fileURL"));
 				Collection<String> keyword=new LinkedList<String>();
 				keyword.add(rs.getString("keyword1"));
