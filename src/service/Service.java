@@ -1,12 +1,12 @@
 package service;
 import dao.*;
 import model.*;
-import java.util.Collection;
+
+import java.util.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+
 public class Service
 {
 	private UserDao userDao;
@@ -49,7 +49,11 @@ public class Service
 	}
 
     public User getUserById(int id){
-	    return userDao.getUserById(id);
+		User user=userDao.getUserById(id);
+		user.setToReadPapers(getPaperByState(user.getId(),0));
+		user.setReadPapers(getPaperByState(user.getId(),2));
+		user.setStudiedPapers(getPaperByState(user.getId(),1));
+	    return user;
     }
 
     public int updatePaperState(int user_id, int paper_id ,int state){
@@ -57,6 +61,12 @@ public class Service
     }
 
     public Collection<Paper> getPaperByState(int user_id, int state) {
-        return userDao.getPaperByState(user_id,state);
+		Collection<Paper> papers=new LinkedList<>();
+		Collection<Integer> paperids=userDao.getPaperidByState(user_id,state);
+		for (Iterator iter = paperids.iterator(); iter.hasNext();) {
+			int i=(int)iter.next();
+			papers.add(paperDao.getPaperById(i));
+		}
+        return papers;
     }
 }

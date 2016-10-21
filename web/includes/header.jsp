@@ -85,7 +85,7 @@
         <li><a href="javascript:void(0);">笔记</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <%if(request.getSession().)%>
+        <%--if(request.getSession())--%>
         <li><a href="/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
         <li><a href="/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
       </ul>
