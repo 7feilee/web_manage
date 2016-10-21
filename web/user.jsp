@@ -36,7 +36,7 @@
       <div id="myTabContent" class="tab-content">
         <div id="toRead" class="tab-pane fade in active">
           <s:if test="%{user.toReadPapers.isEmpty()}">
-            <h4 class="text-center">你并没有计划读的论文</h4>
+            <p class="text-center">并没有计划要读的论文</p>
           </s:if>
           <s:else>
             <table class="table table-bordered table-striped table-hover">
@@ -59,9 +59,7 @@
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors" var="author"><s:property
-                      value="%{#author}"/>,</s:iterator></td>
-                    <%-- fixme --%>
+                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <td style='vertical-align: middle;'>
                     <button class="btn btn-sm btn-danger">
@@ -76,7 +74,7 @@
         </div>
         <div id="read" class="tab-pane fade">
           <s:if test="%{user.readPapers.isEmpty()}">
-            <h4 class="text-center">你并没有已粗读的论文</h4>
+            <p class="text-center">并没有已经粗略读过的论文</p>
           </s:if>
           <s:else>
             <table class="table table-bordered table-striped table-hover">
@@ -99,8 +97,7 @@
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors" var="author"><s:property
-                      value="%{#author}"/>,</s:iterator></td>
+                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <td style='vertical-align: middle;'>
                     <button class="btn btn-sm btn-danger">
@@ -115,7 +112,7 @@
         </div>
         <div id="studied" class="tab-pane fade">
           <s:if test="%{user.studiedPapers.isEmpty()}">
-            <h4 class="text-center">你并没有已精读的论文</h4>
+            <p class="text-center">并没有已经仔细研究过的论文</p>
           </s:if>
           <s:else>
             <table class="table table-bordered table-striped table-hover">
@@ -138,8 +135,7 @@
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors" var="author"><s:property
-                      value="%{#author}"/>,</s:iterator></td>
+                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <td style='vertical-align: middle;'>
                     <button class="btn btn-sm btn-danger">
@@ -158,12 +154,12 @@
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h1 class="panel-title">
-      <%
-        if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
-          out.print("我");
-        else
-          out.print("ta");
-      %>的动态
+        <%
+          if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
+            out.print("我");
+          else
+            out.print("ta");
+        %>的动态
       </h1>
     </div>
     <div class="panel-body">
@@ -185,5 +181,15 @@
       todo....
     </div>
   </div>
+  <%
+    if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
+    {
+  %>
+  <a href="<s:url action="logout"/>" class="btn btn-danger btn-hg btn-block">
+    <span class="glyphicon glyphicon-log-out"></span>&nbsp;退出登录</a>
+  <%
+    }
+  %>
 </div>
+
 <%@ include file="includes/footer.jsp" %>
