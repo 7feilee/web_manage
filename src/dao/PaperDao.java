@@ -25,9 +25,9 @@ public class PaperDao
         try
         {
             ResultSet rs = stmt.executeQuery(sql);
-            Paper paper=new Paper();
             while(rs.next())
             {
+                Paper paper=new Paper();
                 paper.setId(rs.getInt("id"));
                 paper.setTitle(rs.getString("title"));
                 paper.setPublishDate(rs.getDate("publishDate"));
@@ -38,8 +38,8 @@ public class PaperDao
                 else if (rs.getString("author3")!=null)
                     author.add(rs.getString("author3"));
                 paper.setAuthors(author);
+                papers.add(paper);
             }
-            papers.add(paper);
         }
         catch(SQLException e){
             System.err.println("MySQL查询错误@dao.PaperDao.getAllPapers");
@@ -58,14 +58,14 @@ public class PaperDao
                 paper.setId(rs.getInt("id"));
                 paper.setTitle(rs.getString("title"));
                 paper.setPublishDate(rs.getDate("publishDate"));
-                Collection<String> author=new LinkedList<>();r
+                Collection<String> author=new LinkedList<>();
                 author.add(rs.getString("author1"));
                 if (rs.getString("author2")!=null)
                     author.add(rs.getString("author2"));
                 else if (rs.getString("author3")!=null)
                     author.add(rs.getString("author3"));
                 paper.setAuthors(author);
-                paper.setAbsrtct(rs.getString("abstct"));
+                paper.setAbstct(rs.getString("abstct"));
                 paper.setFileURI(rs.getString("fileURL"));
                 Collection<String> keyword=new LinkedList<>();
                 keyword.add(rs.getString("keyword1"));
