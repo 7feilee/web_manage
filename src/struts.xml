@@ -9,19 +9,6 @@
   <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
 
   <package name="actions" extends="struts-default">
-
-    <interceptors>
-      <interceptor name="checkLogin" class="web.interceptor.CheckLogin" />
-      <interceptor-stack name="myDefaultStack">
-        <interceptor-ref name="defaultStack"/>
-        <interceptor-ref name="checkLogin"/>
-      </interceptor-stack>
-    </interceptors>
-    <!--default-interceptor-ref name="myDefaultStack"/-->
-    <global-results>
-      <result name="input">login.jsp</result>
-    </global-results>
-
     <action name="login" class="web.action.Login">
       <result name="success"/>
       <result name="error">login.jsp</result>
@@ -36,10 +23,10 @@
       <result name="success">index.jsp</result>
     </action>
     <action name="showUserDetails" class="web.action.ShowUserDetails">
-      <interceptor-ref name="myDefaultStack">
-        <param name="checkLogin.includeMethods">login</param>
-      </interceptor-ref>
       <result name="success">user.jsp</result>
+    </action>
+    <action name="logout" class="web.action.Logout">
+      <result name="success" type="redirect">index.jsp</result>
     </action>
   </package>
 </struts>

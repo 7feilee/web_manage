@@ -1,4 +1,4 @@
-package dao;
+﻿package dao;
 import model.*;
 import java.sql.*;
 import java.util.Collection;
@@ -136,5 +136,4 @@ public class UserDao
 			return null;
 		}
 	}
-
 }

@@ -1,4 +1,4 @@
-package dao;
+﻿package dao;
 import model.*;
 import java.sql.*;
 import java.util.Collection;
@@ -25,9 +25,10 @@ public class PaperDao
         try
         {
             ResultSet rs = stmt.executeQuery(sql);
+            Paper paper;
             while(rs.next())
             {
-                Paper paper=new Paper();
+                paper=new Paper();
                 paper.setId(rs.getInt("id"));
                 paper.setTitle(rs.getString("title"));
                 paper.setPublishDate(rs.getDate("publishDate"));
