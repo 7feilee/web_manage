@@ -21,6 +21,20 @@
     </tr>
     </thead>
     <tbody>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("button").click(function () {
+          var $this = $(this)
+        $.ajax({url:"../ajax/paper.txt",
+                async:false,
+                success:function (result) {
+                    $this.attr('class', 'btn btn-success btn-sm')
+                    $this.html(result)
+                }})
+      })
+    })
+  </script>
     <s:iterator value="papers">
       <tr>
         <td style='vertical-align: middle;'>
@@ -33,7 +47,7 @@
         <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
         <td style='vertical-align: middle;'>
           <button class="btn btn-sm btn-danger">
-            todo<!--todo-->
+            点击收藏
           </button>
         </td>
       </tr>
