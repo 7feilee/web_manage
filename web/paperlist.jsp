@@ -5,7 +5,7 @@
 <% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
 <s:if test="%{papers.isEmpty()}">
-  <h4 class="text-center">数据库中没有论文╮（╯＿╰）╭</h4>
+  <h4 class="text-center">数据库中没有论文╮（╯＿╰）╭主人快来添加论文吧！</h4>
 </s:if>
 <s:else>
   <table class="table table-bordered table-striped table-hover">
@@ -42,8 +42,7 @@
             <s:property value="%{title}"/>
           </a>
         </td>
-        <td style='vertical-align: middle;'><s:iterator value="authors" var="author"><s:property
-            value="%{#author}"/>,</s:iterator></td>
+        <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
         <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
         <td style='vertical-align: middle;'>
           <button class="btn btn-sm btn-danger">

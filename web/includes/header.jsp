@@ -69,7 +69,7 @@
   <link href="resources/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
@@ -90,12 +90,11 @@
         <%
           if (CheckLogin.checkLogin())
           {
-            User user = (User) request.getSession().getAttribute("user");
         %>
         <li><a href="<s:url action="showUserDetails">
-                       <s:param name="id">${user.id}</s:param>
+                       <s:param name="id">${sessionScope.user.id}</s:param>
                      </s:url>"><span class="glyphicon glyphicon-user"></span>&nbsp;
-          ${user.username}
+          ${sessionScope.user.username}
           </a></li>
         <%
           } else {
