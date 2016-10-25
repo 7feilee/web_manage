@@ -16,7 +16,11 @@
     <div class="panel-heading">
       <h1 class="panel-title">
         <%
-          if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
+          String sruid = request.getParameter("id");
+          int iruid = -1;
+          if(sruid != null)
+            iruid = Integer.valueOf(sruid);
+          if (userp != null && userp.getId() == iruid)
             out.print("我");
           else
             out.print("ta");
@@ -155,7 +159,7 @@
     <div class="panel-heading">
       <h1 class="panel-title">
         <%
-          if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
+          if (userp != null && userp.getId() == iruid)
             out.print("我");
           else
             out.print("ta");
@@ -170,7 +174,7 @@
     <div class="panel-heading">
       <h1 class="panel-title">
         <%
-          if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
+          if (userp != null && userp.getId() == iruid)
             out.print("我");
           else
             out.print("ta");

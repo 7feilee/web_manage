@@ -28,5 +28,8 @@
     <action name="logout" class="web.action.Logout">
       <result name="success" type="redirect">index.jsp</result>
     </action>
+    <action name="addPaper" class="web.action.AddPaper">
+      <result name="success">paperlist.jsp</result>
+    </action>
   </package>
 </struts>
