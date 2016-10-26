@@ -186,7 +186,7 @@
     </div>
   </div>
   <%
-    if (((User) session.getAttribute("user")).getId() == (Integer.valueOf(request.getParameter("id"))))
+    if (userp != null && userp.getId() == iruid)
     {
   %>
   <a href="<s:url action="logout"/>" class="btn btn-danger btn-hg btn-block">
