@@ -1,12 +1,11 @@
 package service;
 import dao.*;
 import model.*;
-import java.util.Collection;
+
+import java.util.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 public class Service
 {
 	private UserDao userDao;
@@ -58,5 +57,11 @@ public class Service
 
     public Collection<Paper> getPaperByState(int user_id, int state) {
         return userDao.getPaperByState(user_id,state);
+    }
+    
+    public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
+                        String abstct, Date publishDate, int operater){
+	    // TODO:@ayh
+	    return 0;
     }
 }
