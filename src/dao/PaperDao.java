@@ -1,7 +1,8 @@
-﻿package dao;
+package dao;
 import model.*;
 import java.sql.*;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class PaperDao
@@ -82,6 +83,46 @@ public class PaperDao
             System.err.println("MySQL查询错误@dao.PaperDao.getPaperById");
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public int insertNewPaper(String title,String fileURI,String publishDate,
+                              Collection<String> authors,String abstct,
+                              Collection<String> keywords){
+        int i=0;
+        String author1=new String(),author2=new String(),author3=new String(),keyword1=new String(),keyword2=new String(),keyword3=new String();
+        for (Iterator<String> it=authors.iterator();it.hasNext();){
+            i++;
+            if (i==1)
+                author1=(String)it.next();
+            else if (i==2)
+                author2=(String)it.next();
+            else if (i==3)
+                author3=(String)it.next();
+        }
+        i=0;
+        for (Iterator<String> its=keywords.iterator();its.hasNext();){
+            i++;
+            if (i==1)
+                keyword1=(String)its.next();
+            else if (i==2)
+                keyword2=(String)its.next();
+            else if (i==3)
+                keyword3=(String)its.next() ;
+        }
+        String sql="insert into paper(title,fileURI,publishDate,author1,author2,author3," +
+                "abstct,keyword1,keyword2,keyword3) values" +
+                "('"+title+"','"+fileURI+"','"+publishDate+"','"+author1+"','"+author2+"','"+author3+"','"+
+                abstct+"','"+keyword1+"','"+keyword2+"','"+keyword3+"');";
+        try{
+            int m=stmt.executeUpdate(sql);
+            if (m>0)
+                return m;
+            else
+                return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 }
