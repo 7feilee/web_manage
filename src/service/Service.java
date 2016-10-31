@@ -6,7 +6,6 @@ import java.util.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-
 public class Service
 {
 	private UserDao userDao;
@@ -68,5 +67,11 @@ public class Service
 			papers.add(paperDao.getPaperById(i));
 		}
         return papers;
+    }
+    
+    public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
+                        String abstct, Date publishDate, int operater){
+	    // TODO:@ayh
+	    return 0;
     }
 }
