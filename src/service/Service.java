@@ -3,8 +3,7 @@ import dao.*;
 import model.*;
 
 import java.util.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Date;
 import java.util.Collection;
 
 public class Service {
@@ -67,8 +66,7 @@ public class Service {
     }
     
     public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
-                        String abstct, Date publishDate, int operater){
-	    // TODO:@ayh
-	    return 0;
+                        String abstct, java.util.Date publishDate, int operater){
+	    return paperDao.insertNewPaper(title,fileURI,(java.sql.Date)publishDate,authors,abstct,keywords);
     }
 }

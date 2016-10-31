@@ -87,7 +87,7 @@ public class PaperDao
         }
     }
 
-    public int insertNewPaper(String title,String fileURI,String publishDate,
+    public int insertNewPaper(String title,String fileURI,Date publishDate,
                               Collection<String> authors,String abstct,
                               Collection<String> keywords){
         int i=0;
