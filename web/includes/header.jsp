@@ -78,7 +78,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/index.jsp">logo</a>
+      <a class="navbar-brand" href="index.jsp">logo</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-01">
       <ul class="nav navbar-nav">
@@ -88,8 +88,10 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <%
+          User userp = null;
           if (CheckLogin.checkLogin())
           {
+            userp = (User) session.getAttribute("user");
         %>
         <li><a href="<s:url action="showUserDetails">
                        <s:param name="id">${sessionScope.user.id}</s:param>
@@ -99,8 +101,8 @@
         <%
           } else {
         %>
-        <li><a href="/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-        <li><a href="/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+        <li><a href="register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+        <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
         <%
           }
         %>

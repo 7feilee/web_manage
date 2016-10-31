@@ -63,7 +63,12 @@ public class Service {
 			int i = (int) iter.next();
 			papers.add(paperDao.getPaperById(i));
 		}
-		return papers;
-	}
-
+        return papers;
+    }
+    
+    public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
+                        String abstct, Date publishDate, int operater){
+	    // TODO:@ayh
+	    return 0;
+    }
 }

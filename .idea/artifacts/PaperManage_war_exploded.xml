@@ -9,6 +9,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Struts 2-2.3.20.1" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/annotations-java8.jar" />
         </element>
       </element>
     </root>

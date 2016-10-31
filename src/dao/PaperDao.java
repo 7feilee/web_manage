@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class PaperDao
 {
     private Statement stmt;
-    Dao dao;
+    private Dao dao;
     /**构造方法，进行数据库的连接*/
     public PaperDao()
     {
@@ -16,6 +16,7 @@ public class PaperDao
         stmt=dao.newDao();
     }
 
+    @Override
     protected void finalize(){
         dao.closeDao();
     }
