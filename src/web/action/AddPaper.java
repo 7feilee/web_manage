@@ -1,5 +1,4 @@
 package web.action;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import model.User;
 import org.apache.struts2.ServletActionContext;

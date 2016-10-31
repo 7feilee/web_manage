@@ -18,7 +18,7 @@
         <%
           String sruid = request.getParameter("id");
           int iruid = -1;
-          if(sruid != null)
+          if (sruid != null)
             iruid = Integer.valueOf(sruid);
           if (userp != null && userp.getId() == iruid)
             out.print("我");
