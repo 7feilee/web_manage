@@ -50,9 +50,9 @@
         <td style='vertical-align: middle;'>
           <!--  <button class="btn btn-sm btn-danger">
               点击收藏 -->
-          <select id="Choice" title="收藏状态" class="form-control select select-primary select-block mbl">
-            <option value="取消收藏">取消收藏</option>
-            <option value="未读">未读</option>
+          <select id="Choice" title="收藏状态" class="form-control select select-primary select-block">
+            <option value="取消收藏" >未收藏</option>
+            <option value="未读">计划读</option>
             <option value="已粗读">已粗读</option>
             <option value="已精读">已精读</option>
           </select>

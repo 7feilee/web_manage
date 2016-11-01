@@ -1,4 +1,4 @@
-﻿package dao;
+package dao;
 import model.Paper;
 
 import java.sql.ResultSet;
