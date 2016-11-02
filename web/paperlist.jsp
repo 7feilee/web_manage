@@ -38,22 +38,6 @@
     </tr>
     </thead>
     <tbody>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $("#Choice").change(function () {
-          var $this = $(this)
-        $.ajax({
-          type: 'POST',
-          url:"../../src/web.action/ShowUserPaperStatus",
-          async:false,
-          success:function (result) {
-              $this.attr('class', 'btn btn-success btn-sm')
-              $this.html(result)
-              }})
-      })
-    })
-  </script>
     <s:iterator value="papers">
       <tr>
         <td style='vertical-align: middle;'>
@@ -64,15 +48,15 @@
         <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
         <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
         <td style='vertical-align: middle;'>
-        <!--  <button class="btn btn-sm btn-danger">
-            点击收藏 -->
-            <select id="Choice">
-              <option value="取消收藏">取消收藏</option>
-              <option value="未读">未读</option>
-              <option value="已粗读">已粗读</option>
-              <option value="已精读">已精读</option>
-            </select>
-         <!-- </button> -->
+          <!--  <button class="btn btn-sm btn-danger">
+              点击收藏 -->
+          <select id="Choice" title="收藏状态" class="form-control select select-primary select-block">
+            <option value="取消收藏" >未收藏</option>
+            <option value="未读">计划读</option>
+            <option value="已粗读">已粗读</option>
+            <option value="已精读">已精读</option>
+          </select>
+          <!-- </button> -->
         </td>
       </tr>
     </s:iterator>

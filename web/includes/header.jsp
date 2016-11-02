@@ -32,7 +32,7 @@
   <script type="text/javascript" charset="utf8" src="resources/libs/datatables/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" charset="utf8" src="resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
   
-  <!-- initiate datatable -->
+  <!-- initiate datatable and ajax by @lqf -->
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
       $('.table').dataTable({
@@ -61,6 +61,22 @@
           }
         }
       });
+      
+      $("#Choice").change(function () {
+        var $this = $(this);
+        $.ajax({
+          type: 'POST',
+          url: "../../src/web.action/ShowUserPaperStatus",
+          async: false,
+          success: function (result) {
+            $this.attr('class', 'btn btn-success btn-sm');
+            $this.html(result);
+          }
+        });
+      });
+      
+      $('.select').select2();
+  
     });
   </script>
   <%
