@@ -1,5 +1,8 @@
 package web.action;
 import com.opensymphony.xwork2.ActionSupport;
+import model.User;
+import org.apache.struts2.ServletActionContext;
+import service.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -18,6 +21,14 @@ public class AddPaper extends ActionSupport
 	private Collection<String> authors;
 	private Collection<String> keywords;
 	private Date publishDate;
+	
+	private Service service;
+	
+	public AddPaper()
+	{
+		super();
+		service = new Service();
+	}
 	@Override
 	public String execute() throws Exception
 	{
@@ -32,8 +43,16 @@ public class AddPaper extends ActionSupport
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				publishDate = sdf.parse(dateStr);
 			}
-			//调用service
-			return SUCCESS;
+			Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
+			if(obj == null)
+				return ERROR;
+			//else
+			int uid = ((User) obj).getId();
+			int stat = service.addPaper(title,authors,fileURI,keywords,abstct,publishDate,uid);
+			if(stat == 0)
+				return SUCCESS;
+			else
+				return ERROR;
 		}
 		else
 			return ERROR;
