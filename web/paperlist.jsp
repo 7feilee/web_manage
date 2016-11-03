@@ -67,8 +67,8 @@
         <!--  <button class="btn btn-sm btn-danger">
             点击收藏 -->
             <select id="Choice">
-              <option value="取消收藏">取消收藏</option>
-              <option value="未读">未读</option>
+              <option value="未收藏">取消收藏</option>
+              <option value="计划读">未读</option>
               <option value="已粗读">已粗读</option>
               <option value="已精读">已精读</option>
             </select>
