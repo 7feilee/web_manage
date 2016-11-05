@@ -6,24 +6,21 @@ import model.Paper;
 import model.User;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 public class Service
 {
 	private UserDao userDao;
 	private PaperDao paperDao;
 	private NoteDao noteDao;
-	
-	public Service()
-	{
+
+	public Service() {
 		super();
 		userDao = new UserDao();
 		paperDao = new PaperDao();
 		noteDao = new NoteDao();
 	}
-	
-	public int login(String username, String password)
-	{
+
+	public int login(String username, String password) {
 		User user = userDao.getUserByUsername(username);
 		if (user != null)
 			if (password.equals(user.getPassword()))
@@ -80,9 +77,7 @@ public class Service
 	}
 	
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
-	                    String abstct, Date publishDate, int operater)
-	{
-		// TODO:@ayh
-		return 0;
-	}
+                        String abstct, java.util.Date publishDate, int operater){
+	    return paperDao.insertNewPaper(title,fileURI,(java.sql.Date)publishDate,authors,abstct,keywords);
+    }
 }
