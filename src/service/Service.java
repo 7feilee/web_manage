@@ -12,15 +12,17 @@ public class Service
 	private UserDao userDao;
 	private PaperDao paperDao;
 	private NoteDao noteDao;
-
-	public Service() {
+	
+	public Service()
+	{
 		super();
 		userDao = new UserDao();
 		paperDao = new PaperDao();
 		noteDao = new NoteDao();
 	}
-
-	public int login(String username, String password) {
+	
+	public int login(String username, String password)
+	{
 		User user = userDao.getUserByUsername(username);
 		if (user != null)
 			if (password.equals(user.getPassword()))
@@ -64,7 +66,7 @@ public class Service
 		return userDao.updatePaperState(user_id, paper_id, state);
 	}
 	
-	public Collection<Paper> getPaperByState(int user_id, int state)
+	private Collection<Paper> getPaperByState(int user_id, int state)
 	{
 		Collection<Paper> papers = new LinkedList<>();
 		Collection<Integer> paperids = userDao.getPaperidByState(user_id, state);
@@ -77,7 +79,8 @@ public class Service
 	}
 	
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
-                        String abstct, java.util.Date publishDate, int operater){
-	    return paperDao.insertNewPaper(title,fileURI,(java.sql.Date)publishDate,authors,abstct,keywords);
-    }
+	                    String abstct, java.util.Date publishDate, int operater)
+	{
+		return paperDao.insertNewPaper(title, fileURI, (java.sql.Date) publishDate, authors, abstct, keywords);
+	}
 }
