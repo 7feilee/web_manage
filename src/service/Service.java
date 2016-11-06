@@ -55,9 +55,9 @@ public class Service
 	public User getUserById(int id)
 	{
 		User user = userDao.getUserById(id);
-		user.setToReadPapers(getPaperByState(user.getId(), 0));
+		user.setToReadPapers(getPaperByState(user.getId(), 1));
 		user.setReadPapers(getPaperByState(user.getId(), 2));
-		user.setStudiedPapers(getPaperByState(user.getId(), 1));
+		user.setStudiedPapers(getPaperByState(user.getId(), 3));
 		return user;
 	}
 	
@@ -79,8 +79,11 @@ public class Service
 	}
 	
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
-	                    String abstct, java.util.Date publishDate, int operater)
-	{
-		return paperDao.insertNewPaper(title, fileURI, (java.sql.Date) publishDate, authors, abstct, keywords);
+                        String abstct, java.util.Date publishDate, int operater){
+		java.sql.Date publishDate2=new java.sql.Date(publishDate.getTime());
+	    return paperDao.insertNewPaper(title,fileURI,publishDate2,authors,abstct,keywords);
+    }
+	public int getPaperState(int user_id, int paper_id){
+		return userDao.getPaperState(user_id,paper_id);
 	}
 }
