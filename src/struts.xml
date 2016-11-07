@@ -31,5 +31,11 @@
     <action name="addPaper" class="web.action.AddPaper">
       <result name="success" type="redirectAction">listPapers</result>
     </action>
+    <action name="showPaperState" class="web.action.ShowPaperState">
+      <result name="success">ajax/showPaperState.jsp</result>
+    </action>
+    <action name="changePaperState" class="web.action.ChangePaperState">
+      <result name="success" type="chain">showPaperState</result>
+    </action>
   </package>
 </struts>

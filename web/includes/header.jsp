@@ -66,7 +66,7 @@
         var $this = $(this);
         $.ajax({
           type: 'POST',
-          url: "../../src/web.action/ShowUserPaperStatus",
+          url: "../../src/web.action/ShowPaperState",
           async: false,
           success: function (result) {
             $this.attr('class', 'btn btn-success btn-sm');

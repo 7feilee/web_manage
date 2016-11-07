@@ -6,7 +6,6 @@ import model.Paper;
 import model.User;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 public class Service
 {
@@ -56,9 +55,9 @@ public class Service
 	public User getUserById(int id)
 	{
 		User user = userDao.getUserById(id);
-		user.setToReadPapers(getPaperByState(user.getId(), 0));
+		user.setToReadPapers(getPaperByState(user.getId(), 1));
 		user.setReadPapers(getPaperByState(user.getId(), 2));
-		user.setStudiedPapers(getPaperByState(user.getId(), 1));
+		user.setStudiedPapers(getPaperByState(user.getId(), 3));
 		return user;
 	}
 	
@@ -67,7 +66,7 @@ public class Service
 		return userDao.updatePaperState(user_id, paper_id, state);
 	}
 	
-	public Collection<Paper> getPaperByState(int user_id, int state)
+	private Collection<Paper> getPaperByState(int user_id, int state)
 	{
 		Collection<Paper> papers = new LinkedList<>();
 		Collection<Integer> paperids = userDao.getPaperidByState(user_id, state);
@@ -80,9 +79,11 @@ public class Service
 	}
 	
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
-	                    String abstct, Date publishDate, int operater)
-	{
-		// TODO:@ayh
-		return 0;
+                        String abstct, java.util.Date publishDate, int operater){
+		java.sql.Date publishDate2=new java.sql.Date(publishDate.getTime());
+	    return paperDao.insertNewPaper(title,fileURI,publishDate2,authors,abstct,keywords);
+    }
+	public int getPaperState(int user_id, int paper_id){
+		return userDao.getPaperState(user_id,paper_id);
 	}
 }

@@ -99,8 +99,8 @@ public class UserDao
 				if (rs.next())
 				{
 					int id = rs.getInt(1);
-					String sql1 = "CREATE TABLE user_" + id + " (paper_id int(10),state int(10),note VARCHAR(2000));";
-					stmt.executeUpdate(sql1);
+                    String sql1 = "CREATE TABLE user_" + id + " (paper_id int(10) NOT NULL,state int(10) NOT NULL DEFAULT '0',treehead int(10),UNIQUE KEY 'user_1_paper_id_uindex' ('paper_id')) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+                    stmt.executeUpdate(sql1);
 				}
 			}
 			return m;
@@ -112,18 +112,18 @@ public class UserDao
 			return -1;
 		}
 	}
-	
+
+    //state=0是未收藏，1是未读，2是粗读，3是精读
 	public int updatePaperState(int user_id, int paper_id, int state)
 	{
-		//state=1 精读 2 粗读 0 未读
 		String sql0 = "SELECT table_name FROM information_schema.TABLES WHERE table_name ='user_" + user_id + "';";
 		try
 		{
 			ResultSet rs = stmt.executeQuery(sql0);
 			if (!rs.next())
 			{
-				String sql1 = "CREATE TABLE user_" + user_id + " (paper_id int(10),state int(10),treehead int(10));";
-				stmt.executeUpdate(sql1);
+				String sql1 = "CREATE TABLE user_" + user_id + " (paper_id int(10) NOT NULL,state int(10) NOT NULL DEFAULT '0',treehead int(10),UNIQUE KEY `user_1_paper_id_uindex` (`paper_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+ 				stmt.executeUpdate(sql1);
 			}
 			String sql2 = "INSERT INTO user_" + user_id + "(paper_id, state) VALUES ('" + paper_id + "','" + state + "');";
 			return stmt.executeUpdate(sql2);
@@ -156,4 +156,23 @@ public class UserDao
 			return null;
 		}
 	}
+
+    public int getPaperState(int user_id, int paper_id){
+        String sql = "select paper_id from user_" + user_id + " WHERE paper_id=" + paper_id + ";";
+        try
+        {
+            ResultSet rs = stmt.executeQuery(sql);
+            int state=0;
+            if (rs.next()){
+                state=rs.getInt(1);
+            }
+            return state;
+        }
+        catch (SQLException e)
+        {
+            System.err.println("MySQL查询错误@dao.UserDao.getPaperState");
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }

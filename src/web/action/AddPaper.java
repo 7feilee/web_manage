@@ -38,7 +38,7 @@ public class AddPaper extends ActionSupport
 				authors = Arrays.asList(author.split("\\|"));
 			if(keyword != null)
 				keywords = Arrays.asList(keyword.split("\\|"));
-			if(dateStr!= null)
+			if(dateStr!= null && dateStr.matches("\\d{4}-\\d{2}-\\d{2}"))
 			{
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				publishDate = sdf.parse(dateStr);
