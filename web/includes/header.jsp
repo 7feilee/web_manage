@@ -62,15 +62,33 @@
         }
       });
       
-      $("#Choice").change(function () {
+      $(".clct").change(function () {
         var $this = $(this);
+        $this.attr("disabled",true);
+        var uid,pid,state;
+        uid = 0${sessionScope.user.id};
+        if(uid == 0)
+          return;
+        pid = $this.attr("id").substring(3,999);
+        state = $this.val();
+        var url = "<s:url action="changePaperState"/>?uid="+uid+"&pid="+pid+"&state="+state;
+        var mid = "#ms_"+pid;
+        $(mid).removeClass("hidden");
         $.ajax({
           type: 'POST',
-          url: "../../src/web.action/ShowPaperState",
-          async: false,
-          success: function (result) {
-            $this.attr('class', 'btn btn-success btn-sm');
-            $this.html(result);
+          url: url,
+          
+          success: function (result,status,xhr) {
+            $(mid).removeClass("loader primary");
+            $(mid).addClass("glyphicon-ok success");
+            $this.val(result);
+            $this.attr("disabled",false);
+          },
+          error: function (xhr, status, error) {
+            $(mid).removeClass("loader primary");
+            $(mid).addClass("glyphicon-remove danger");
+            $this.val(result);
+            $this.attr("disabled",false);
           }
         });
       });

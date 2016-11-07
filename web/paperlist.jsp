@@ -48,15 +48,13 @@
         <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
         <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
         <td style='vertical-align: middle;'>
-          <!--  <button class="btn btn-sm btn-danger">
-              点击收藏 -->
-          <select id="Choice" title="收藏状态" class="form-control select select-primary select-block">
-            <option value="-1" >未收藏</option>
-            <option value="0">计划读</option>
+          <select id="ps_<s:property value="%{id}"/>" title="收藏状态" style="width: 75%" class="form-control select select-primary clct">
+            <option value="0">未收藏</option>
+            <option value="1">计划读</option>
             <option value="2">已粗读</option>
-            <option value="1">已精读</option>
+            <option value="3">已精读</option>
           </select>
-          <!-- </button> -->
+          <span id="ms_<s:property value="%{id}"/>" style="margin-left: 5px;" class="glyphicon loader hidden primary"></span>
         </td>
       </tr>
     </s:iterator>
