@@ -47,14 +47,18 @@
         </td>
         <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
         <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
-        <td style='vertical-align: middle;'>
-          <select id="ps_<s:property value="%{id}"/>" title="收藏状态" style="width: 75%" class="form-control select select-primary clct">
+        <td style='vertical-align: middle; width: 220px'>
+          <select id="ps_<s:property value="%{id}"/>" title="收藏状态" style="width: 75%; min-width: 110px; float: left"
+                  class="form-control select select-primary clct">
             <option value="0">未收藏</option>
             <option value="1">计划读</option>
             <option value="2">已粗读</option>
             <option value="3">已精读</option>
           </select>
-          <span id="ms_<s:property value="%{id}"/>" style="margin-left: 5px;" class="glyphicon loader hidden primary"></span>
+          <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
+            <span id="ms_<s:property value="%{id}"/>" style="font-size: 20px;vertical-align: middle;text-align: center;"
+                  class="glyphicon loader hidden primary"></span>
+          </div>
         </td>
       </tr>
     </s:iterator>
