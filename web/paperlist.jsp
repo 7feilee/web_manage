@@ -34,7 +34,14 @@
       </th>
       <th style='vertical-align: middle;' width="20%">作者</th>
       <th style='vertical-align: middle;' width="20%">发表时间</th>
+      <%
+        if(userp != null)
+        {
+      %>
       <th style='vertical-align: middle;' width="10%">收藏</th>
+      <%
+        }
+      %>
     </tr>
     </thead>
     <tbody>
@@ -47,6 +54,10 @@
         </td>
         <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
         <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
+        <%
+          if(userp != null)
+          {
+        %>
         <td style='vertical-align: middle; width: 220px'>
           <select id="ps_<s:property value="%{id}"/>" title="收藏状态" style="width: 75%; min-width: 110px; float: left"
                   class="form-control select select-primary clct">
@@ -60,6 +71,9 @@
                   class="glyphicon loader hidden primary"></span>
           </div>
         </td>
+        <%
+          }
+        %>
       </tr>
     </s:iterator>
     </tbody>

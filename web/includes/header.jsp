@@ -64,11 +64,11 @@
       
       $(".clct").change(function () {
         var $this = $(this);
-        $this.attr("disabled",true);
         var uid,pid,state;
         uid = 0${sessionScope.user.id};
         if(uid == 0)
           return;
+        $this.attr("disabled",true);
         pid = $this.attr("id").substring(3,999);
         state = $this.val();
         var url = "<s:url action="changePaperState"/>?uid="+uid+"&pid="+pid+"&state="+state;
