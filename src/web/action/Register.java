@@ -19,6 +19,9 @@ public class Register extends ActionSupport{
         Integer state;
         // TODO: 输入验证
         state = service1.addNewUser(username,password);
+        if (username.length() < 50 || username.length() > 0) state = 1;
+        else
+            return ERROR;
         if(state == 1)
             return SUCCESS;
         else
