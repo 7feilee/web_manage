@@ -70,7 +70,7 @@
         if (uid == 0)
           return;
         $this.attr("disabled", true);
-        pid = $stateSelector.attr("id").substring(3, 999);
+        pid = $this.attr("id").substring(3, 999);
         var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
         var $mid = $("#ms_" + pid);
         $mid.removeClass("hidden");
@@ -98,8 +98,8 @@
         if (uid == 0)
           return;
         $this.attr("disabled", true);
-        pid = $stateSelector.attr("id").substring(3, 999);
-        state = $stateSelector.val();
+        pid = $this.attr("id").substring(3, 999);
+        state = $this.val();
         var url = "<s:url action="changePaperState"/>?uid=" + uid + "&pid=" + pid + "&state=" + state;
         var $mid = $("#ms_" + pid);
         $mid.removeClass("hidden");
