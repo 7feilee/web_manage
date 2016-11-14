@@ -35,7 +35,7 @@
   <!-- initiate datatable and ajax by @lqf -->
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-      $('.table').dataTable({
+      $(".table").dataTable({
         language: {
           "sProcessing": "处理中...",
           "sLengthMenu": "每页显示 _MENU_ 项结果",
@@ -62,21 +62,67 @@
         }
       });
       
-      $("#Choice").change(function () {
+      var $stateSelector = $(".clct");
+      $stateSelector.each(function () {
         var $this = $(this);
+        var uid, pid, state;
+        uid = 0${sessionScope.user.id};
+        if (uid == 0)
+          return;
+        $this.attr("disabled", true);
+        pid = $stateSelector.attr("id").substring(3, 999);
+        var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
+        var $mid = $("#ms_" + pid);
+        $mid.removeClass("hidden");
         $.ajax({
           type: 'POST',
-          url: "../../src/web.action/ShowPaperState",
-          async: false,
-          success: function (result) {
-            $this.attr('class', 'btn btn-success btn-sm');
-            $this.html(result);
+          url: url,
+    
+          success: function (result, status, xhr) {
+            $mid.removeClass("loader primary");
+            $mid.addClass("glyphicon-ok success");
+            $this.val(result);
+            $this.attr("disabled", false);
+          },
+          error: function (xhr, status, error) {
+            $mid.removeClass("loader primary");
+            $mid.addClass("glyphicon-remove danger");
+            $this.attr("disabled", false);
+          }
+        });
+      });
+      $stateSelector.change(function () {
+        var $this = $(this);
+        var uid, pid, state;
+        uid = 0${sessionScope.user.id};
+        if (uid == 0)
+          return;
+        $this.attr("disabled", true);
+        pid = $stateSelector.attr("id").substring(3, 999);
+        state = $stateSelector.val();
+        var url = "<s:url action="changePaperState"/>?uid=" + uid + "&pid=" + pid + "&state=" + state;
+        var $mid = $("#ms_" + pid);
+        $mid.removeClass("hidden");
+        $.ajax({
+          type: 'POST',
+          url: url,
+          
+          success: function (result, status, xhr) {
+            $mid.removeClass("loader primary");
+            $mid.addClass("glyphicon-ok success");
+            $this.val(result);
+            $this.attr("disabled", false);
+          },
+          error: function (xhr, status, error) {
+            $mid.removeClass("loader primary");
+            $mid.addClass("glyphicon-remove danger");
+            $this.attr("disabled", false);
           }
         });
       });
       
       $('.select').select2();
-  
+      
     });
   </script>
   <%
@@ -113,9 +159,11 @@
                        <s:param name="id">${sessionScope.user.id}</s:param>
                      </s:url>"><span class="glyphicon glyphicon-user"></span>&nbsp;
           ${sessionScope.user.username}
-          </a></li>
+        </a></li>
         <%
-          } else {
+        }
+        else
+        {
         %>
         <li><a href="register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
         <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
