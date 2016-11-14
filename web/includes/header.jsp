@@ -62,6 +62,8 @@
         }
       });
       
+      $('.select').select2();
+      
       var $stateSelector = $(".clct");
       $stateSelector.each(function () {
         var $this = $(this);
@@ -81,7 +83,7 @@
           success: function (result, status, xhr) {
             $mid.removeClass("loader primary");
             $mid.addClass("glyphicon-ok success");
-            $this.val(result);
+            $this.val(result).trigger("change");
             $this.attr("disabled", false);
           },
           error: function (xhr, status, error) {
@@ -110,7 +112,7 @@
           success: function (result, status, xhr) {
             $mid.removeClass("loader primary");
             $mid.addClass("glyphicon-ok success");
-            $this.val(result);
+            $this.val(result).trigger("change");
             $this.attr("disabled", false);
           },
           error: function (xhr, status, error) {
@@ -120,9 +122,6 @@
           }
         });
       });
-      
-      $('.select').select2();
-      
     });
   </script>
   <%
