@@ -60,40 +60,37 @@
             "sSortDescending": ": 以降序排列此列"
           }
         }
-      });
-      
-      $('.select').select2();
-      
-      var $stateSelector = $(".clct");
-      $stateSelector.each(function () {
-        var $this = $(this);
-        var uid, pid, state;
-        uid = 0${sessionScope.user.id};
-        if (uid == 0)
-          return;
-        $this.attr("disabled", true);
-        pid = $this.attr("id").substring(3, 999);
-        var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
-        var $mid = $("#ms_" + pid);
-        $mid.removeClass("hidden");
-        $.ajax({
-          type: 'POST',
-          url: url,
-    
-          success: function (result, status, xhr) {
-            $mid.removeClass("loader primary");
-            $mid.addClass("glyphicon-ok success");
-            $this.val(result).trigger("change");
-            $this.attr("disabled", false);
-          },
-          error: function (xhr, status, error) {
-            $mid.removeClass("loader primary");
-            $mid.addClass("glyphicon-remove danger");
-            $this.attr("disabled", false);
-          }
+      }).on('draw.dt', function () {
+        $('.select').select2();
+        $(".clct").each(function () {
+          var $this = $(this);
+          var uid, pid;
+          uid = 0${sessionScope.user.id};
+          if (uid == 0)
+            return;
+          $this.attr("disabled", true);
+          pid = $this.attr("id").substring(3, 999);
+          var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
+          var $mid = $("#ms_" + pid);
+          $mid.removeClass("hidden");
+          $.ajax({
+            type: 'POST',
+            url: url,
+            
+            success: function (result, status, xhr) {
+              $mid.addClass("hidden");
+              $this.val(result).trigger("change");
+              $this.attr("disabled", false);
+            },
+            error: function (xhr, status, error) {
+              $mid.addClass("hidden");
+              $this.attr("disabled", false);
+            }
+          });
         });
       });
-      $stateSelector.change(function () {
+      
+      $(".clct").change(function () {
         var $this = $(this);
         var uid, pid, state;
         uid = 0${sessionScope.user.id};
@@ -112,7 +109,6 @@
           success: function (result, status, xhr) {
             $mid.removeClass("loader primary");
             $mid.addClass("glyphicon-ok success");
-            $this.val(result).trigger("change");
             $this.attr("disabled", false);
           },
           error: function (xhr, status, error) {

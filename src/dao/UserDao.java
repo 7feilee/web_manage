@@ -158,7 +158,7 @@ public class UserDao
 	}
 
     public int getPaperState(int user_id, int paper_id){
-        String sql = "select paper_id from user_" + user_id + " WHERE paper_id=" + paper_id + ";";
+        String sql = "select state from user_" + user_id + " WHERE paper_id=" + paper_id + ";";
         try
         {
             ResultSet rs = stmt.executeQuery(sql);
