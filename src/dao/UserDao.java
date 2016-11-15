@@ -16,23 +16,26 @@ public class UserDao
 	 */
 	public UserDao()
 	{
-		Dao dao = new Dao();
-		stmt = dao.newDao();
+
 	}
 	
 	protected void finalize()
 	{
-		dao.closeDao();
+
 	}
 	
 	public User getUserByUsername(String username)
 	{
 		String sql = "select * from user WHERE username='" + username + "';";
+		ResultSet rss=null;
 		try
 		{
-			ResultSet rss = stmt.executeQuery(sql);
+			stmt = dao.newDao();
+			rss = stmt.executeQuery(sql);
 			if (rss.next())
 			{
+				dao = new Dao();
+				stmt = dao.newDao();
 				User user = new User();
 				user.setUsername(rss.getString("username"));
 				user.setPassword(rss.getString("password"));
@@ -54,6 +57,15 @@ public class UserDao
 			e.printStackTrace();
 			return null;
 		}
+		finally {
+			if (rss!=null)
+				try {
+					rss.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			dao.closeDao();
+		}
 	}
 	
 	public User getUserById(int id)
@@ -61,6 +73,8 @@ public class UserDao
 		String sql = "select * from user WHERE id='" + id + "';";
 		try
 		{
+			dao = new Dao();
+			stmt = dao.newDao();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next())
 			{
@@ -84,10 +98,15 @@ public class UserDao
 			e.printStackTrace();
 			return null;
 		}
+		finally {
+			dao.closeDao();
+		}
 	}
 	
 	public int insertNewUser(String username, String password)
 	{
+		dao = new Dao();
+		stmt = dao.newDao();
 		String sql = "INSERT INTO user(username, password) VALUES ('" + username + "','" + password + "');";
 		try
 		{
@@ -99,7 +118,7 @@ public class UserDao
 				if (rs.next())
 				{
 					int id = rs.getInt(1);
-                    String sql1 = "CREATE TABLE user_" + id + " (paper_id int(10) NOT NULL,state int(10) NOT NULL DEFAULT '0',treehead int(10),UNIQUE KEY 'user_1_paper_id_uindex' ('paper_id')) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+                    String sql1 = "CREATE TABLE user_" + id + " (paper_id int(10) NOT NULL,state int(10) NOT NULL DEFAULT '0',treehead int(10),UNIQUE KEY `user_1_paper_id_uindex` (`paper_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
                     stmt.executeUpdate(sql1);
 				}
 			}
@@ -111,11 +130,16 @@ public class UserDao
 			e.printStackTrace();
 			return -1;
 		}
+		finally {
+			dao.closeDao();
+		}
 	}
 
     //state=0是未收藏，1是未读，2是粗读，3是精读
 	public int updatePaperState(int user_id, int paper_id, int state)
 	{
+		dao = new Dao();
+		stmt = dao.newDao();
 		String sql0 = "SELECT table_name FROM information_schema.TABLES WHERE table_name ='user_" + user_id + "';";
 		try
 		{
@@ -125,7 +149,14 @@ public class UserDao
 				String sql1 = "CREATE TABLE user_" + user_id + " (paper_id int(10) NOT NULL,state int(10) NOT NULL DEFAULT '0',treehead int(10),UNIQUE KEY `user_1_paper_id_uindex` (`paper_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
  				stmt.executeUpdate(sql1);
 			}
-			String sql2 = "INSERT INTO user_" + user_id + "(paper_id, state) VALUES ('" + paper_id + "','" + state + "');";
+			ResultSet rs2=stmt.executeQuery("SELECT * FROM user_" + user_id + " WHERE paper_id="+paper_id+";");
+			String sql2;
+			if (rs2.next()){
+				sql2="UPDATE user_" + user_id + "SET state="+state+"WHERE paper_id="+paper_id+";";
+			}
+			else {
+				sql2 = "INSERT INTO user_" + user_id + "(paper_id, state) VALUES ('" + paper_id + "','" + state + "');";
+			}
 			return stmt.executeUpdate(sql2);
 		}
 		catch (SQLException e)
@@ -134,10 +165,15 @@ public class UserDao
 			e.printStackTrace();
 			return 0;
 		}
+		finally {
+			dao.closeDao();
+		}
 	}
 	
 	public Collection<Integer> getPaperidByState(int user_id, int state)
 	{
+		dao = new Dao();
+		stmt = dao.newDao();
 		String sql2 = "select paper_id from user_" + user_id + " WHERE state=" + state + ";";
 		try
 		{
@@ -155,12 +191,17 @@ public class UserDao
 			e.printStackTrace();
 			return null;
 		}
+		finally {
+			dao.closeDao();
+		}
 	}
 
     public int getPaperState(int user_id, int paper_id){
-        String sql = "select paper_id from user_" + user_id + " WHERE paper_id=" + paper_id + ";";
+        String sql = "select state from user_" + user_id + " WHERE paper_id=" + paper_id + ";";
         try
         {
+			dao = new Dao();
+			stmt = dao.newDao();
             ResultSet rs = stmt.executeQuery(sql);
             int state=0;
             if (rs.next()){
@@ -174,5 +215,8 @@ public class UserDao
             e.printStackTrace();
             return -1;
         }
-    }
+        finally {
+			dao.closeDao();
+		}
+	}
 }
