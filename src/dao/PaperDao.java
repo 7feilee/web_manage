@@ -48,6 +48,8 @@ public class PaperDao
 				stmt.close();
 			if (conn!=null)
 				conn.close();
+			stmt=null;
+			conn=null;
 			return 1;
 		}
 		catch (SQLException e)
@@ -68,10 +70,11 @@ public class PaperDao
 	{
 		Collection<Paper> papers = new LinkedList<>();
 		String sql = "select * from paper";
+		stmt = newDao();
+		ResultSet rs=null;
 		try
 		{
-			stmt = newDao();
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 			Paper paper;
 			while (rs.next())
 			{
@@ -96,6 +99,12 @@ public class PaperDao
 			return null;
 		}
 		finally {
+			if (rs!=null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			closeDao();
 		}
 		return papers;
@@ -104,10 +113,11 @@ public class PaperDao
 	public Paper getPaperById(int id)
 	{
 		String sql = "select * from paper where id='" + id + "';";
+		stmt = newDao();
+		ResultSet rs=null;
 		try
 		{
-			stmt = newDao();
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 			Paper paper = new Paper();
 			if (rs.next())
 			{
@@ -140,6 +150,12 @@ public class PaperDao
 			return null;
 		}
 		finally {
+			if (rs!=null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			closeDao();
 		}
 	}
