@@ -65,11 +65,26 @@
                   </td>
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
-                  <td style='vertical-align: middle;'>
-                    <button class="btn btn-sm btn-danger">
-                      todo<!--todo-->
-                    </button>
+                  <%
+                    if(userp != null && userp.getId() == iruid)
+                    {
+                  %>
+                  <td style='vertical-align: middle; width: 220px'>
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
+                            class="form-control select select-primary clct" title="收藏状态" >
+                      <option value="0">未收藏</option>
+                      <option value="1">计划读</option>
+                      <option value="2">已粗读</option>
+                      <option value="3">已精读</option>
+                    </select>
+                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
+            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    </div>
                   </td>
+                  <%
+                    }
+                  %>
                 </tr>
               </s:iterator>
               </tbody>
@@ -103,11 +118,26 @@
                   </td>
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
-                  <td style='vertical-align: middle;'>
-                    <button class="btn btn-sm btn-danger">
-                      todo<!--todo-->
-                    </button>
+                  <%
+                    if(userp != null && userp.getId() == iruid)
+                    {
+                  %>
+                  <td style='vertical-align: middle; width: 220px'>
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
+                            class="form-control select select-primary clct" title="收藏状态" >
+                      <option value="0">未收藏</option>
+                      <option value="1">计划读</option>
+                      <option value="2">已粗读</option>
+                      <option value="3">已精读</option>
+                    </select>
+                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
+            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    </div>
                   </td>
+                  <%
+                    }
+                  %>
                 </tr>
               </s:iterator>
               </tbody>
@@ -141,11 +171,26 @@
                   </td>
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
-                  <td style='vertical-align: middle;'>
-                    <button class="btn btn-sm btn-danger">
-                      todo<!--todo-->
-                    </button>
+                  <%
+                    if(userp != null && userp.getId() == iruid)
+                    {
+                  %>
+                  <td style='vertical-align: middle; width: 220px'>
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
+                            class="form-control select select-primary clct" title="收藏状态" >
+                      <option value="0">未收藏</option>
+                      <option value="1">计划读</option>
+                      <option value="2">已粗读</option>
+                      <option value="3">已精读</option>
+                    </select>
+                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
+            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    </div>
                   </td>
+                  <%
+                    }
+                  %>
                 </tr>
               </s:iterator>
               </tbody>
