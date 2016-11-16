@@ -38,7 +38,7 @@
       
       function iniSelector() {
           $('select.select').select2();
-          $(".clct").each(function () {
+          $("select.clct").each(function () {
             var $this = $(this);
             var uid, pid;
             uid = 0${sessionScope.user.id};
@@ -92,7 +92,7 @@
         }
       }).on('draw.dt', iniSelector()).on('init.dt',iniSelector());
       
-      $(".clct").on("change",(function () {
+      $("select.clct").on("change",(function () {
         var $this = $(this);
         var uid, pid, state;
         uid = 0${sessionScope.user.id};
