@@ -37,7 +37,7 @@
     $(document).ready(function () {
       
       function iniSelector() {
-          $('.select').select2();
+          $('select.select').select2();
           $(".clct").each(function () {
             var $this = $(this);
             var uid, pid;
@@ -55,7 +55,7 @@
         
               success: function (result, status, xhr) {
                 $mid.addClass("hidden");
-                $this.val(result).trigger("change");
+                $this.val(result).trigger("change.select2");
                 $this.attr("disabled", false);
               },
               error: function (xhr, status, error) {
@@ -92,7 +92,7 @@
         }
       }).on('draw.dt', iniSelector()).on('init.dt',iniSelector());
       
-      $(".clct").change(function () {
+      $(".clct").on("change",(function () {
         var $this = $(this);
         var uid, pid, state;
         uid = 0${sessionScope.user.id};
@@ -119,7 +119,7 @@
             $this.attr("disabled", false);
           }
         });
-      });
+      }));
     });
   </script>
   <%
