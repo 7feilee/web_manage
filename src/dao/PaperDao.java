@@ -1,10 +1,7 @@
 package dao;
 import model.Paper;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -12,29 +9,72 @@ import java.util.LinkedList;
 public class PaperDao
 {
 	private Statement stmt;
-	private Dao dao;
+	private Connection conn;
 	/**
 	 * 构造方法，进行数据库的连接
 	 */
-	public PaperDao()
+
+	public Statement newDao()
 	{
-		Dao dao = new Dao();
-		stmt = dao.newDao();
+		if (stmt!=null)
+			return stmt;
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			//conn = DriverManager.getConnection("jdbc:mysql://123.207.154.130:3306/papermanage", "root", "coding");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "19951224");
+			stmt = conn.createStatement();
+			return stmt;
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL连接错误@dao.Dao");
+			e.printStackTrace();
+			return null;
+		}
+		catch (Exception e)
+		{
+			System.err.println("MySQL驱动程序错误@dao.Dao");
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
-	@Override
-	protected void finalize()
+
+	public int closeDao()
 	{
-		dao.closeDao();
+		try
+		{
+			if (stmt!=null)
+				stmt.close();
+			if (conn!=null)
+				conn.close();
+			stmt=null;
+			conn=null;
+			return 1;
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL连接错误@dao.Dao.closeDao");
+			e.printStackTrace();
+			return -1;
+		}
+		catch (Exception e)
+		{
+			System.err.println("MySQL驱动程序错误@dao.Dao.closeDao");
+			e.printStackTrace();
+			return -2;
+		}
 	}
-	
+
 	public Collection<Paper> getAllPapers()
 	{
 		Collection<Paper> papers = new LinkedList<>();
 		String sql = "select * from paper";
+		stmt = newDao();
+		ResultSet rs=null;
 		try
 		{
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 			Paper paper;
 			while (rs.next())
 			{
@@ -58,15 +98,26 @@ public class PaperDao
 			e.printStackTrace();
 			return null;
 		}
+		finally {
+			if (rs!=null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			closeDao();
+		}
 		return papers;
 	}
 	
 	public Paper getPaperById(int id)
 	{
 		String sql = "select * from paper where id='" + id + "';";
+		stmt = newDao();
+		ResultSet rs=null;
 		try
 		{
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 			Paper paper = new Paper();
 			if (rs.next())
 			{
@@ -97,6 +148,15 @@ public class PaperDao
 			System.err.println("MySQL查询错误@dao.PaperDao.getPaperById");
 			e.printStackTrace();
 			return null;
+		}
+		finally {
+			if (rs!=null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			closeDao();
 		}
 	}
 	
@@ -133,6 +193,7 @@ public class PaperDao
 				abstct + "','" + keyword1 + "','" + keyword2 + "','" + keyword3 + "');";
 		try
 		{
+			stmt = newDao();
 			int m = stmt.executeUpdate(sql);
 			if (m > 0)
 				return m;
@@ -143,6 +204,9 @@ public class PaperDao
 		{
 			e.printStackTrace();
 			return -1;
+		}
+		finally {
+			closeDao();
 		}
 	}
 }
