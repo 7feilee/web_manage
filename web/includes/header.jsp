@@ -35,6 +35,36 @@
   <!-- initiate datatable and ajax by @lqf -->
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+      
+      function iniSelector() {
+          $('.select').select2();
+          $(".clct").each(function () {
+            var $this = $(this);
+            var uid, pid;
+            uid = 0${sessionScope.user.id};
+            if (uid == 0)
+              return;
+            $this.attr("disabled", true);
+            pid = $this.attr("id").substring(3, 999);
+            var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
+            var $mid = $("#ms_" + pid);
+            $mid.removeClass("hidden");
+            $.ajax({
+              type: 'POST',
+              url: url,
+        
+              success: function (result, status, xhr) {
+                $mid.addClass("hidden");
+                $this.val(result).trigger("change");
+                $this.attr("disabled", false);
+              },
+              error: function (xhr, status, error) {
+                $mid.addClass("hidden");
+                $this.attr("disabled", false);
+              }
+            });
+          });
+      }
       $(".table").dataTable({
         language: {
           "sProcessing": "处理中...",
@@ -60,35 +90,7 @@
             "sSortDescending": ": 以降序排列此列"
           }
         }
-      }).on('draw.dt', function () {
-        $('.select').select2();
-        $(".clct").each(function () {
-          var $this = $(this);
-          var uid, pid;
-          uid = 0${sessionScope.user.id};
-          if (uid == 0)
-            return;
-          $this.attr("disabled", true);
-          pid = $this.attr("id").substring(3, 999);
-          var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
-          var $mid = $("#ms_" + pid);
-          $mid.removeClass("hidden");
-          $.ajax({
-            type: 'POST',
-            url: url,
-            
-            success: function (result, status, xhr) {
-              $mid.addClass("hidden");
-              $this.val(result).trigger("change");
-              $this.attr("disabled", false);
-            },
-            error: function (xhr, status, error) {
-              $mid.addClass("hidden");
-              $this.attr("disabled", false);
-            }
-          });
-        });
-      });
+      }).on('draw.dt', iniSelector()).on('init.dt',iniSelector());
       
       $(".clct").change(function () {
         var $this = $(this);
