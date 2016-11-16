@@ -19,7 +19,7 @@ public class ShowPaperState extends ActionSupport
 	public String execute() throws Exception
 	{
 		state = service.getPaperState(uid,pid);
-		if (state > 0)
+		if (state >= 0)
 			return SUCCESS;
 		//else
 		return ERROR;

@@ -206,7 +206,7 @@ public class UserDao
 			ResultSet rs2=stmt.executeQuery("SELECT * FROM user_" + user_id + " WHERE paper_id="+paper_id+";");
 			String sql2;
 			if (rs2.next()){
-				sql2="UPDATE user_" + user_id + "SET state="+state+"WHERE paper_id="+paper_id+";";
+				sql2="UPDATE user_" + user_id + " SET state="+state+" WHERE paper_id="+paper_id+";";
 			}
 			else {
 				sql2 = "INSERT INTO user_" + user_id + "(paper_id, state) VALUES ('" + paper_id + "','" + state + "');";
