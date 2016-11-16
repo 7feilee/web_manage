@@ -52,7 +52,9 @@
                 </th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <%if(userp != null && userp.getId() == iruid) {%>
                 <th style='vertical-align: middle;' width="10%">收藏</th>
+                <%}%>
               </tr>
               </thead>
               <tbody>
@@ -105,8 +107,9 @@
                 </th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <%if(userp != null && userp.getId() == iruid) {%>
                 <th style='vertical-align: middle;' width="10%">收藏</th>
-              </tr>
+                <%}%>              </tr>
               </thead>
               <tbody>
               <s:iterator value="user.readPapers">
@@ -158,8 +161,9 @@
                 </th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <%if(userp != null && userp.getId() == iruid) {%>
                 <th style='vertical-align: middle;' width="10%">收藏</th>
-              </tr>
+                <%}%>              </tr>
               </thead>
               <tbody>
               <s:iterator value="user.studiedPapers">
