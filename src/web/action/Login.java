@@ -23,9 +23,6 @@ public class Login extends ActionSupport
 	{
 		Integer uid;
 		// TODO: 输入验证
-		if (username.length() < 50 || username.length() > 0) ;
-		else
-			return ERROR;
 		uid = service.login(username, password);
 		if (uid > 0)
 		{
