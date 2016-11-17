@@ -22,7 +22,7 @@ public class PaperDao
 		{
 			Class.forName("com.mysql.jdbc.Driver");
 			//conn = DriverManager.getConnection("jdbc:mysql://123.207.154.130:3306/papermanage", "root", "coding");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "coding");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "19951224");
 			stmt = conn.createStatement();
 			return stmt;
 		}
