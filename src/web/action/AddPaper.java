@@ -49,7 +49,7 @@ public class AddPaper extends ActionSupport
 			//else
 			int uid = ((User) obj).getId();
 			int stat = service.addPaper(title,authors,fileURI,keywords,abstct,publishDate,uid);
-			if(stat == 0)
+			if(stat > 0)
 				return SUCCESS;
 			else
 				return ERROR;

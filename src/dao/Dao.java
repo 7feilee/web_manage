@@ -12,9 +12,12 @@ class Dao
 	
 	public Statement newDao()
 	{
+		if (stmt!=null)
+			return stmt;
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
+			//conn = DriverManager.getConnection("jdbc:mysql://123.207.154.130:3306/papermanage", "root", "coding");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "coding");
 			stmt = conn.createStatement();
 			return stmt;
@@ -37,8 +40,10 @@ class Dao
 	{
 		try
 		{
-			stmt.close();
-			conn.close();
+			if (stmt!=null)
+				stmt.close();
+			if (conn!=null)
+				conn.close();
 			return 1;
 		}
 		catch (SQLException e)
