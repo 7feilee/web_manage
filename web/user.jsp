@@ -46,14 +46,11 @@
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="50%">篇名
-                  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top"
-                        title="点击书名查看详情"></span>
-                </th>
+                <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null && userp.getId() == iruid) {%>
-                <th style='vertical-align: middle;' width="10%">收藏</th>
+                <%if(userp != null) {%>
+                <th style='vertical-align: middle;' width="20%">收藏</th>
                 <%}%>
               </tr>
               </thead>
@@ -72,14 +69,14 @@
                     {
                   %>
                   <td style='vertical-align: middle; width: 220px'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
                             class="form-control select select-primary clct" title="收藏状态" >
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
+                    <div style="margin-left: 5%; height: auto; width: 20%; vertical-align: middle; float: left">
             <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
                   style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
@@ -101,15 +98,13 @@
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="50%">篇名
-                  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top"
-                        title="点击书名查看详情"></span>
-                </th>
+                <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null && userp.getId() == iruid) {%>
-                <th style='vertical-align: middle;' width="10%">收藏</th>
-                <%}%>              </tr>
+                <%if(userp != null) {%>
+                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <%}%>
+              </tr>
               </thead>
               <tbody>
               <s:iterator value="user.readPapers">
@@ -126,14 +121,14 @@
                     {
                   %>
                   <td style='vertical-align: middle; width: 220px'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
                             class="form-control select select-primary clct" title="收藏状态" >
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
+                    <div style="margin-left: 5%; height: auto; width: 20%; vertical-align: middle; float: left">
             <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
                   style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
@@ -155,15 +150,13 @@
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="50%">篇名
-                  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top"
-                        title="点击书名查看详情"></span>
-                </th>
+                <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null && userp.getId() == iruid) {%>
-                <th style='vertical-align: middle;' width="10%">收藏</th>
-                <%}%>              </tr>
+                <%if(userp != null) {%>
+                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <%}%>
+              </tr>
               </thead>
               <tbody>
               <s:iterator value="user.studiedPapers">
@@ -180,14 +173,14 @@
                     {
                   %>
                   <td style='vertical-align: middle; width: 220px'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
                             class="form-control select select-primary clct" title="收藏状态" >
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
+                    <div style="margin-left: 5%; height: auto; width: 20%; vertical-align: middle; float: left">
             <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
                   style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
