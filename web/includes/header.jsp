@@ -89,7 +89,8 @@
             "sSortAscending": ": 以升序排列此列",
             "sSortDescending": ": 以降序排列此列"
           }
-        }
+        },
+        "autoWidth": false
       }).on('draw.dt', iniSelector()).on('init.dt',iniSelector());
       
       $("select.clct").on("change",(function () {

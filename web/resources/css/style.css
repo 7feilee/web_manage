@@ -104,12 +104,23 @@
         -4px, /* 1 */ -4px;
     }
 }
-.primary{
+
+.primary {
     color: #286090;
 }
-.success{
+
+.success {
     color: #449d44;
 }
-.danger{
+
+.danger {
     color: #c9302c;
+}
+
+.loading-icon {
+    margin-left: 5%;
+    height: auto;
+    width: 20%;
+    vertical-align: middle;
+    float: left
 }
