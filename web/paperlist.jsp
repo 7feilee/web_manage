@@ -50,7 +50,7 @@
           if(userp != null)
           {
         %>
-        <td style='vertical-align: middle; width: 220px'>
+        <td style='vertical-align: middle;'>
           <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
                   class="form-control select select-primary clct" title="收藏状态" >
             <option value="0">未收藏</option>
@@ -58,7 +58,7 @@
             <option value="2">已粗读</option>
             <option value="3">已精读</option>
           </select>
-          <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
+          <div class="loading-icon">
             <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
                   style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
           </div>

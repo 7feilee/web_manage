@@ -49,7 +49,10 @@
                 <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null) {%>
+                <%
+                  if (userp != null)
+                  {
+                %>
                 <th style='vertical-align: middle;' width="20%">收藏</th>
                 <%}%>
               </tr>
@@ -65,20 +68,20 @@
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <%
-                    if(userp != null && userp.getId() == iruid)
+                    if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle; width: 220px'>
+                  <td style='vertical-align: middle;'>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
-                            class="form-control select select-primary clct" title="收藏状态" >
+                            class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5%; height: auto; width: 20%; vertical-align: middle; float: left">
-            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
-                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    <div class="loading-icon">
+                      <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                            style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
                   </td>
                   <%
@@ -101,7 +104,10 @@
                 <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null) {%>
+                <%
+                  if (userp != null)
+                  {
+                %>
                 <th style='vertical-align: middle;' width="20%">收藏</th>
                 <%}%>
               </tr>
@@ -117,20 +123,20 @@
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <%
-                    if(userp != null && userp.getId() == iruid)
+                    if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle; width: 220px'>
+                  <td style='vertical-align: middle;'>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
-                            class="form-control select select-primary clct" title="收藏状态" >
+                            class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5%; height: auto; width: 20%; vertical-align: middle; float: left">
-            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
-                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    <div class="loading-icon">
+                      <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                            style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
                   </td>
                   <%
@@ -153,7 +159,10 @@
                 <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null) {%>
+                <%
+                  if (userp != null)
+                  {
+                %>
                 <th style='vertical-align: middle;' width="20%">收藏</th>
                 <%}%>
               </tr>
@@ -169,20 +178,20 @@
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <%
-                    if(userp != null && userp.getId() == iruid)
+                    if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle; width: 220px'>
+                  <td style='vertical-align: middle;'>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
-                            class="form-control select select-primary clct" title="收藏状态" >
+                            class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5%; height: auto; width: 20%; vertical-align: middle; float: left">
-            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
-                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    <div class="loading-icon">
+                      <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                            style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
                   </td>
                   <%
