@@ -50,7 +50,7 @@
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
                 <%
-                  if (userp != null)
+                  if (userp != null && userp.getId() == iruid)
                   {
                 %>
                 <th style='vertical-align: middle;' width="20%">收藏</th>
@@ -105,7 +105,7 @@
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
                 <%
-                  if (userp != null)
+                  if (userp != null && userp.getId() == iruid)
                   {
                 %>
                 <th style='vertical-align: middle;' width="20%">收藏</th>
@@ -160,7 +160,7 @@
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
                 <%
-                  if (userp != null)
+                  if (userp != null && userp.getId() == iruid)
                   {
                 %>
                 <th style='vertical-align: middle;' width="20%">收藏</th>
