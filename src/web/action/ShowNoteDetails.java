@@ -1,12 +1,13 @@
 package web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import model.Note;
 import model.Paper;
 import service.Service;
 import java.text.SimpleDateFormat;
 public class ShowNoteDetails extends ActionSupport
 {
-	private Paper paper;
+	private Note note;
 	private int id;
 	private Service service;
 	private String dateStr;
@@ -19,11 +20,11 @@ public class ShowNoteDetails extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		paper = service.getPaperById(id);
-		if (paper != null)
+		note = service.getNoteById(id);
+		if (note != null)
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			dateStr = sdf.format(paper.getPublishDate());
+			dateStr = sdf.format(note.getPublishTime());
 			return SUCCESS;
 		}
 		return ERROR;
@@ -36,14 +37,6 @@ public class ShowNoteDetails extends ActionSupport
 	{
 		this.id = id;
 	}
-	public Paper getPaper()
-	{
-		return paper;
-	}
-	public void setPaper(Paper paper)
-	{
-		this.paper = paper;
-	}
 	public String getDateStr()
 	{
 		return dateStr;
@@ -51,5 +44,13 @@ public class ShowNoteDetails extends ActionSupport
 	public void setDateStr(String dateStr)
 	{
 		this.dateStr = dateStr;
+	}
+	public Note getNote()
+	{
+		return note;
+	}
+	public void setNote(Note note)
+	{
+		this.note = note;
 	}
 }

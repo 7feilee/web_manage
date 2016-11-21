@@ -5,21 +5,21 @@ import java.util.Date;
 public class Note implements Serializable
 {
 	private int id;
-	private int author;
-	private int paper;
-	private Date pubiishTime;
+	private User author;
+	private Paper paper;
+	private Date publishTime;
 	private String title;
 	private String content;
 	private Boolean isPrivate;
 	
 	
-	public Date getPubiishTime()
+	public Date getPublishTime()
 	{
-		return pubiishTime;
+		return publishTime;
 	}
-	public void setPubiishTime(Date pubiishTime)
+	public void setPublishTime(Date pubiishTime)
 	{
-		this.pubiishTime = pubiishTime;
+		this.publishTime = pubiishTime;
 	}
 	public int getId()
 	{
@@ -53,19 +53,19 @@ public class Note implements Serializable
 	{
 		this.content = content;
 	}
-	public int getAuthor()
+	public User getAuthor()
 	{
 		return author;
 	}
-	public void setAuthor(int author)
+	public void setAuthor(User author)
 	{
 		this.author = author;
 	}
-	public int getPaper()
+	public Paper getPaper()
 	{
 		return paper;
 	}
-	public void setPaper(int paper)
+	public void setPaper(Paper paper)
 	{
 		this.paper = paper;
 	}

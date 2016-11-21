@@ -75,10 +75,12 @@ public class NoteDao
 			if(rs.next())
 			{
 				note.setId(rs.getInt("id"));
-				note.setAuthor(rs.getInt("author"));
-				note.setPaper(rs.getInt("paper"));
+				UserDao userDao = new UserDao();
+				note.setAuthor(userDao.getUserById(rs.getInt("author")));
+				PaperDao paperDao = new PaperDao();
+				note.setPaper(paperDao.getPaperById(rs.getInt("paper")));
 				note.setTitle(rs.getString("title"));
-				note.setPubiishTime(rs.getDate("publishtime"));
+				note.setPublishTime(rs.getDate("publishtime"));
 				note.setContent(rs.getString("content"));
 			}
 			return note;

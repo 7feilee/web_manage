@@ -2,6 +2,7 @@ package service;
 import dao.NoteDao;
 import dao.PaperDao;
 import dao.UserDao;
+import model.Note;
 import model.Paper;
 import model.User;
 
@@ -18,7 +19,7 @@ public class Service
 		super();
 		userDao = new UserDao();
 		paperDao = new PaperDao();
-		//noteDao = new NoteDao();
+		noteDao = new NoteDao();
 	}
 	
 	public int login(String username, String password)
@@ -86,5 +87,10 @@ public class Service
 
 	public int getPaperState(int user_id, int paper_id){
 		return userDao.getPaperState(user_id,paper_id);
+	}
+	
+	public Note getNoteById(int nid)
+	{
+		return noteDao.getNoteById(nid);
 	}
 }
