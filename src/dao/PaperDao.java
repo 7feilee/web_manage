@@ -12,7 +12,6 @@ public class PaperDao
 	private Statement stmt;
 	private Connection conn;
 	
-	@Nullable
 	private Statement newDao()
 	{
 		if (stmt!=null)
@@ -68,12 +67,11 @@ public class PaperDao
 	public Collection<Paper> getAllPapers()
 	{
 		Collection<Paper> papers = new LinkedList<>();
-		String sql = "select * from paper";
+		String sql = "select * from paper;";
 		stmt = newDao();
 		ResultSet rs=null;
 		try
 		{
-			assert stmt != null;
 			rs = stmt.executeQuery(sql);
 			Paper paper;
 			while (rs.next())
@@ -117,7 +115,6 @@ public class PaperDao
 		ResultSet rs=null;
 		try
 		{
-			assert stmt != null;
 			rs = stmt.executeQuery(sql);
 			Paper paper = new Paper();
 			if (rs.next())
@@ -151,14 +148,14 @@ public class PaperDao
 			return null;
 		}
 		finally {
-			if (rs!=null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			closeDao();
-		}
+		if (rs!=null)
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		closeDao();
+	}
 	}
 	
 	public int insertNewPaper(String title, String fileURI, Date publishDate,
@@ -195,7 +192,6 @@ public class PaperDao
 		try
 		{
 			stmt = newDao();
-			assert stmt != null;
 			int m = stmt.executeUpdate(sql);
 			if (m > 0)
 				return m;

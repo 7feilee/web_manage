@@ -2,10 +2,7 @@ package dao;
 import model.Note;
 import org.jetbrains.annotations.Nullable;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Collection;
 
 public class NoteDao
@@ -68,7 +65,39 @@ public class NoteDao
 	
 	public Note getNoteById(int nid)
 	{
-		return null;
+		String sql = "SELECT * FROM note WHERE id=" + nid + ";";
+		stmt = newDao();
+		ResultSet rs=null;
+		try
+		{
+			rs = stmt.executeQuery(sql);
+			Note note = new Note();
+			if(rs.next())
+			{
+				note.setId(rs.getInt("id"));
+				note.setAuthor(rs.getInt("author"));
+				note.setPaper(rs.getInt("paper"));
+				note.setTitle(rs.getString("title"));
+				note.setPubiishTime(rs.getDate("publishtime"));
+				note.setContent(rs.getString("content"));
+			}
+			return note;
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.NoteDao.getNoteById");
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			if (rs!=null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			closeDao();
+		}
 	}
 	public Collection<Note> getAllNotes()
 	{
@@ -78,7 +107,7 @@ public class NoteDao
 	{
 		return null;
 	}
-	public Collection<Note> getNoteByPaper(int pid)
+	public Collection<Note> getNotesByPaper(int pid)
 	{
 		return null;
 	}
