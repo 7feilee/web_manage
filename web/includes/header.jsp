@@ -144,7 +144,7 @@
       <ul class="nav navbar-nav">
         <li><a href="<s:url action="listPapers"/>">论文</a></li>
         <li><a href="javascript:void(0);">动态</a></li>
-        <li><a href="javascript:void(0);">笔记</a></li>
+        <li><a href="<s:url action="listNotes"/>">笔记</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <%

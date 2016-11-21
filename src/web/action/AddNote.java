@@ -4,4 +4,5 @@ package web.action;
  */
 public class AddNote
 {
+	// TODO: 2016/11/21  
 }

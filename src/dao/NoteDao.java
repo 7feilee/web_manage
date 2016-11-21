@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
 import java.util.Collection;
+import java.util.LinkedList;
 
 public class NoteDao
 {
@@ -103,7 +104,44 @@ public class NoteDao
 	}
 	public Collection<Note> getAllNotes()
 	{
-		return null;
+		Collection<Note> notes = new LinkedList<>();
+		String sql = "select * from note;";
+		stmt = newDao();
+		ResultSet rs=null;
+		try
+		{
+			rs = stmt.executeQuery(sql);
+			Note note;
+			UserDao userDao = new UserDao();
+			PaperDao paperDao = new PaperDao();
+			while (rs.next())
+			{
+				note = new Note();
+				note.setId(rs.getInt("id"));
+				note.setAuthor(userDao.getUserById(rs.getInt("author")));
+				note.setPaper(paperDao.getPaperById(rs.getInt("paper")));
+				note.setTitle(rs.getString("title"));
+				note.setPublishTime(rs.getDate("publishtime"));
+				note.setContent(rs.getString("content"));
+				notes.add(note);
+			}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.PaperDao.getAllPapers");
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			if (rs!=null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			closeDao();
+		}
+		return notes;
 	}
 	public Collection<Note> getNotesByUser(int uid)
 	{

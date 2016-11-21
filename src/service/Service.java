@@ -93,4 +93,8 @@ public class Service
 	{
 		return noteDao.getNoteById(nid);
 	}
+	public Collection<Note> getNotes()
+	{
+		return noteDao.getAllNotes();
+	}
 }
