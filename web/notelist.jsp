@@ -52,7 +52,7 @@
           <s:property value="%{paper.title}"/>
           </a>
         </td>
-        <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
+        <td style='vertical-align: middle;'><s:property value="%{publishTime}"/></td>
       </tr>
     </s:iterator>
     </tbody>
