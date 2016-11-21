@@ -7,7 +7,8 @@ public class Note implements Serializable
 	private int id;
 	private User author;
 	private Date pubiishTime;
-	private String noteURI;
+	private String title;
+	private String content;
 	private Boolean isPrivate;
 	
 	public User getAuthor()
@@ -26,14 +27,6 @@ public class Note implements Serializable
 	{
 		this.pubiishTime = pubiishTime;
 	}
-	public String getNoteURI()
-	{
-		return noteURI;
-	}
-	public void setNoteURI(String noteURI)
-	{
-		this.noteURI = noteURI;
-	}
 	public int getId()
 	{
 		return id;
@@ -49,5 +42,21 @@ public class Note implements Serializable
 	public void setPrivate(Boolean aPrivate)
 	{
 		isPrivate = aPrivate;
+	}
+	public String getTitle()
+	{
+		return title;
+	}
+	public void setTitle(String title)
+	{
+		this.title = title;
+	}
+	public String getContent()
+	{
+		return content;
+	}
+	public void setContent(String content)
+	{
+		this.content = content;
 	}
 }

@@ -1,10 +1,12 @@
 package dao;
+import model.Note;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 
 public class NoteDao
 {
@@ -64,6 +66,22 @@ public class NoteDao
 		}
 	}
 	
+	public Note getNoteById(int nid)
+	{
+		return null;
+	}
+	public Collection<Note> getAllNotes()
+	{
+		return null;
+	}
+	public Collection<Note> getNotesByUser(int uid)
+	{
+		return null;
+	}
+	public Collection<Note> getNoteByPaper(int pid)
+	{
+		return null;
+	}
 	public int insertNote(int paper_id, int user_id)
 	{
 		return 0;
