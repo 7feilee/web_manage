@@ -1,5 +1,6 @@
 package dao;
 import model.Paper;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
 import java.util.Collection;
@@ -10,11 +11,9 @@ public class PaperDao
 {
 	private Statement stmt;
 	private Connection conn;
-	/**
-	 * 构造方法，进行数据库的连接
-	 */
-
-	public Statement newDao()
+	
+	@Nullable
+	private Statement newDao()
 	{
 		if (stmt!=null)
 			return stmt;
@@ -40,7 +39,7 @@ public class PaperDao
 		}
 	}
 
-	public int closeDao()
+	private int closeDao()
 	{
 		try
 		{
@@ -74,6 +73,7 @@ public class PaperDao
 		ResultSet rs=null;
 		try
 		{
+			assert stmt != null;
 			rs = stmt.executeQuery(sql);
 			Paper paper;
 			while (rs.next())
@@ -117,6 +117,7 @@ public class PaperDao
 		ResultSet rs=null;
 		try
 		{
+			assert stmt != null;
 			rs = stmt.executeQuery(sql);
 			Paper paper = new Paper();
 			if (rs.next())
@@ -194,6 +195,7 @@ public class PaperDao
 		try
 		{
 			stmt = newDao();
+			assert stmt != null;
 			int m = stmt.executeUpdate(sql);
 			if (m > 0)
 				return m;
