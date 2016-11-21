@@ -72,7 +72,7 @@
                     {
                   %>
                   <td style='vertical-align: middle;'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
@@ -127,7 +127,7 @@
                     {
                   %>
                   <td style='vertical-align: middle;'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
@@ -182,7 +182,7 @@
                     {
                   %>
                   <td style='vertical-align: middle;'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>

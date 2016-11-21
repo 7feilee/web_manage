@@ -1,26 +1,9 @@
 <% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
-<s:if test="%{papers.isEmpty()}">
-  <h4 class="text-center">数据库中没有笔记╮（╯＿╰）╭
-    <%
-      // todo
-    %>主人快来<a href="addnote.jsp">添加笔记</a>吧！</h4>
+<s:if test="%{notes.isEmpty()}">
+  <h4 class="text-center">数据库中没有笔记╮（╯＿╰）╭</h4>
 </s:if>
 <s:else>
-  <%
-    if (userp != null)
-    {
-  %>
-  <div class="col-md-3 col-md-offset-9">
-    <a href="addpaper.jsp" class="btn btn-primary btn-block btn-lg">
-      <span class="glyphicon glyphicon-plus"></span>&nbsp;新增论文
-    </a>
-  </div>
-  </div>
-  <div class="row" style="margin-top: 30px">
-  <%
-    }
-  %>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     <tr>

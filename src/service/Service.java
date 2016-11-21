@@ -5,8 +5,10 @@ import dao.UserDao;
 import model.Note;
 import model.Paper;
 import model.User;
+import web.action.AddNote;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 public class Service
 {
@@ -80,7 +82,7 @@ public class Service
 	}
 	
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
-                        String abstct, java.util.Date publishDate, int operater){
+                        String abstct, Date publishDate, int operater){
 		java.sql.Date publishDate2=new java.sql.Date(publishDate.getTime());
 	    return paperDao.insertNewPaper(title,fileURI,publishDate2,authors,abstct,keywords);
     }
@@ -96,5 +98,10 @@ public class Service
 	public Collection<Note> getNotes()
 	{
 		return noteDao.getAllNotes();
+	}
+	public int addNote(String title, String content, int authorId, int paperId)
+	{
+		java.sql.Date publishTime = new java.sql.Date(new Date().getTime());
+		return noteDao.insertNote(authorId,paperId,title,content,publishTime);
 	}
 }

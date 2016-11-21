@@ -151,8 +151,24 @@ public class NoteDao
 	{
 		return null;
 	}
-	public int insertNote(int paper_id, int user_id)
+	public int insertNote(int authorID, int paperID, String title, String content, Date publishTime)
 	{
-		return 0;
+		stmt = newDao();
+		String sql = "INSERT INTO note(author, paper, title, content, publishtime)" +
+				" VALUES ('" + authorID + "','" + paperID + "','"
+				+ title + "','" + content + "','" + publishTime + "');";
+		try
+		{
+			return stmt.executeUpdate(sql);
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.NoteDao.insertNote");
+			e.printStackTrace();
+			return -1;
+		}
+		finally {
+			closeDao();
+		}
 	}
 }
