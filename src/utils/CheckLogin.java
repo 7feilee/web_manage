@@ -42,7 +42,15 @@ public class CheckLogin
 							}
 						}
 						else
+						{
+							for (Cookie cookie1 : cookies)
+							{
+								cookie1.setMaxAge(0);
+								ServletActionContext.getResponse().addCookie(cookie1);
+							}
+							ServletActionContext.getRequest().getSession().removeAttribute("user");
 							return false;
+						}
 					}
 					else if (cookie.getName().equals("utoken"))
 					{

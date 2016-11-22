@@ -58,9 +58,12 @@ public class Service
 	public User getUserById(int id)
 	{
 		User user = userDao.getUserById(id);
-		user.setToReadPapers(getPaperByState(user.getId(), 1));
-		user.setReadPapers(getPaperByState(user.getId(), 2));
-		user.setStudiedPapers(getPaperByState(user.getId(), 3));
+		if(user!=null)
+		{
+			user.setToReadPapers(getPaperByState(user.getId(), 1));
+			user.setReadPapers(getPaperByState(user.getId(), 2));
+			user.setStudiedPapers(getPaperByState(user.getId(), 3));
+		}
 		return user;
 	}
 	
