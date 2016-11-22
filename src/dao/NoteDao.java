@@ -151,7 +151,7 @@ public class NoteDao
 	{
 		return null;
 	}
-	public int insertNote(int authorID, int paperID, String title, String content, Date publishTime)
+	public int insertNote(int authorID, int paperID, String title, String content, Timestamp publishTime)
 	{
 		stmt = newDao();
 		String sql = "INSERT INTO note(author, paper, title, content, publishtime)" +

@@ -9,7 +9,7 @@
   <s:form theme="bootstrap" action="addNote" cssClass="form-horizontal" id="validationForm">
     <s:textfield name="title" label="题目" labelCssClass="col-sm-1" elementCssClass="col-sm-11" requiredLabel="true"/>
     <s:textarea name="content" label="内容" rows="15" labelCssClass="col-sm-1" elementCssClass="col-sm-11"/>
-    <s:textfield name="paperid" cssClass="hidden"/>
+    <s:textfield name="paperid" cssClass="hidden" value='%{#parameters.paperid}'/>
     <s:submit value="提交" cssClass="btn btn-primary btn-block btn-hg"/>
   </s:form>
 </div>

@@ -4,7 +4,7 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = false;%>
 <%@ include file="includes/header.jsp" %>
-<h4 class="page-header"><s:property value="note.title"/></h4>
+<h2 class="page-header"><s:property value="note.title"/></h2>
 <small class="text-right">
   <a href="<s:url action="showUserDetails">
                 <s:param name="id"><s:property value="note.author.id"/></s:param>
@@ -19,7 +19,7 @@
   </a>
   的笔记&nbsp;<s:property value="dateStr"/>
 </small>
-<div class="content">
+<div class="content"  style="margin-top: 40px">
   <s:property value="note.content"/>
 </div>
 <%@ include file="includes/footer.jsp" %>

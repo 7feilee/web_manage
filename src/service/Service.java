@@ -5,11 +5,11 @@ import dao.UserDao;
 import model.Note;
 import model.Paper;
 import model.User;
-import web.action.AddNote;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.sql.Timestamp;
 public class Service
 {
 	private UserDao userDao;
@@ -104,7 +104,7 @@ public class Service
 	}
 	public int addNote(String title, String content, int authorId, int paperId)
 	{
-		java.sql.Date publishTime = new java.sql.Date(new Date().getTime());
+		Timestamp publishTime = new Timestamp(System.currentTimeMillis());
 		return noteDao.insertNote(authorId,paperId,title,content,publishTime);
 	}
 }
