@@ -37,5 +37,8 @@
     <action name="changePaperState" class="web.action.ChangePaperState">
       <result name="success" type="chain">showPaperState</result>
     </action>
+    <action name="addtreelabel" class="web.action.AddTreeLabel">
+      <result name="success" type="chain">showPaperState</result>
+    </action>
   </package>
 </struts>

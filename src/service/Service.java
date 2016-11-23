@@ -87,4 +87,8 @@ public class Service
 	public int getPaperState(int user_id, int paper_id){
 		return userDao.getPaperState(user_id,paper_id);
 	}
+
+	public int addTreeLabel(String labelname,String label_father,int user_id){
+        return userDao.addTreeLabel(labelname,label_father,user_id);
+    }
 }

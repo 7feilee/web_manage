@@ -276,4 +276,25 @@ public class UserDao
 			closeDao();
 		}
 	}
+
+	public int addTreeLabel(String labelname,String label_father,int user_id){
+        String sql = "insert into user_tree(user_id,labelname,label_father) values('" + user_id + "','" + labelname + "','" + label_father +"');";
+        try
+        {
+            stmt = newDao();
+            int m = stmt.executeUpdate(sql);
+            if (!(m <= 0))
+                return m;
+            else
+                return 0;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            return -1;
+        }
+        finally {
+            closeDao();
+        }
+    }
 }
