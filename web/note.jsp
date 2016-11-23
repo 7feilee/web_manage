@@ -17,7 +17,7 @@
            </s:url>">
     <s:property value="%{note.paper.title}"/>
   </a>
-  的笔记&nbsp;<s:property value="dateStr"/>
+  的笔记&commat;<s:property value="dateStr"/>
 </small>
 <div class="content"  style="margin-top: 40px">
   <s:property value="note.content"/>

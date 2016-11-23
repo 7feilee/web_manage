@@ -107,4 +107,8 @@ public class Service
 		Timestamp publishTime = new Timestamp(System.currentTimeMillis());
 		return noteDao.insertNote(authorId,paperId,title,content,publishTime);
 	}
+	public Collection<Note> getNotesByUser(int uid)
+	{
+		return noteDao.getNotesByUser(uid);
+	}
 }
