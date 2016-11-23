@@ -186,7 +186,44 @@ public class NoteDao
 	}
 	public Collection<Note> getNotesByPaper(int pid)
 	{
-		return null;
+		String sql = "SELECT * FROM note WHERE paper=" + pid + ";";
+		stmt = newDao();
+		ResultSet rs=null;
+		try
+		{
+			rs = stmt.executeQuery(sql);
+			Note note;
+			Collection<Note> notes = new LinkedList<>();
+			while (rs.next())
+			{
+				note = new Note();
+				note.setId(rs.getInt("id"));
+				UserDao userDao = new UserDao();
+				note.setAuthor(userDao.getUserById(rs.getInt("author")));
+				PaperDao paperDao = new PaperDao();
+				note.setPaper(paperDao.getPaperById(rs.getInt("paper")));
+				note.setTitle(rs.getString("title"));
+				note.setPublishTime(rs.getDate("publishtime"));
+				note.setContent(rs.getString("content"));
+				notes.add(note);
+			}
+			return notes;
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.NoteDao.getNotesByPaper");
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			if (rs!=null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			closeDao();
+		}
 	}
 	public int insertNote(int authorID, int paperID, String title, String content, Timestamp publishTime)
 	{

@@ -4,7 +4,7 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = false;%>
 <%@ include file="includes/header.jsp" %>
-<h2 class="page-header"><s:property value="note.title"/></h2>
+<h2 class="page-header" style="margin-bottom: 10px;"><s:property value="note.title"/></h2>
 <small class="text-right">
   <a href="<s:url action="showUserDetails">
                 <s:param name="id"><s:property value="note.author.id"/></s:param>

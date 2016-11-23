@@ -111,4 +111,8 @@ public class Service
 	{
 		return noteDao.getNotesByUser(uid);
 	}
+	public Collection<Note> getNotesByPaper(int pid)
+	{
+		return noteDao.getNotesByPaper(pid);
+	}
 }

@@ -124,3 +124,9 @@
     vertical-align: middle;
     float: left
 }
+td{
+    vertical-align: middle !important;
+}
+th{
+    vertical-align: middle !important;
+}

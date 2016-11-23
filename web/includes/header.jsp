@@ -32,7 +32,7 @@
   <script type="text/javascript" charset="utf8" src="resources/libs/datatables/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" charset="utf8" src="resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
   
-  <!-- initiate datatable and ajax by @lqf -->
+  <!-- initiate datatable and ajax -->
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
       
