@@ -4,7 +4,6 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = false;%>
 <%@ include file="includes/header.jsp" %>
-<div class="col-md-9">
 <h2 class="page-header text-center"><s:property value="paper.title"/></h2>
 
 <h5 class="text-center"><s:iterator value="paper.authors"><s:property/>&nbsp;</s:iterator></h5>
@@ -15,20 +14,19 @@
 <h5 class="page-header">来源链接</h5>
 <a href="<s:property value="paper.fileURI"/>"><s:property value="paper.fileURI"/></a>
 
-<%if (userp != null) {%>
-<div class="col-md-3 col-md-offset-9">
-  <a href="addnote.jsp?paperid=${requestScope.get("id")}" class="btn btn-primary btn-block btn-hg">
-    <span class="glyphicon glyphicon-edit"></span>&nbsp;写笔记
-  </a>
-</div>
-<%}%>
-</div>
-<div class="col-md-3">
-  <div class="panel panel-primary">
+
+  <div class="panel panel-primary" style="margin-top: 30px">
     <div class="panel-heading">
-      <h3 class="panel-title">大家的公开笔记</h3>
+      <h3 class="panel-title">大家的笔记</h3>
     </div>
     <div class="panel-body">
+      <%if (userp != null) {%>
+      <div class="col-md-3 col-md-offset-9" style="margin-bottom: 15px">
+        <a href="addnote.jsp?paperid=${requestScope.get("id")}" class="btn btn-primary btn-block btn-hg">
+          <span class="glyphicon glyphicon-edit"></span>&nbsp;写笔记
+        </a>
+      </div>
+      <%}%>
       <s:if test="%{notes.isEmpty()}">
         <h4 class="text-center">并没有用户留下笔记╮（╯＿╰）╭</h4>
       </s:if>
@@ -64,5 +62,4 @@
       </s:else>
     </div>
   </div>
-</div>
 <%@ include file="includes/footer.jsp" %>
