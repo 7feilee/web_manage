@@ -4,18 +4,15 @@ import com.opensymphony.xwork2.ActionSupport;
 import model.Note;
 import model.Paper;
 import service.Service;
-
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-public class ShowPaperDetails extends ActionSupport
+public class ShowNoteDetails extends ActionSupport
 {
-	private Paper paper;
+	private Note note;
 	private int id;
 	private Service service;
 	private String dateStr;
-	private Collection<Note> notes;
 	
-	public ShowPaperDetails()
+	public ShowNoteDetails()
 	{
 		super();
 		service = new Service();
@@ -23,16 +20,12 @@ public class ShowPaperDetails extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		paper = service.getPaperById(id);
-		if (paper != null)
+		note = service.getNoteById(id);
+		if (note != null)
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			dateStr = sdf.format(paper.getPublishDate());
-			notes = service.getNotesByPaper(id);
-			if (notes != null)
-				return SUCCESS;
-			//else
-			return ERROR;
+			dateStr = sdf.format(note.getPublishTime());
+			return SUCCESS;
 		}
 		return ERROR;
 	}
@@ -44,14 +37,6 @@ public class ShowPaperDetails extends ActionSupport
 	{
 		this.id = id;
 	}
-	public Paper getPaper()
-	{
-		return paper;
-	}
-	public void setPaper(Paper paper)
-	{
-		this.paper = paper;
-	}
 	public String getDateStr()
 	{
 		return dateStr;
@@ -60,12 +45,12 @@ public class ShowPaperDetails extends ActionSupport
 	{
 		this.dateStr = dateStr;
 	}
-	public Collection<Note> getNotes()
+	public Note getNote()
 	{
-		return notes;
+		return note;
 	}
-	public void setNotes(Collection<Note> notes)
+	public void setNote(Note note)
 	{
-		this.notes = notes;
+		this.note = note;
 	}
 }

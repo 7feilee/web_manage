@@ -2,11 +2,14 @@ package service;
 import dao.NoteDao;
 import dao.PaperDao;
 import dao.UserDao;
+import model.Note;
 import model.Paper;
 import model.User;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
+import java.sql.Timestamp;
 public class Service
 {
 	private UserDao userDao;
@@ -18,7 +21,7 @@ public class Service
 		super();
 		userDao = new UserDao();
 		paperDao = new PaperDao();
-		//noteDao = new NoteDao();
+		noteDao = new NoteDao();
 	}
 	
 	public int login(String username, String password)
@@ -55,9 +58,12 @@ public class Service
 	public User getUserById(int id)
 	{
 		User user = userDao.getUserById(id);
-		user.setToReadPapers(getPaperByState(user.getId(), 1));
-		user.setReadPapers(getPaperByState(user.getId(), 2));
-		user.setStudiedPapers(getPaperByState(user.getId(), 3));
+		if(user!=null)
+		{
+			user.setToReadPapers(getPaperByState(user.getId(), 1));
+			user.setReadPapers(getPaperByState(user.getId(), 2));
+			user.setStudiedPapers(getPaperByState(user.getId(), 3));
+		}
 		return user;
 	}
 	
@@ -79,12 +85,34 @@ public class Service
 	}
 	
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
-                        String abstct, java.util.Date publishDate, int operater){
+                        String abstct, Date publishDate, int operater){
 		java.sql.Date publishDate2=new java.sql.Date(publishDate.getTime());
 	    return paperDao.insertNewPaper(title,fileURI,publishDate2,authors,abstct,keywords);
     }
 
 	public int getPaperState(int user_id, int paper_id){
 		return userDao.getPaperState(user_id,paper_id);
+	}
+	
+	public Note getNoteById(int nid)
+	{
+		return noteDao.getNoteById(nid);
+	}
+	public Collection<Note> getNotes()
+	{
+		return noteDao.getAllNotes();
+	}
+	public int addNote(String title, String content, int authorId, int paperId)
+	{
+		Timestamp publishTime = new Timestamp(System.currentTimeMillis());
+		return noteDao.insertNote(authorId,paperId,title,content,publishTime);
+	}
+	public Collection<Note> getNotesByUser(int uid)
+	{
+		return noteDao.getNotesByUser(uid);
+	}
+	public Collection<Note> getNotesByPaper(int pid)
+	{
+		return noteDao.getNotesByPaper(pid);
 	}
 }

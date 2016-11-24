@@ -32,7 +32,7 @@
   <script type="text/javascript" charset="utf8" src="resources/libs/datatables/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" charset="utf8" src="resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
   
-  <!-- initiate datatable and ajax by @lqf -->
+  <!-- initiate datatable and ajax -->
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
       
@@ -89,7 +89,8 @@
             "sSortAscending": ": 以升序排列此列",
             "sSortDescending": ": 以降序排列此列"
           }
-        }
+        },
+        "autoWidth": false
       }).on('draw.dt', iniSelector()).on('init.dt',iniSelector());
       
       $("select.clct").on("change",(function () {
@@ -143,7 +144,7 @@
       <ul class="nav navbar-nav">
         <li><a href="<s:url action="listPapers"/>">论文</a></li>
         <li><a href="javascript:void(0);">动态</a></li>
-        <li><a href="javascript:void(0);">笔记</a></li>
+        <li><a href="<s:url action="listNotes"/>">笔记</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <%

@@ -37,5 +37,14 @@
     <action name="changePaperState" class="web.action.ChangePaperState">
       <result name="success" type="chain">showPaperState</result>
     </action>
+    <action name="showNoteDetails" class="web.action.ShowNoteDetails">
+      <result name="success">note.jsp</result>
+    </action>
+    <action name="listNotes" class="web.action.ListNotes">
+      <result name="success">notelist.jsp</result>
+    </action>
+    <action name="addNote" class="web.action.AddNote">
+      <result name="success" type="redirectAction">listNotes</result>
+    </action>
   </package>
 </struts>

@@ -40,20 +40,20 @@
       <div id="myTabContent" class="tab-content">
         <div id="toRead" class="tab-pane fade in active">
           <s:if test="%{user.toReadPapers.isEmpty()}">
-            <p class="text-center">并没有计划要读的论文</p>
+            <h4 class="text-center">并没有计划要读的论文</h4>
           </s:if>
           <s:else>
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="50%">篇名
-                  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top"
-                        title="点击书名查看详情"></span>
-                </th>
+                <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null && userp.getId() == iruid) {%>
-                <th style='vertical-align: middle;' width="10%">收藏</th>
+                <%
+                  if (userp != null && userp.getId() == iruid)
+                  {
+                %>
+                <th style='vertical-align: middle;' width="20%">收藏</th>
                 <%}%>
               </tr>
               </thead>
@@ -68,20 +68,20 @@
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <%
-                    if(userp != null && userp.getId() == iruid)
+                    if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle; width: 220px'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
-                            class="form-control select select-primary clct" title="收藏状态" >
+                  <td style='vertical-align: middle;'>
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
+                            class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
-            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
-                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    <div class="loading-icon">
+                      <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                            style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
                   </td>
                   <%
@@ -95,21 +95,22 @@
         </div>
         <div id="read" class="tab-pane fade">
           <s:if test="%{user.readPapers.isEmpty()}">
-            <p class="text-center">并没有已经粗略读过的论文</p>
+            <h4 class="text-center">并没有已经粗略读过的论文</h4>
           </s:if>
           <s:else>
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="50%">篇名
-                  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top"
-                        title="点击书名查看详情"></span>
-                </th>
+                <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null && userp.getId() == iruid) {%>
-                <th style='vertical-align: middle;' width="10%">收藏</th>
-                <%}%>              </tr>
+                <%
+                  if (userp != null && userp.getId() == iruid)
+                  {
+                %>
+                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <%}%>
+              </tr>
               </thead>
               <tbody>
               <s:iterator value="user.readPapers">
@@ -122,20 +123,20 @@
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <%
-                    if(userp != null && userp.getId() == iruid)
+                    if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle; width: 220px'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
-                            class="form-control select select-primary clct" title="收藏状态" >
+                  <td style='vertical-align: middle;'>
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
+                            class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
-            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
-                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    <div class="loading-icon">
+                      <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                            style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
                   </td>
                   <%
@@ -149,21 +150,22 @@
         </div>
         <div id="studied" class="tab-pane fade">
           <s:if test="%{user.studiedPapers.isEmpty()}">
-            <p class="text-center">并没有已经仔细研究过的论文</p>
+            <h4 class="text-center">并没有已经仔细研究过的论文</h4>
           </s:if>
           <s:else>
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="50%">篇名
-                  <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top"
-                        title="点击书名查看详情"></span>
-                </th>
+                <th style='vertical-align: middle;' width="40%">篇名</th>
                 <th style='vertical-align: middle;' width="20%">作者</th>
                 <th style='vertical-align: middle;' width="20%">发表时间</th>
-                <%if(userp != null && userp.getId() == iruid) {%>
-                <th style='vertical-align: middle;' width="10%">收藏</th>
-                <%}%>              </tr>
+                <%
+                  if (userp != null && userp.getId() == iruid)
+                  {
+                %>
+                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <%}%>
+              </tr>
               </thead>
               <tbody>
               <s:iterator value="user.studiedPapers">
@@ -176,20 +178,20 @@
                   <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
                   <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
                   <%
-                    if(userp != null && userp.getId() == iruid)
+                    if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle; width: 220px'>
-                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 110px; float: left"
-                            class="form-control select select-primary clct" title="收藏状态" >
+                  <td style='vertical-align: middle;'>
+                    <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
+                            class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
                       <option value="1">计划读</option>
                       <option value="2">已粗读</option>
                       <option value="3">已精读</option>
                     </select>
-                    <div style="margin-left: 5px; height: 40px; width: 40px; vertical-align: middle; float: left">
-            <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
-                  style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
+                    <div class="loading-icon">
+                      <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
+                            style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
                     </div>
                   </td>
                   <%
@@ -231,7 +233,39 @@
       </h1>
     </div>
     <div class="panel-body">
-      todo....
+      <s:if test="%{notes.isEmpty()}">
+        <h4 class="text-center">用户并没有写笔记╮（╯＿╰）╭</h4>
+      </s:if>
+      <s:else>
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+          <tr>
+            <th width="50%">题目</th>
+            <th width="30%">论文</th>
+            <th width="20%">发表时间</th>
+          </tr>
+          </thead>
+          <tbody>
+          <s:iterator value="notes">
+            <tr>
+              <td>
+                <a href='<s:url action="showNoteDetails"><s:param name="id" value="id" /></s:url>'>
+                  <s:property value="%{title}"/>
+                </a>
+              </td>
+              <td>
+                <a href="<s:url action="showPaperDetails">
+                            <s:param name="id"><s:property value="paper.id"/></s:param>
+                        </s:url>">
+                  <s:property value="%{paper.title}"/>
+                </a>
+              </td>
+              <td><s:property value="%{publishTime}"/></td>
+            </tr>
+          </s:iterator>
+          </tbody>
+        </table>
+      </s:else>
     </div>
   </div>
   <%
