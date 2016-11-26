@@ -8,6 +8,8 @@ public class Tree {
     private String labelname;
     private Collection<Paper> papers;
 
+    private int depth;
+
     public Collection<Tree> getChildTree() {
         return childTree;
     }
@@ -30,5 +32,13 @@ public class Tree {
 
     public void setPapers(Collection<Paper> papers) {
         this.papers = papers;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 }

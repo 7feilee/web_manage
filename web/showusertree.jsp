@@ -1,18 +1,36 @@
-<%@ page import="model.Tree" %><%--
-  Created by IntelliJ IDEA.
-  User: Jevons
-  Date: 2016/11/24
-  Time: 21:22
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="service.Service" %>
+<%@ page import="model.Tree" %>
+<%@ page import="org.apache.struts2.ServletActionContext" %>
+<%@ page import="model.User" %>
+<%@ page import="java.util.Collection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>我的研究树</title>
 </head>
 <body>
+    <%! String s=""; %>
+    <%!
+        void printtree(Tree tree){
+            if (tree!=null){
+                s+=(tree.getLabelname());
+                s+='\n';
+                Collection<Tree> ctrees=tree.getChildTree();
+                for (Tree ctree : ctrees) {
+                    printtree(ctree);
+                }
+            }
+        }
+    %>
     <%
-        Tree tree=
+        Service service=new Service();
+        Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
+        int uid = ((User) obj).getId();
+        Tree tree=service.getUserTree(uid);
+
+
+        for (int )
+
 
     %>
 
