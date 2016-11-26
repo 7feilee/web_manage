@@ -38,7 +38,10 @@
       <result name="success" type="chain">showPaperState</result>
     </action>
     <action name="addtreelabel" class="web.action.AddTreeLabel">
-      <result name="success" type="chain">showPaperState</result>
+      <result name="success">usertree.jsp</result>
+    </action>
+    <action name="showUserTree" class="web.action.ShowUserTree">
+      <result name="success">showusertree.jsp</result>
     </action>
   </package>
 </struts>

@@ -3,6 +3,7 @@ import dao.NoteDao;
 import dao.PaperDao;
 import dao.UserDao;
 import model.Paper;
+import model.Tree;
 import model.User;
 
 import java.util.Collection;
@@ -91,4 +92,29 @@ public class Service
 	public int addTreeLabel(String labelname,String label_father,int user_id){
         return userDao.addTreeLabel(labelname,label_father,user_id);
     }
+
+	public Tree getUserTree(int user_id){
+		Tree tree=new Tree();
+		tree.setChildTree(getTree(user_id,"空"));
+		return tree;
+	}
+
+	public Collection<Tree> getTree(int user_id, String labelname){
+		Collection<Tree> trees = userDao.getChildTree(user_id,labelname);
+		if (trees==null)
+			return null;
+		else{
+			for (Tree tree : trees) {
+				tree.setChildTree(getTree(user_id,tree.getLabelname()));
+				Collection<Integer> paperids=userDao.getTreePapers(tree.getLabelname(),user_id);
+				Collection<Paper> papers=new LinkedList<>();
+				for (Integer paperid : paperids) {
+					Paper paper=getPaperById(paperid);
+					papers.add(paper);
+				}
+				tree.setPapers(papers);
+			}
+		}
+		return trees;
+	}
 }

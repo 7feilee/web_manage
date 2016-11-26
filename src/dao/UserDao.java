@@ -1,5 +1,7 @@
 package dao;
+import model.Tree;
 import model.User;
+import model.Paper;
 
 import java.sql.*;
 import java.util.Collection;
@@ -297,4 +299,39 @@ public class UserDao
             closeDao();
         }
     }
+
+    public Collection<Tree> getChildTree(int user_id, String label_father){
+		//Tree tree=new Tree();
+		String sql="select * from user_tree where user_id="+user_id+" and label_father="+label_father+" ;";
+		Collection<Tree> trees=new LinkedList<>();
+		if (stmt!=null)
+			stmt=newDao();
+		try {
+			ResultSet rs=stmt.executeQuery(sql);
+			while(rs.next()){
+				Tree tree1=new Tree();
+				tree1.setLabelname(rs.getString("labelname"));
+				trees.add(tree1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return trees;
+	}
+
+	public Collection<Integer> getTreePapers(String labelname, int user_id){
+		String sql="select paperid from user_paper_tree where user_id="+user_id+" and labelname="+labelname+" ;";
+		Collection<Integer> papers=new LinkedList<>();
+		if (stmt!=null)
+			stmt=newDao();
+		try {
+			ResultSet rs=stmt.executeQuery(sql);
+			while(rs.next()){
+				papers.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return papers;
+	}
 }
