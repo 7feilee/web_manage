@@ -23,7 +23,6 @@ public class UserDao
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
-			//conn = DriverManager.getConnection("jdbc:mysql://123.207.154.130:3306/papermanage", "root", "coding");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "coding");
 			stmt = conn.createStatement();
 			return stmt;
@@ -159,17 +158,6 @@ public class UserDao
 		try
 		{
 			int m = stmt.executeUpdate(sql);
-			if (m != 0)
-			{
-				sql = "select id from user where username='" + username + "';";
-				rs = stmt.executeQuery(sql);
-				if (rs.next())
-				{
-					int id = rs.getInt(1);
-                    String sql1 = "CREATE TABLE user_" + id + " (paper_id int(10) NOT NULL,state int(10) NOT NULL DEFAULT '0',treehead int(10),UNIQUE KEY `user_1_paper_id_uindex` (`paper_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-                    stmt.executeUpdate(sql1);
-				}
-			}
 			return m;
 		}
 		catch (SQLException e)
@@ -193,23 +181,20 @@ public class UserDao
 	public int updatePaperState(int user_id, int paper_id, int state)
 	{
 		stmt = newDao();
-		String sql0 = "SELECT table_name FROM information_schema.TABLES WHERE table_name ='user_" + user_id + "';";
 		ResultSet rs=null;
 		try
 		{
-			rs = stmt.executeQuery(sql0);
-			if (!rs.next())
+			String sql0="Select id from user_paper_tree where user_id="+user_id+" and paper_id="+paper_id+" ;";
+			rs=stmt.executeQuery(sql0);
+			int id=0;
+			String sql2="";
+			if (rs.next())
 			{
-				String sql1 = "CREATE TABLE user_" + user_id + " (paper_id int(10) NOT NULL,state int(10) NOT NULL DEFAULT '0',treehead int(10),UNIQUE KEY `user_1_paper_id_uindex` (`paper_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
- 				stmt.executeUpdate(sql1);
-			}
-			ResultSet rs2=stmt.executeQuery("SELECT * FROM user_" + user_id + " WHERE paper_id="+paper_id+";");
-			String sql2;
-			if (rs2.next()){
-				sql2="UPDATE user_" + user_id + " SET state="+state+" WHERE paper_id="+paper_id+";";
+				id=rs.getInt(1);
+				sql2="UPDATE user_paper_tree SET state="+state+" WHERE id="+id+";";
 			}
 			else {
-				sql2 = "INSERT INTO user_" + user_id + "(paper_id, state) VALUES ('" + paper_id + "','" + state + "');";
+				sql2 = "INSERT INTO user_paper_tree (user_id, paper_id, state) VALUES ('"+user_id+ "','" + paper_id + "','" + state + "');";
 			}
 			return stmt.executeUpdate(sql2);
 		}
@@ -233,7 +218,7 @@ public class UserDao
 	public Collection<Integer> getPaperidByState(int user_id, int state)
 	{
 		stmt = newDao();
-		String sql2 = "select paper_id from user_" + user_id + " WHERE state=" + state + ";";
+		String sql2 = "select paper_id from user_paper_tree where user_id="+user_id+" and state=" + state + ";";
 		ResultSet rs4=null;
 		try
 		{
@@ -263,7 +248,7 @@ public class UserDao
 	}
 
     public int getPaperState(int user_id, int paper_id){
-        String sql = "select state from user_" + user_id + " WHERE paper_id=" + paper_id + ";";
+        String sql = "select state from user_paper_tree where user_id="+user_id+" and paper_id="+paper_id+" ;";
 		ResultSet rs=null;
 		try
         {
