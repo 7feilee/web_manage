@@ -1,5 +1,6 @@
 package web.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Log;
 import service.Service;
@@ -18,10 +19,13 @@ public class ListLogs extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
+		/*
 		logs = service.getAllLogs();
 		if(logs!=null)
 			return SUCCESS;
-		return ERROR;
+		return ERROR;*/
+		ActionContext.getContext().put("123","456");
+		return SUCCESS;
 	}
 	public Collection<Log> getLogs()
 	{

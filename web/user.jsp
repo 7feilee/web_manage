@@ -46,32 +46,32 @@
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="40%">篇名</th>
-                <th style='vertical-align: middle;' width="20%">作者</th>
-                <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <th width="40%">篇名</th>
+                <th width="20%">作者</th>
+                <th width="20%">发表时间</th>
                 <%
                   if (userp != null && userp.getId() == iruid)
                   {
                 %>
-                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <th width="20%">收藏</th>
                 <%}%>
               </tr>
               </thead>
               <tbody>
               <s:iterator value="user.toReadPapers">
                 <tr>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <a href='<s:url action="showPaperDetails"><s:param name="id" value="id" /></s:url>'>
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
-                  <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
+                  <td><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
+                  <td><s:property value="%{publishDate}"/></td>
                   <%
                     if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
@@ -101,32 +101,32 @@
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="40%">篇名</th>
-                <th style='vertical-align: middle;' width="20%">作者</th>
-                <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <th width="40%">篇名</th>
+                <th width="20%">作者</th>
+                <th width="20%">发表时间</th>
                 <%
                   if (userp != null && userp.getId() == iruid)
                   {
                 %>
-                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <th width="20%">收藏</th>
                 <%}%>
               </tr>
               </thead>
               <tbody>
               <s:iterator value="user.readPapers">
                 <tr>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <a href='<s:url action="showPaperDetails"><s:param name="id" value="id" /></s:url>'>
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
-                  <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
+                  <td><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
+                  <td><s:property value="%{publishDate}"/></td>
                   <%
                     if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
@@ -156,32 +156,32 @@
             <table class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="40%">篇名</th>
-                <th style='vertical-align: middle;' width="20%">作者</th>
-                <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <th width="40%">篇名</th>
+                <th width="20%">作者</th>
+                <th width="20%">发表时间</th>
                 <%
                   if (userp != null && userp.getId() == iruid)
                   {
                 %>
-                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <th width="20%">收藏</th>
                 <%}%>
               </tr>
               </thead>
               <tbody>
               <s:iterator value="user.studiedPapers">
                 <tr>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <a href='<s:url action="showPaperDetails"><s:param name="id" value="id" /></s:url>'>
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
-                  <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
+                  <td><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
+                  <td><s:property value="%{publishDate}"/></td>
                   <%
                     if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
@@ -218,7 +218,7 @@
       </h1>
     </div>
     <div class="panel-body">
-      todo
+      todo<%--todo--%>
     </div>
   </div>
   <div class="panel panel-primary">

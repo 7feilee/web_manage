@@ -1,8 +1,10 @@
 package web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import model.Log;
 import model.Note;
 import model.User;
+import org.apache.struts2.ServletActionContext;
 import service.Service;
 
 import java.util.Collection;
@@ -12,6 +14,7 @@ public class ShowUserDetails extends ActionSupport
 	private int id;
 	private Service service;
 	private Collection<Note> notes;
+	private Collection<Log> logs;
 	
 	public ShowUserDetails()
 	{
@@ -27,7 +30,15 @@ public class ShowUserDetails extends ActionSupport
 		{
 			notes = service.getNotesByUser(id);
 			if(notes != null)
-				return SUCCESS;
+			{
+				logs = service.getLogsByUser(id);
+				if(logs!=null)
+				{
+					ServletActionContext.getRequest().setAttribute("logs",logs);
+					return SUCCESS;
+				}
+				return ERROR;
+			}
 			//else
 			return ERROR;
 		}
@@ -56,5 +67,13 @@ public class ShowUserDetails extends ActionSupport
 	public void setNotes(Collection<Note> notes)
 	{
 		this.notes = notes;
+	}
+	public Collection<Log> getLogs()
+	{
+		return logs;
+	}
+	public void setLogs(Collection<Log> logs)
+	{
+		this.logs = logs;
 	}
 }
