@@ -15,10 +15,7 @@ public class Log implements Serializable
 	public static final int ADD = 1;
 	public static final int DELETE = 2;
 	public static final int EDIT = 3;
-	/**
-	 * 操作对象的ID
-	 */
-	private int id;
+	
 	private Date time;
 	private Boolean isPrivate;
 	private int target;
@@ -26,14 +23,6 @@ public class Log implements Serializable
 	private int operator;
 	
 	
-	public int getId()
-	{
-		return id;
-	}
-	public void setId(int id)
-	{
-		this.id = id;
-	}
 	public Date getTime()
 	{
 		return time;

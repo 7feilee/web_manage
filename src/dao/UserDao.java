@@ -9,12 +9,6 @@ public class UserDao
 {
 	private Statement stmt;
 	private Connection conn;
-	/**
-	 * 构造方法，进行数据库的连接
-	 */
-	public UserDao()	{	}
-	
-	protected void finalize(){	}
 
 	public Statement newDao()
 	{
