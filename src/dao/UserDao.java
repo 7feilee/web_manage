@@ -302,10 +302,9 @@ public class UserDao
 
     public Collection<Tree> getChildTree(int user_id, String label_father){
 		//Tree tree=new Tree();
-		String sql="select * from user_tree where user_id="+user_id+" and label_father="+label_father+" ;";
+		String sql="select * from user_tree where user_id="+user_id+" and label_father='"+label_father+"' ;";
 		Collection<Tree> trees=new LinkedList<>();
-		if (stmt!=null)
-			stmt=newDao();
+		stmt=newDao();
 		try {
 			ResultSet rs=stmt.executeQuery(sql);
 			while(rs.next()){
@@ -320,10 +319,9 @@ public class UserDao
 	}
 
 	public Collection<Integer> getTreePapers(String labelname, int user_id){
-		String sql="select paperid from user_paper_tree where user_id="+user_id+" and labelname="+labelname+" ;";
+		String sql="select paper_id from user_paper_tree where user_id="+user_id+" and labelname='"+labelname+"' ;";
 		Collection<Integer> papers=new LinkedList<>();
-		if (stmt!=null)
-			stmt=newDao();
+		stmt=newDao();
 		try {
 			ResultSet rs=stmt.executeQuery(sql);
 			while(rs.next()){
@@ -334,4 +332,47 @@ public class UserDao
 		}
 		return papers;
 	}
+
+	public int deleteTreeLabel(String labelname,int user_id){
+		String sql="SELECT label_father FROM user_tree where labelname='"+labelname+"' and user_id="+user_id+";";
+		stmt=newDao();
+		try {
+			ResultSet rs=stmt.executeQuery(sql);
+			String father="null";
+			if (rs.next()){
+				father=rs.getString(1);
+			}
+			String sql2="Update user_tree set label_father='"+father+"' where label_father='"+labelname+"' and user_id="+user_id+";";
+			stmt.executeUpdate(sql2);
+			String sql22="Update user_paper_tree set labelname='"+father+"' where labelname='"+labelname+"' and user_id="+user_id+";";
+			stmt.executeUpdate(sql22);
+			String sql3="delete from user_tree where labelname='"+labelname+"';";
+			return stmt.executeUpdate(sql3);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public int updatePaperLabel(String labelname,int user_id ,int paper_id){
+		String sql="update user_paper_tree set labelname='"+labelname+"' where user_id="+user_id+" and paper_id="+paper_id+";";
+		stmt=newDao();
+		try {
+			return stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public int updateTreeLabel(String labelname, String newlabelname, int user_id){
+		String sql="update user_tree set labelname='"+newlabelname+"' where user_id="+user_id+" and labelname='"+labelname+"';";
+		try {
+			return stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
 }

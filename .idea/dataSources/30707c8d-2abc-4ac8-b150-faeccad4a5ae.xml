@@ -201,6 +201,7 @@
     <column id="56" parent="15" name="labelname">
       <Position>5</Position>
       <DataType>varchar(1000)|0</DataType>
+      <DefaultExpression>&apos;null&apos;</DefaultExpression>
     </column>
     <index id="57" parent="15" name="user_paper_tree_id_uindex">
       <ColNames>id</ColNames>

@@ -1,38 +1,25 @@
-<%@ page import="service.Service" %>
-<%@ page import="model.Tree" %>
-<%@ page import="org.apache.struts2.ServletActionContext" %>
-<%@ page import="model.User" %>
-<%@ page import="java.util.Collection" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>我的研究树</title>
 </head>
 <body>
-    <%! String s=""; %>
-    <%!
-        void printtree(Tree tree){
-            if (tree!=null){
-                s+=(tree.getLabelname());
-                s+='\n';
-                Collection<Tree> ctrees=tree.getChildTree();
-                for (Tree ctree : ctrees) {
-                    printtree(ctree);
-                }
-            }
-        }
-    %>
-    <%
-        Service service=new Service();
-        Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
-        int uid = ((User) obj).getId();
-        Tree tree=service.getUserTree(uid);
-
-
-        for (int )
-
-
-    %>
+    <table class="table table-bordered table-striped table-hover">
+        <tbody>
+        <s:iterator value="trees">
+            <tr>
+                <s:property value="depth"></s:property>
+                <s:property value="labelname"></s:property></br>
+            </tr>
+        </s:iterator>
+        <s:iterator value="papers">
+            <tr>
+                <s:property value="title"></s:property></br>
+            </tr>
+        </s:iterator>
+        </tbody>
+    </table>
 
 </body>
 </html>
