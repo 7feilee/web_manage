@@ -46,5 +46,8 @@
     <action name="addNote" class="web.action.AddNote">
       <result name="success" type="redirectAction">listNotes</result>
     </action>
+    <action name="listLogs" class="web.action.ListLogs">
+      <result name="success">logs.jsp</result>
+    </action>
   </package>
 </struts>

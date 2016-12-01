@@ -1,7 +1,9 @@
 package service;
+import dao.LogDao;
 import dao.NoteDao;
 import dao.PaperDao;
 import dao.UserDao;
+import model.Log;
 import model.Note;
 import model.Paper;
 import model.User;
@@ -15,6 +17,7 @@ public class Service
 	private UserDao userDao;
 	private PaperDao paperDao;
 	private NoteDao noteDao;
+	private LogDao logDao;
 	
 	public Service()
 	{
@@ -22,6 +25,7 @@ public class Service
 		userDao = new UserDao();
 		paperDao = new PaperDao();
 		noteDao = new NoteDao();
+		logDao = new LogDao();
 	}
 	
 	public int login(String username, String password)
@@ -114,5 +118,9 @@ public class Service
 	public Collection<Note> getNotesByPaper(int pid)
 	{
 		return noteDao.getNotesByPaper(pid);
+	}
+	public Collection<Log> getAllLogs()
+	{
+		return logDao.getAllLogs();
 	}
 }
