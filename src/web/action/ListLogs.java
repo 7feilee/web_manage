@@ -6,6 +6,7 @@ import model.Log;
 import service.Service;
 
 import java.util.Collection;
+import java.util.LinkedList;
 public class ListLogs extends ActionSupport
 {
 	private Collection<Log> logs;
@@ -24,7 +25,8 @@ public class ListLogs extends ActionSupport
 		if(logs!=null)
 			return SUCCESS;
 		return ERROR;*/
-		ActionContext.getContext().put("123","456");
+		logs = new LinkedList<>();
+		logs.add(new Log());
 		return SUCCESS;
 	}
 	public Collection<Log> getLogs()
