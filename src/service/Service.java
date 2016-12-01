@@ -123,4 +123,8 @@ public class Service
 	{
 		return logDao.getAllLogs();
 	}
+	public Collection<Log> getLogsByUser(int uid)
+	{
+		return logDao.getLogsByUser(uid);
+	}
 }
