@@ -30,10 +30,10 @@ public class ShowUserDetails extends ActionSupport
 		if (user != null)
 		{
 			notes = service.getNotesByUser(id);
-			if(notes != null)
+			if (notes != null)
 			{
 				Collection<Log> logs1 = service.getLogsByUser(id);
-				if(logs1!=null)
+				if (logs1 != null)
 				{
 					logs = FormatLog.formatLogs(logs1);
 					return SUCCESS;
@@ -53,13 +53,13 @@ public class ShowUserDetails extends ActionSupport
 	{
 		this.user = user;
 	}
-	public void setId(int id)
-	{
-		this.id = id;
-	}
 	public int getId()
 	{
 		return id;
+	}
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 	public Collection<Note> getNotes()
 	{

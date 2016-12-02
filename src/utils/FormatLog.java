@@ -104,6 +104,7 @@ public class FormatLog
 						+ operator.getUsername()+"注册成为本系统第"+operator.getId()+"位会员";
 				result.setEvent(event);
 			}
+			// TODO: 2016/12/2 用户资料修改
 		}
 		return result;
 	}
