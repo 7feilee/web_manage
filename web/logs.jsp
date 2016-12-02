@@ -20,25 +20,9 @@
     </thead>
     <tbody>
     <s:iterator value="logs" var="log">
-      <%
-        Log log = (Log) ActionContext.getContext().get("log");
-        log.hashCode();
-        String event,time;
-        if (log.getId() == 0 || log.getOperatorid() == 0 || log.getTarget() == 0 || log.getTargetid() == 0 || log.getType() == 0 || log.getTime() == null)
-        {
-        	event = "当前日志实例未完全初始化";
-        	time = "NaT";
-        }
-        else
-        {
-          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-          time = sdf.format(log.getTime());
-          // TODO: 2016/12/2 处理event
-        }
-      %>
       <tr>
         <td>
-          <%=time%>
+          <s
         </td>
         <td>
           <%=event%>

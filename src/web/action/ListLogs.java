@@ -20,14 +20,11 @@ public class ListLogs extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		/*
+		
 		logs = service.getAllLogs();
 		if(logs!=null)
 			return SUCCESS;
-		return ERROR;*/
-		logs = new LinkedList<>();
-		logs.add(new Log());
-		return SUCCESS;
+		return ERROR;
 	}
 	public Collection<Log> getLogs()
 	{
