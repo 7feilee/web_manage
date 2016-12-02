@@ -218,7 +218,26 @@
       </h1>
     </div>
     <div class="panel-body">
-      todo<%--todo--%>
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>时间</th>
+          <th>事件</th>
+        </tr>
+        </thead>
+        <tbody>
+        <s:iterator value="logs">
+          <tr>
+            <td>
+              <s:property value="time"/>
+            </td>
+            <td>
+              <s:property value="event"/>
+            </td>
+          </tr>
+        </s:iterator>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="panel panel-primary">

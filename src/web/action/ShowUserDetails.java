@@ -4,8 +4,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import model.Log;
 import model.Note;
 import model.User;
-import org.apache.struts2.ServletActionContext;
 import service.Service;
+import utils.FormatLog;
+import web.model.FrontLog;
 
 import java.util.Collection;
 public class ShowUserDetails extends ActionSupport
@@ -14,7 +15,7 @@ public class ShowUserDetails extends ActionSupport
 	private int id;
 	private Service service;
 	private Collection<Note> notes;
-	private Collection<Log> logs;
+	private Collection<FrontLog> logs;
 	
 	public ShowUserDetails()
 	{
@@ -31,10 +32,10 @@ public class ShowUserDetails extends ActionSupport
 			notes = service.getNotesByUser(id);
 			if(notes != null)
 			{
-				logs = service.getLogsByUser(id);
-				if(logs!=null)
+				Collection<Log> logs1 = service.getLogsByUser(id);
+				if(logs1!=null)
 				{
-					ServletActionContext.getRequest().setAttribute("logs",logs);
+					logs = FormatLog.formatLogs(logs1);
 					return SUCCESS;
 				}
 				return ERROR;
@@ -68,11 +69,11 @@ public class ShowUserDetails extends ActionSupport
 	{
 		this.notes = notes;
 	}
-	public Collection<Log> getLogs()
+	public Collection<FrontLog> getLogs()
 	{
 		return logs;
 	}
-	public void setLogs(Collection<Log> logs)
+	public void setLogs(Collection<FrontLog> logs)
 	{
 		this.logs = logs;
 	}

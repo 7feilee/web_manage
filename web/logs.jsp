@@ -1,6 +1,3 @@
-<%@ page import="com.opensymphony.xwork2.ActionContext" %>
-<%@ page import="model.Log" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
@@ -19,13 +16,13 @@
     </tr>
     </thead>
     <tbody>
-    <s:iterator value="logs" var="log">
+    <s:iterator value="logs">
       <tr>
         <td>
-          <s
+          <s:property value="time"/>
         </td>
         <td>
-          <%=event%>
+          <s:property value="event"/>
         </td>
       </tr>
     </s:iterator>
@@ -33,5 +30,5 @@
   </table>
 </s:else>
 
-<s:debug></s:debug>
+<s:debug/>
 <%@ include file="includes/footer.jsp" %>
