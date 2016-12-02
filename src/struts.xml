@@ -48,6 +48,7 @@
     </action>
     <action name="listLogs" class="web.action.ListLogs">
       <result name="success">logs.jsp</result>
+    </action>
     <action name="addtreelabel" class="web.action.AddTreeLabel">
       <result name="success">usertree.jsp</result>
     </action>
