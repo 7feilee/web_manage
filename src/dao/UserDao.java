@@ -151,8 +151,7 @@ public class UserDao
 		ResultSet rs=null;
 		try
 		{
-			int m = stmt.executeUpdate(sql);
-			return m;
+			return stmt.executeUpdate(sql);
 		}
 		catch (SQLException e)
 		{
