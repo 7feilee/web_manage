@@ -1,4 +1,5 @@
 package dao;
+import model.Log;
 import model.Paper;
 
 import java.sql.*;
@@ -158,7 +159,7 @@ public class PaperDao
 	
 	public int insertNewPaper(String title, String fileURI, Date publishDate,
 	                          Collection<String> authors, String abstct,
-	                          Collection<String> keywords)
+	                          Collection<String> keywords, int operater)
 	{
 		int i = 0;
 		String author1 = "", author2 = "", author3 = "", keyword1 = "", keyword2 = "", keyword3 = "";
@@ -190,11 +191,20 @@ public class PaperDao
 		try
 		{
 			stmt = newDao();
-			int m = stmt.executeUpdate(sql);
-			if (m > 0)
-				return m;
-			else
-				return 0;
+			int result = stmt.executeUpdate(sql);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int id;
+			if (rs.next())
+			{
+				id = rs.getInt(1);
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.ADD, Log.PAPER, id, operater) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			rs.close();
+			return -2;//其他未知错误
 		}
 		catch (SQLException e)
 		{

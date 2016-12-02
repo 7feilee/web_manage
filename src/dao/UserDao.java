@@ -1,7 +1,8 @@
 package dao;
+import model.Log;
 import model.Tree;
 import model.User;
-import model.Paper;
+import org.intellij.lang.annotations.Language;
 
 import java.sql.*;
 import java.util.Collection;
@@ -11,8 +12,8 @@ public class UserDao
 {
 	private Statement stmt;
 	private Connection conn;
-
-	public Statement newDao()
+	
+	private Statement newDao()
 	{
 		if (stmt!=null)
 			return stmt;
@@ -36,8 +37,8 @@ public class UserDao
 			return null;
 		}
 	}
-
-	public int closeDao()
+	
+	private int closeDao()
 	{
 		try
 		{
@@ -150,10 +151,22 @@ public class UserDao
 	{
 		stmt = newDao();
 		String sql = "INSERT INTO user(username, password) VALUES ('" + username + "','" + password + "');";
-		ResultSet rs=null;
 		try
 		{
-			return stmt.executeUpdate(sql);
+			int result = stmt.executeUpdate(sql);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int id;
+			if (rs.next())
+			{
+				id = rs.getInt(1);
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.ADD, Log.USER, id, id) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			rs.close();
+			return -2;//其他未知错误
 		}
 		catch (SQLException e)
 		{
@@ -162,12 +175,6 @@ public class UserDao
 			return -1;
 		}
 		finally {
-			if (rs!=null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 			closeDao();
 		}
 	}
@@ -181,8 +188,8 @@ public class UserDao
 		{
 			String sql0="Select id from user_paper_tree where user_id="+user_id+" and paper_id="+paper_id+" ;";
 			rs=stmt.executeQuery(sql0);
-			int id=0;
-			String sql2="";
+			int id;
+			String sql2;
 			if (rs.next())
 			{
 				id=rs.getInt(1);
@@ -295,7 +302,8 @@ public class UserDao
 
     public Collection<Tree> getChildTree(int user_id, String label_father){
 		//Tree tree=new Tree();
-		String sql="select * from user_tree where user_id="+user_id+" and label_father='"+label_father+"' ;";
+	    @Language("MySQL")
+	    String sql="select * from user_tree where user_id="+user_id+" and label_father='"+label_father+"' ;";
 		Collection<Tree> trees=new LinkedList<>();
 		stmt=newDao();
 		try {

@@ -89,7 +89,7 @@ public class Service
 	                    String abstct, Date publishDate, int operater)
 	{
 		java.sql.Date publishDate2 = new java.sql.Date(publishDate.getTime());
-		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords);
+		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords, operater);
 	}
 	
 	public int getPaperState(int user_id, int paper_id)
@@ -236,5 +236,9 @@ public class Service
 			}
 		}
 		return papers;
+	}
+	public int addLog(int type, int target, int targetid, int operatorid)
+	{
+		return logDao.insertLog(type, target, targetid, operatorid);
 	}
 }

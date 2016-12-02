@@ -10,9 +10,9 @@ public class LogDao
 	private Statement stmt;
 	private Connection conn;
 	
-	public Statement newDao()
+	private Statement newDao()
 	{
-		if (stmt!=null)
+		if (stmt != null)
 			return stmt;
 		try
 		{
@@ -35,16 +35,16 @@ public class LogDao
 		}
 	}
 	
-	public int closeDao()
+	private int closeDao()
 	{
 		try
 		{
-			if (stmt!=null)
+			if (stmt != null)
 				stmt.close();
-			if (conn!=null)
+			if (conn != null)
 				conn.close();
-			stmt=null;
-			conn=null;
+			stmt = null;
+			conn = null;
 			return 1;
 		}
 		catch (SQLException e)
@@ -63,9 +63,9 @@ public class LogDao
 	public Collection<Log> getAllLogs()
 	{
 		Collection<Log> logs = new LinkedList<>();
-		String sql = "select * from log;";
+		String sql = "SELECT * FROM log;";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -88,11 +88,15 @@ public class LogDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -102,9 +106,9 @@ public class LogDao
 	public Collection<Log> getLogsByUser(int uid)
 	{
 		Collection<Log> logs = new LinkedList<>();
-		String sql = "select * from log WHERE operatorid='"+uid+"';";
+		String sql = "select * from log WHERE operatorid='" + uid + "';";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -127,15 +131,40 @@ public class LogDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
 		}
 		return logs;
+	}
+	public int insertLog(int type, int target, int targetid, int operatorid)
+	{
+		stmt = newDao();
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		String sql = "INSERT INTO log(time, type, target, targetid, operatorid) " +
+				"VALUES ('" + time + "','" + type + "','" + target + "','" + targetid + "','" + operatorid + "');";
+		try
+		{
+			return stmt.executeUpdate(sql);
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.LogDao.insertLog");
+			e.printStackTrace();
+			return -1;
+		}
+		finally
+		{
+			closeDao();
+		}
 	}
 }

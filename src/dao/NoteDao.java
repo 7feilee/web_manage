@@ -1,4 +1,5 @@
 package dao;
+import model.Log;
 import model.Note;
 import org.jetbrains.annotations.Nullable;
 
@@ -233,7 +234,20 @@ public class NoteDao
 				+ title + "','" + content + "','" + publishTime + "');";
 		try
 		{
-			return stmt.executeUpdate(sql);
+			int result = stmt.executeUpdate(sql);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int id;
+			if (rs.next())
+			{
+				id = rs.getInt(1);
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.ADD, Log.NOTE, id, authorID) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			rs.close();
+			return -2;//其他未知错误
 		}
 		catch (SQLException e)
 		{
