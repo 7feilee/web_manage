@@ -86,7 +86,7 @@ public class FormatLog
 			if (log.getType()==Log.ADD)
 			{//新增笔记
 				User operator = service.getUserById(log.getOperatorid());
-				Note note = service.getNoteById(log.getOperatorid());
+				Note note = service.getNoteById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
 						"新增了笔记：<a href='/showNoteDetails.action?id=" + note.getId() + "'>"

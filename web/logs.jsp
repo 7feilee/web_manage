@@ -4,7 +4,7 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
-<s:if test="%{notes.isEmpty()}">
+<s:if test="%{logs.isEmpty()}">
   <h4 class="text-center">数据库中没有日志╮（╯＿╰）╭</h4>
 </s:if>
 <s:else>
@@ -22,7 +22,7 @@
           <s:property value="time"/>
         </td>
         <td>
-          <s:property value="event"/>
+          <s:property value="event" escapeHtml="false"/>
         </td>
       </tr>
     </s:iterator>
