@@ -208,7 +208,19 @@ public class UserDao
 			{
 				sql2 = "INSERT INTO user_paper_tree (user_id, paper_id, state) VALUES ('" + user_id + "','" + paper_id + "','" + state + "');";
 			}
-			return stmt.executeUpdate(sql2);
+			int result = stmt.executeUpdate(sql2, Statement.RETURN_GENERATED_KEYS);
+			rs = stmt.getGeneratedKeys();
+			if (rs.next())
+			{
+				id = rs.getInt(1);
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(state + 3, Log.PAPER, paper_id, user_id) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			rs.close();
+			return -2;//其他未知错误
 		}
 		catch (SQLException e)
 		{

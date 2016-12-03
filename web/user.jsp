@@ -232,7 +232,7 @@
               <s:property value="time"/>
             </td>
             <td>
-              <s:property value="event"/>
+              <s:property value="event" escapeHtml="false"/>
             </td>
           </tr>
         </s:iterator>

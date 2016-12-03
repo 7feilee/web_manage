@@ -170,7 +170,7 @@ public class Service
 		return trees;
 	}
 	
-	public Collection<Tree> getTree(int user_id, String labelname, int depth)
+	private Collection<Tree> getTree(int user_id, String labelname, int depth)
 	{
 		Collection<Tree> trees = userDao.getChildTree(user_id, labelname);
 		int newdepth = depth + 1;

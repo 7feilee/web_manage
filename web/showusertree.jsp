@@ -9,13 +9,13 @@
         <tbody>
         <s:iterator value="trees">
             <tr>
-                <s:property value="depth"></s:property>
-                <s:property value="labelname"></s:property></br>
+                <s:property value="depth"/>
+                <s:property value="labelname"/>
             </tr>
         </s:iterator>
         <s:iterator value="papers">
             <tr>
-                <s:property value="title"></s:property></br>
+                <s:property value="title"/>
             </tr>
         </s:iterator>
         </tbody>
