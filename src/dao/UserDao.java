@@ -209,18 +209,15 @@ public class UserDao
 				sql2 = "INSERT INTO user_paper_tree (user_id, paper_id, state) VALUES ('" + user_id + "','" + paper_id + "','" + state + "');";
 			}
 			int result = stmt.executeUpdate(sql2, Statement.RETURN_GENERATED_KEYS);
-			rs = stmt.getGeneratedKeys();
-			if (rs.next())
+			if (result > 0)
 			{
-				id = rs.getInt(1);
 				LogDao logDao = new LogDao();
 				if (logDao.insertLog(state + 3, Log.PAPER, paper_id, user_id) > 0)
 					return result;
 				else
 					return -3;//写入日志失败
 			}
-			rs.close();
-			return -2;//其他未知错误
+			return result;//其他未知错误
 		}
 		catch (SQLException e)
 		{
@@ -321,11 +318,7 @@ public class UserDao
 		try
 		{
 			stmt = newDao();
-			int m = stmt.executeUpdate(sql);
-			if (!(m <= 0))
-				return m;
-			else
-				return 0;
+			return stmt.executeUpdate(sql);
 		}
 		catch (SQLException e)
 		{
@@ -414,7 +407,16 @@ public class UserDao
 		stmt = newDao();
 		try
 		{
-			return stmt.executeUpdate(sql);
+			int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			if (result > 0)
+			{
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.UPDATETREELABLE, Log.PAPER, paper_id, user_id) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			return result;//其他未知错误
 		}
 		catch (SQLException e)
 		{

@@ -79,6 +79,16 @@ public class FormatLog
 						+ paper.getTitle() + "</a>";
 				result.setEvent(event);
 			}
+			else if (log.getType() == Log.UPDATETREELABLE)
+			{//更新分类树
+				User operator = service.getUserById(log.getOperatorid());
+				Paper paper = service.getPaperById(log.getTargetid());
+				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
+						+ operator.getUsername() + "</a>" +
+						"更新了收藏论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						+ paper.getTitle() + "</a>的分类";
+				result.setEvent(event);
+			}
 			// TODO: 2016/12/2 修改和删除论文
 		}
 		else if(log.getTarget()==Log.NOTE)
