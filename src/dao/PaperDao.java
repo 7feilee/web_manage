@@ -191,7 +191,7 @@ public class PaperDao
 		try
 		{
 			stmt = newDao();
-			int result = stmt.executeUpdate(sql);
+			int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			ResultSet rs = stmt.getGeneratedKeys();
 			int id;
 			if (rs.next())

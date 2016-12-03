@@ -15,7 +15,7 @@ public class NoteDao
 	@Nullable
 	private Statement newDao()
 	{
-		if (stmt!=null)
+		if (stmt != null)
 			return stmt;
 		try
 		{
@@ -43,12 +43,12 @@ public class NoteDao
 	{
 		try
 		{
-			if (stmt!=null)
+			if (stmt != null)
 				stmt.close();
-			if (conn!=null)
+			if (conn != null)
 				conn.close();
-			stmt=null;
-			conn=null;
+			stmt = null;
+			conn = null;
 			return 1;
 		}
 		catch (SQLException e)
@@ -69,12 +69,12 @@ public class NoteDao
 	{
 		String sql = "SELECT * FROM note WHERE id=" + nid + ";";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
 			Note note = new Note();
-			if(rs.next())
+			if (rs.next())
 			{
 				note.setId(rs.getInt("id"));
 				UserDao userDao = new UserDao();
@@ -93,11 +93,15 @@ public class NoteDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -106,9 +110,9 @@ public class NoteDao
 	public Collection<Note> getAllNotes()
 	{
 		Collection<Note> notes = new LinkedList<>();
-		String sql = "select * from note;";
+		String sql = "SELECT * FROM note;";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -133,11 +137,15 @@ public class NoteDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -148,7 +156,7 @@ public class NoteDao
 	{
 		String sql = "SELECT * FROM note WHERE author=" + uid + ";";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -175,11 +183,15 @@ public class NoteDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -189,7 +201,7 @@ public class NoteDao
 	{
 		String sql = "SELECT * FROM note WHERE paper=" + pid + ";";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -216,11 +228,15 @@ public class NoteDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -255,7 +271,8 @@ public class NoteDao
 			e.printStackTrace();
 			return -1;
 		}
-		finally {
+		finally
+		{
 			closeDao();
 		}
 	}
