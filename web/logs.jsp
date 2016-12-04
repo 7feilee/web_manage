@@ -2,8 +2,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
+<title>全站动态|文献管理系统</title>
+<%@ include file="includes/header2.jsp" %>
 <s:if test="%{logs.isEmpty()}">
   <h4 class="text-center">数据库中没有日志╮（╯＿╰）╭</h4>
 </s:if>

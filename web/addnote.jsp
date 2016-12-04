@@ -2,8 +2,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<% Boolean useDatatable = false;%>
 <%@ include file="includes/header.jsp" %>
+<title>添加笔记|文献管理系统</title>
+<%@include file="includes/header2.jsp" %>
 <div class="well">
   <h2 class="text-center" style="margin-bottom: 20px">写笔记</h2>
   <s:form theme="bootstrap" action="addNote" cssClass="form-horizontal" id="validationForm">

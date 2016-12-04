@@ -3,11 +3,12 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%
-  Boolean useDatatable = false;
   Boolean err;
   err = (Boolean) request.getAttribute("err");
 %>
 <%@ include file="includes/header.jsp" %>
+<title>登录|文献管理系统</title>
+<%@include file="includes/header2.jsp" %>
 <div class="col-md-4 col-md-offset-4 well" style="margin-top: 80px;">
   <s:form action="login" enctype="multipart/form-data" theme="bootstrap" cssClass="form-horizontal"
           label="用户登录">
@@ -22,7 +23,7 @@
         cssClass="input-sm"/>
     <div class="form-group">
       <div class="col-sm-offset-3 col-sm-9">
-        <label class="checkbox" for="login_autoLogin" >
+        <label class="checkbox" for="login_autoLogin">
           <input type="checkbox" name="autoLogin" id="login_autoLogin"
                  checked="checked" data-toggle="checkbox">
           自动登录
@@ -46,9 +47,9 @@
   %>
 </div>
 <script>
-  $(function () {
-    $(':checkbox').radiocheck();
-    $('[data-toggle="tooltip"]').tooltip();
-  })
+    $(function () {
+        $(':checkbox').radiocheck();
+        $('[data-toggle="tooltip"]').tooltip();
+    })
 </script>
 <%@ include file="includes/footer.jsp" %>

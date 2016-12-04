@@ -2,8 +2,108 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
+<title>笔记列表|文献管理系统</title>
+<link rel="stylesheet" type="text/css"
+      href="${pageContext.request.contextPath}/resources/libs/datatables/css/dataTables.bootstrap.min.css">
+<script type="text/javascript" charset="utf8"
+        src="${pageContext.request.contextPath}/resources/libs/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
+<!-- initiate datatable and ajax -->
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+
+        function iniSelector() {
+            $('select.select').select2();
+            $("select.clct").each(function () {
+                var $this = $(this);
+                var uid, pid;
+                uid = 0${sessionScope.user.id};
+                if (uid == 0)
+                    return;
+                $this.attr("disabled", true);
+                pid = $this.attr("id").substring(3, 999);
+                var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
+                var $mid = $("#ms_" + pid);
+                $mid.removeClass("hidden");
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+
+                    success: function (result, status, xhr) {
+                        $mid.addClass("hidden");
+                        $this.val(result).trigger("change.select2");
+                        $this.attr("disabled", false);
+                    },
+                    error: function (xhr, status, error) {
+                        $mid.addClass("hidden");
+                        $this.attr("disabled", false);
+                    }
+                });
+            });
+        }
+
+        $(".table").dataTable({
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "每页显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "表格内搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            "autoWidth": false
+        }).on('draw.dt', iniSelector()).on('init.dt', iniSelector());
+
+        $("select.clct").on("change", (function () {
+            var $this = $(this);
+            var uid, pid, state;
+            uid = 0${sessionScope.user.id};
+            if (uid == 0)
+                return;
+            $this.attr("disabled", true);
+            pid = $this.attr("id").substring(3, 999);
+            state = $this.val();
+            var url = "<s:url action="changePaperState"/>?uid=" + uid + "&pid=" + pid + "&state=" + state;
+            var $mid = $("#ms_" + pid);
+            $mid.removeClass("hidden");
+            $.ajax({
+                type: 'POST',
+                url: url,
+
+                success: function (result, status, xhr) {
+                    $mid.removeClass("loader primary");
+                    $mid.addClass("glyphicon-ok success");
+                    $this.attr("disabled", false);
+                },
+                error: function (xhr, status, error) {
+                    $mid.removeClass("loader primary");
+                    $mid.addClass("glyphicon-remove danger");
+                    $this.attr("disabled", false);
+                }
+            });
+        }));
+    });
+</script>
+
+<%@include file="includes/header2.jsp" %>
 <s:if test="%{notes.isEmpty()}">
   <h4 class="text-center">数据库中没有笔记╮（╯＿╰）╭</h4>
 </s:if>
@@ -36,7 +136,7 @@
           <a href="<s:url action="showPaperDetails">
                 <s:param name="id"><s:property value="paper.id"/></s:param>
            </s:url>">
-          <s:property value="%{paper.title}"/>
+            <s:property value="%{paper.title}"/>
           </a>
         </td>
         <td><s:property value="%{publishTime}"/></td>
