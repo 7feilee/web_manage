@@ -13,38 +13,9 @@
 <!-- initiate datatable and ajax -->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-
-        function iniSelector() {
-            $('select.select').select2();
-            $("select.clct").each(function () {
-                var $this = $(this);
-                var uid, pid;
-                uid = 0${sessionScope.user.id};
-                if (uid == 0)
-                    return;
-                $this.attr("disabled", true);
-                pid = $this.attr("id").substring(3, 999);
-                var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
-                var $mid = $("#ms_" + pid);
-                $mid.removeClass("hidden");
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-
-                    success: function (result, status, xhr) {
-                        $mid.addClass("hidden");
-                        $this.val(result).trigger("change.select2");
-                        $this.attr("disabled", false);
-                    },
-                    error: function (xhr, status, error) {
-                        $mid.addClass("hidden");
-                        $this.attr("disabled", false);
-                    }
-                });
-            });
-        }
-
         $(".table").dataTable({
+            lengthMenu: [25, 50, 100, 150, 300],
+            pageLength: 50,
             language: {
                 "sProcessing": "处理中...",
                 "sLengthMenu": "每页显示 _MENU_ 项结果",
@@ -70,36 +41,7 @@
                 }
             },
             "autoWidth": false
-        }).on('draw.dt', iniSelector()).on('init.dt', iniSelector());
-
-        $("select.clct").on("change", (function () {
-            var $this = $(this);
-            var uid, pid, state;
-            uid = 0${sessionScope.user.id};
-            if (uid == 0)
-                return;
-            $this.attr("disabled", true);
-            pid = $this.attr("id").substring(3, 999);
-            state = $this.val();
-            var url = "<s:url action="changePaperState"/>?uid=" + uid + "&pid=" + pid + "&state=" + state;
-            var $mid = $("#ms_" + pid);
-            $mid.removeClass("hidden");
-            $.ajax({
-                type: 'POST',
-                url: url,
-
-                success: function (result, status, xhr) {
-                    $mid.removeClass("loader primary");
-                    $mid.addClass("glyphicon-ok success");
-                    $this.attr("disabled", false);
-                },
-                error: function (xhr, status, error) {
-                    $mid.removeClass("loader primary");
-                    $mid.addClass("glyphicon-remove danger");
-                    $this.attr("disabled", false);
-                }
-            });
-        }));
+        });
     });
 </script>
 

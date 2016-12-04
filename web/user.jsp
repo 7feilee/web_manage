@@ -45,6 +45,8 @@
         }
 
         $(".table").dataTable({
+            lengthMenu: [5, 10, 15, 30, 50],
+            pageLength: 5,
             language: {
                 "sProcessing": "处理中...",
                 "sLengthMenu": "每页显示 _MENU_ 项结果",
@@ -84,6 +86,7 @@
             var url = "<s:url action="changePaperState"/>?uid=" + uid + "&pid=" + pid + "&state=" + state;
             var $mid = $("#ms_" + pid);
             $mid.removeClass("hidden");
+            $mid.addClass("loader primary");
             $.ajax({
                 type: 'POST',
                 url: url,

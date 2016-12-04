@@ -13,7 +13,6 @@
 <!-- initiate datatable and ajax -->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-
         function iniSelector() {
             $('select.select').select2();
             $("select.clct").each(function () {
@@ -45,6 +44,8 @@
         }
 
         $(".table").dataTable({
+            lengthMenu: [25, 50, 100, 150, 300],
+            pageLength: 50,
             language: {
                 "sProcessing": "处理中...",
                 "sLengthMenu": "每页显示 _MENU_ 项结果",
@@ -84,6 +85,7 @@
             var url = "<s:url action="changePaperState"/>?uid=" + uid + "&pid=" + pid + "&state=" + state;
             var $mid = $("#ms_" + pid);
             $mid.removeClass("hidden");
+            $mid.addClass("loader primary");
             $.ajax({
                 type: 'POST',
                 url: url,

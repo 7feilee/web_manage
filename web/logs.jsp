@@ -13,7 +13,10 @@
 <!-- initiate datatable and ajax -->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+
         $(".table").dataTable({
+            lengthMenu: [25, 50, 100, 150, 300],
+            pageLength: 50,
             language: {
                 "sProcessing": "处理中...",
                 "sLengthMenu": "每页显示 _MENU_ 项结果",
