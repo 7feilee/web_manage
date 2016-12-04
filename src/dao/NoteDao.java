@@ -1,4 +1,5 @@
 package dao;
+import model.Log;
 import model.Note;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,7 +15,7 @@ public class NoteDao
 	@Nullable
 	private Statement newDao()
 	{
-		if (stmt!=null)
+		if (stmt != null)
 			return stmt;
 		try
 		{
@@ -42,12 +43,12 @@ public class NoteDao
 	{
 		try
 		{
-			if (stmt!=null)
+			if (stmt != null)
 				stmt.close();
-			if (conn!=null)
+			if (conn != null)
 				conn.close();
-			stmt=null;
-			conn=null;
+			stmt = null;
+			conn = null;
 			return 1;
 		}
 		catch (SQLException e)
@@ -68,12 +69,12 @@ public class NoteDao
 	{
 		String sql = "SELECT * FROM note WHERE id=" + nid + ";";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
 			Note note = new Note();
-			if(rs.next())
+			if (rs.next())
 			{
 				note.setId(rs.getInt("id"));
 				UserDao userDao = new UserDao();
@@ -92,11 +93,15 @@ public class NoteDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -105,9 +110,9 @@ public class NoteDao
 	public Collection<Note> getAllNotes()
 	{
 		Collection<Note> notes = new LinkedList<>();
-		String sql = "select * from note;";
+		String sql = "SELECT * FROM note;";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -132,11 +137,15 @@ public class NoteDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -147,7 +156,7 @@ public class NoteDao
 	{
 		String sql = "SELECT * FROM note WHERE author=" + uid + ";";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -174,11 +183,15 @@ public class NoteDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -188,7 +201,7 @@ public class NoteDao
 	{
 		String sql = "SELECT * FROM note WHERE paper=" + pid + ";";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -215,11 +228,15 @@ public class NoteDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -233,7 +250,20 @@ public class NoteDao
 				+ title + "','" + content + "','" + publishTime + "');";
 		try
 		{
-			return stmt.executeUpdate(sql);
+			int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int id;
+			if (rs.next())
+			{
+				id = rs.getInt(1);
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.ADD, Log.NOTE, id, authorID) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			rs.close();
+			return -2;//其他未知错误
 		}
 		catch (SQLException e)
 		{
@@ -241,7 +271,8 @@ public class NoteDao
 			e.printStackTrace();
 			return -1;
 		}
-		finally {
+		finally
+		{
 			closeDao();
 		}
 	}

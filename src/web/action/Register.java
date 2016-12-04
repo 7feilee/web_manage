@@ -25,7 +25,7 @@ public class Register extends ActionSupport
 		Integer state;
 		// TODO: 输入验证
 		state = service.addNewUser(username, password);
-		if (state == 1)
+		if (state > 0)
 		{
 			//设置session
 			Integer uid = service.login(username, password);

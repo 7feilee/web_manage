@@ -3,7 +3,7 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@ include file="includes/header.jsp" %>
-<title>笔记列表|文献管理系统</title>
+<title>全站动态|文献管理系统</title>
 <link rel="stylesheet" type="text/css"
       href="${pageContext.request.contextPath}/resources/libs/datatables/css/dataTables.bootstrap.min.css">
 <script type="text/javascript" charset="utf8"
@@ -13,6 +13,7 @@
 <!-- initiate datatable and ajax -->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+
         $(".table").dataTable({
             lengthMenu: [25, 50, 100, 150, 300],
             pageLength: 50,
@@ -40,48 +41,32 @@
                     "sSortDescending": ": 以降序排列此列"
                 }
             },
-            "autoWidth": false
+            "ordering": false
         });
     });
 </script>
 
-<%@include file="includes/header2.jsp" %>
-<s:if test="%{notes.isEmpty()}">
-  <h4 class="text-center">数据库中没有笔记╮（╯＿╰）╭</h4>
+<%@ include file="includes/header2.jsp" %>
+<s:if test="%{logs.isEmpty()}">
+  <h4 class="text-center">数据库中没有日志╮（╯＿╰）╭</h4>
 </s:if>
 <s:else>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     <tr>
-      <th width="40%">题目</th>
-      <th width="20%">作者</th>
-      <th width="20%">论文</th>
-      <th width="20%">发表时间</th>
+      <th>时间</th>
+      <th>事件</th>
     </tr>
     </thead>
     <tbody>
-    <s:iterator value="notes">
+    <s:iterator value="logs">
       <tr>
         <td>
-          <a href='<s:url action="showNoteDetails"><s:param name="id" value="id" /></s:url>'>
-            <s:property value="%{title}"/>
-          </a>
+          <s:property value="time"/>
         </td>
         <td>
-          <a href="<s:url action="showUserDetails">
-                      <s:param name="id"><s:property value="author.id"/></s:param>
-                   </s:url>">
-            <s:property value="author.name==null?author.username:author.name"/>
-          </a>
+          <s:property value="event" escapeHtml="false"/>
         </td>
-        <td>
-          <a href="<s:url action="showPaperDetails">
-                <s:param name="id"><s:property value="paper.id"/></s:param>
-           </s:url>">
-            <s:property value="%{paper.title}"/>
-          </a>
-        </td>
-        <td><s:property value="%{publishTime}"/></td>
       </tr>
     </s:iterator>
     </tbody>

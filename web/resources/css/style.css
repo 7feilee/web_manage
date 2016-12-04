@@ -130,3 +130,7 @@ td{
 th{
     vertical-align: middle !important;
 }
+
+.pagination li {
+    margin-right: 0 !important;
+}

@@ -2,8 +2,140 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
+<title><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>的个人中心|文献管理系统</title>
+<link rel="stylesheet" type="text/css"
+      href="${pageContext.request.contextPath}/resources/libs/datatables/css/dataTables.bootstrap.min.css">
+<script type="text/javascript" charset="utf8"
+        src="${pageContext.request.contextPath}/resources/libs/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
+<!-- initiate datatable and ajax -->
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+
+        function iniSelector() {
+            $('select.select').select2();
+            $("select.clct").each(function () {
+                var $this = $(this);
+                var uid, pid;
+                uid = 0${sessionScope.user.id};
+                if (uid == 0)
+                    return;
+                $this.attr("disabled", true);
+                pid = $this.attr("id").substring(3, 999);
+                var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
+                var $mid = $("#ms_" + pid);
+                $mid.removeClass("hidden");
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+
+                    success: function (result, status, xhr) {
+                        $mid.addClass("hidden");
+                        $this.val(result).trigger("change.select2");
+                        $this.attr("disabled", false);
+                    },
+                    error: function (xhr, status, error) {
+                        $mid.addClass("hidden");
+                        $this.attr("disabled", false);
+                    }
+                });
+            });
+        }
+
+        $(".dt").dataTable({
+            lengthMenu: [5, 10, 15, 30, 50],
+            pageLength: 5,
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "每页显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "表格内搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            "autoWidth": false
+        }).on('draw.dt', iniSelector()).on('init.dt', iniSelector());
+
+        $(".dtno").dataTable({
+            lengthMenu: [5, 10, 15, 30, 50],
+            pageLength: 5,
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "每页显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "表格内搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            "ordering": false
+        });
+        
+        $("select.clct").on("change", (function () {
+            var $this = $(this);
+            var uid, pid, state;
+            uid = 0${sessionScope.user.id};
+            if (uid == 0)
+                return;
+            $this.attr("disabled", true);
+            pid = $this.attr("id").substring(3, 999);
+            state = $this.val();
+            var url = "<s:url action="changePaperState"/>?uid=" + uid + "&pid=" + pid + "&state=" + state;
+            var $mid = $("#ms_" + pid);
+            $mid.removeClass("hidden");
+            $mid.addClass("loader primary");
+            $.ajax({
+                type: 'POST',
+                url: url,
+
+                success: function (result, status, xhr) {
+                    $mid.removeClass("loader primary");
+                    $mid.addClass("glyphicon-ok success");
+                    $this.attr("disabled", false);
+                },
+                error: function (xhr, status, error) {
+                    $mid.removeClass("loader primary");
+                    $mid.addClass("glyphicon-remove danger");
+                    $this.attr("disabled", false);
+                }
+            });
+        }));
+    });
+</script>
+<%@include file="includes/header2.jsp" %>
 <div class="col-md-3">
   <img src="${pageContext.request.contextPath}/resources/img/user/icon-user-default.png" class="img-responsive"/>
   <h2 class="page-header"><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/></h2>
@@ -23,8 +155,10 @@
           if (userp != null && userp.getId() == iruid)
             out.print("我");
           else
-            out.print("ta");
-        %>的论文
+          {%>
+        <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
+        <%}%>
+        的论文
       </h1>
     </div>
     <div class="panel-body">
@@ -43,35 +177,35 @@
             <h4 class="text-center">并没有计划要读的论文</h4>
           </s:if>
           <s:else>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-striped table-hover dt">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="40%">篇名</th>
-                <th style='vertical-align: middle;' width="20%">作者</th>
-                <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <th width="40%">篇名</th>
+                <th width="20%">作者</th>
+                <th width="20%">发表时间</th>
                 <%
                   if (userp != null && userp.getId() == iruid)
                   {
                 %>
-                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <th width="20%">收藏</th>
                 <%}%>
               </tr>
               </thead>
               <tbody>
               <s:iterator value="user.toReadPapers">
                 <tr>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <a href='<s:url action="showPaperDetails"><s:param name="id" value="id" /></s:url>'>
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
-                  <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
+                  <td><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
+                  <td><s:property value="%{publishDate}"/></td>
                   <%
                     if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
@@ -98,35 +232,35 @@
             <h4 class="text-center">并没有已经粗略读过的论文</h4>
           </s:if>
           <s:else>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-striped table-hover dt">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="40%">篇名</th>
-                <th style='vertical-align: middle;' width="20%">作者</th>
-                <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <th width="40%">篇名</th>
+                <th width="20%">作者</th>
+                <th width="20%">发表时间</th>
                 <%
                   if (userp != null && userp.getId() == iruid)
                   {
                 %>
-                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <th width="20%">收藏</th>
                 <%}%>
               </tr>
               </thead>
               <tbody>
               <s:iterator value="user.readPapers">
                 <tr>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <a href='<s:url action="showPaperDetails"><s:param name="id" value="id" /></s:url>'>
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
-                  <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
+                  <td><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
+                  <td><s:property value="%{publishDate}"/></td>
                   <%
                     if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
@@ -153,35 +287,35 @@
             <h4 class="text-center">并没有已经仔细研究过的论文</h4>
           </s:if>
           <s:else>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-striped table-hover dt">
               <thead>
               <tr>
-                <th style='vertical-align: middle;' width="40%">篇名</th>
-                <th style='vertical-align: middle;' width="20%">作者</th>
-                <th style='vertical-align: middle;' width="20%">发表时间</th>
+                <th width="40%">篇名</th>
+                <th width="20%">作者</th>
+                <th width="20%">发表时间</th>
                 <%
                   if (userp != null && userp.getId() == iruid)
                   {
                 %>
-                <th style='vertical-align: middle;' width="20%">收藏</th>
+                <th width="20%">收藏</th>
                 <%}%>
               </tr>
               </thead>
               <tbody>
               <s:iterator value="user.studiedPapers">
                 <tr>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <a href='<s:url action="showPaperDetails"><s:param name="id" value="id" /></s:url>'>
                       <s:property value="%{title}"/>
                     </a>
                   </td>
-                  <td style='vertical-align: middle;'><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
-                  <td style='vertical-align: middle;'><s:property value="%{publishDate}"/></td>
+                  <td><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
+                  <td><s:property value="%{publishDate}"/></td>
                   <%
                     if (userp != null && userp.getId() == iruid)
                     {
                   %>
-                  <td style='vertical-align: middle;'>
+                  <td>
                     <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                             class="form-control select select-primary clct" title="收藏状态">
                       <option value="0">未收藏</option>
@@ -213,12 +347,32 @@
           if (userp != null && userp.getId() == iruid)
             out.print("我");
           else
-            out.print("ta");
-        %>的动态
+          {%>
+        <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
+        <%}%>的动态
       </h1>
     </div>
     <div class="panel-body">
-      todo
+      <table class="table table-bordered table-striped table-hover dtno">
+        <thead>
+        <tr>
+          <th>时间</th>
+          <th>事件</th>
+        </tr>
+        </thead>
+        <tbody>
+        <s:iterator value="logs">
+          <tr>
+            <td>
+              <s:property value="time"/>
+            </td>
+            <td>
+              <s:property value="event" escapeHtml="false"/>
+            </td>
+          </tr>
+        </s:iterator>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="panel panel-primary">
@@ -228,8 +382,9 @@
           if (userp != null && userp.getId() == iruid)
             out.print("我");
           else
-            out.print("ta");
-        %>的笔记
+          {%>
+        <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
+        <%}%>的笔记
       </h1>
     </div>
     <div class="panel-body">
@@ -237,7 +392,7 @@
         <h4 class="text-center">用户并没有写笔记╮（╯＿╰）╭</h4>
       </s:if>
       <s:else>
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-bordered table-striped table-hover dt">
           <thead>
           <tr>
             <th width="50%">题目</th>

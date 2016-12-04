@@ -2,8 +2,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<% Boolean useDatatable = false;%>
 <%@ include file="includes/header.jsp" %>
+<title>注册|文献管理系统</title>
+<%@include file="includes/header2.jsp" %>
 <div class="col-md-4 col-md-offset-4 well" style="margin-top: 80px;">
   <s:form action="register" enctype="multipart/form-data" theme="bootstrap" cssClass="form-horizontal"
           label="用户注册">

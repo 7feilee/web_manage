@@ -2,8 +2,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<% Boolean useDatatable = false;%>
 <%@ include file="includes/header.jsp" %>
+<title>论文:<s:property value="paper.title"/>|文献管理系统</title>
+<%@include file="includes/header2.jsp" %>
 <h2 class="page-header text-center"><s:property value="paper.title"/></h2>
 
 <h5 class="text-center"><s:iterator value="paper.authors"><s:property/>&nbsp;</s:iterator></h5>
