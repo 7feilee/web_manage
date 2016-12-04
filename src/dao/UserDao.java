@@ -188,7 +188,7 @@ public class UserDao
 		}
 	}
 	
-	//state=0是未收藏，1是未读，2是粗读，3是精读
+	//state=0是未收藏，1是未读，2是粗读，3是精读！这个定义不能轻易改变！
 	public int updatePaperState(int user_id, int paper_id, int state)
 	{
 		stmt = newDao();
@@ -212,7 +212,7 @@ public class UserDao
 			if (result > 0)
 			{
 				LogDao logDao = new LogDao();
-				if (logDao.insertLog(state + 3, Log.PAPER, paper_id, user_id) > 0)
+				if (logDao.insertLog(state + 4, Log.PAPER, paper_id, user_id) > 0)
 					return result;
 				else
 					return -3;//写入日志失败

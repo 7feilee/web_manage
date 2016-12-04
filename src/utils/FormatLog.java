@@ -53,6 +53,16 @@ public class FormatLog
 						+ paper.getTitle() + "</a>";
 				result.setEvent(event);
 			}
+			else if (log.getType() == Log.NOTREAD)
+			{//不读论文
+				User operator = service.getUserById(log.getOperatorid());
+				Paper paper = service.getPaperById(log.getTargetid());
+				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
+						+ operator.getUsername() + "</a>" +
+						"不再阅读论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						+ paper.getTitle() + "</a>";
+				result.setEvent(event);
+			}
 			else if (log.getType() == Log.TOREAD)
 			{//计划读论文
 				User operator = service.getUserById(log.getOperatorid());

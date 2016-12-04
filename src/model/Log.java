@@ -8,15 +8,16 @@ public class Log implements Serializable
 	public static final int PAPER = 1;
 	public static final int NOTE = 2;
 	public static final int USER = 3;
-	//对收藏的操作,这种操作定义为type=4|5|6|7，target=1
-	public static final int TOREAD = 4;
-	public static final int READ = 5;
-	public static final int STUDIED = 6;
-	public static final int UPDATETREELABLE = 7;
 	//操作类型
 	public static final int ADD = 1;
 	public static final int DELETE = 2;
 	public static final int EDIT = 3;
+	//对收藏的操作,这种操作定义为type=4|5|6|7，target=1
+	public static final int NOTREAD = 4;
+	public static final int TOREAD = 5;
+	public static final int READ = 6;
+	public static final int STUDIED = 7;
+	public static final int UPDATETREELABLE = 8;
 	
 	private int id;
 	private Date time;
