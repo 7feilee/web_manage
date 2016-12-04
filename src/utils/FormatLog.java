@@ -17,8 +17,12 @@ public class FormatLog
 		if (logs != null)
 		{
 			Collection<FrontLog> results = new LinkedList<>();
-			for (Log log : logs)
+			Log[] logs1 = logs.toArray(new Log[0]);
+			for (int i = logs.size() - 1; i >= 0; --i)
+			{
+				Log log = logs1[i];
 				results.add(formatLog(log));
+			}
 			return results;
 		}
 		return null;
