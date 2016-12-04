@@ -85,7 +85,7 @@ public class FormatLog
 				Paper paper = service.getPaperById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
-						"更新了收藏论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						"更新了论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
 						+ paper.getTitle() + "</a>的分类";
 				result.setEvent(event);
 			}
@@ -111,7 +111,7 @@ public class FormatLog
 			{//用户注册
 				User operator = service.getUserById(log.getOperatorid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
-						+ operator.getUsername()+"注册成为本系统第"+operator.getId()+"位会员";
+						+ operator.getUsername() + "</a>注册成为本系统第" + operator.getId() + "位会员";
 				result.setEvent(event);
 			}
 			// TODO: 2016/12/2 用户资料修改

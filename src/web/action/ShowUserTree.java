@@ -2,8 +2,6 @@ package web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Paper;
 import model.Tree;
-import model.User;
-import org.apache.struts2.ServletActionContext;
 import service.Service;
 
 import java.util.Collection;
@@ -11,7 +9,7 @@ public class ShowUserTree extends ActionSupport
 {
 	//private Tree tree;
 	private Service service;
-	private int user_id;
+	private int uid;
 	private Collection<Tree> trees;
 	private Collection<Paper> papers;
 	//private String
@@ -26,17 +24,17 @@ public class ShowUserTree extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
-		if (obj == null)
-			return ERROR;
-		int uid = ((User) obj).getId();
-		Tree tree = service.getUserTree(uid);
-		trees = service.getUserTreeList(uid);
-		papers = service.getLabelPapers(uid, "null");
-		if (trees != null)
-			return SUCCESS;
-		else
-			return ERROR;
+		if (uid > 0)
+		{
+			Tree tree = service.getUserTree(uid);
+			trees = service.getUserTreeList(uid);
+			papers = service.getLabelPapers(uid, "null");
+			if (trees != null)
+				return SUCCESS;
+			else
+				return ERROR;
+		}
+		return ERROR;
 	}
 	/*
 	public Tree getTree() {
@@ -48,14 +46,14 @@ public class ShowUserTree extends ActionSupport
         this.tree = tree;
     }*/
 	
-	public int getUser_id()
+	public int getUid()
 	{
-		return user_id;
+		return uid;
 	}
 	
-	public void setUser_id(int user_id)
+	public void setUid(int uid)
 	{
-		this.user_id = user_id;
+		this.uid = uid;
 	}
 	
 	public Collection<Tree> getTrees()

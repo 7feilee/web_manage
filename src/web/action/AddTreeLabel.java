@@ -48,11 +48,11 @@ public class AddTreeLabel extends ActionSupport
 		this.labelname = labelname;
 	}
 
-    /*public int getUser_id() {
+    /*public int getUid() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUid(int user_id) {
         this.user_id = user_id;
     }*/
 	
