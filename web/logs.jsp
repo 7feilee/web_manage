@@ -29,6 +29,4 @@
     </tbody>
   </table>
 </s:else>
-
-<s:debug/>
 <%@ include file="includes/footer.jsp" %>
