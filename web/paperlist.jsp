@@ -5,10 +5,7 @@
 <% Boolean useDatatable = true;%>
 <%@ include file="includes/header.jsp" %>
 <s:if test="%{papers.isEmpty()}">
-  <h4 class="text-center">数据库中没有论文╮（╯＿╰）╭
-    <%
-      // todo
-    %>主人快来<a href="addpaper.jsp">添加论文</a>吧！</h4>
+  <h4 class="text-center">数据库中没有论文╮（╯＿╰）╭</h4>
 </s:if>
 <s:else>
   <%
@@ -51,7 +48,7 @@
           {
         %>
         <td>
-          <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0px; float: left"
+          <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                   class="form-control select select-primary clct" title="收藏状态" >
             <option value="0">未收藏</option>
             <option value="1">计划读</option>

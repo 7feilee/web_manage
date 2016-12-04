@@ -120,7 +120,7 @@ public class LogDao
 				log.setOperatorid(rs.getInt("operatorid"));
 				log.setTarget(rs.getInt("target"));
 				log.setTargetid(rs.getInt("targetid"));
-				log.setTime(rs.getDate("time"));
+				log.setTime(rs.getTimestamp("time"));
 				log.setType(rs.getInt("type"));
 				logs.add(log);
 			}
