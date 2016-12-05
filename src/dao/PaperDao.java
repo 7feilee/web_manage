@@ -82,12 +82,19 @@ public class PaperDao
 				paper.setTitle(rs.getString("title"));
 				paper.setPublishDate(rs.getDate("publishDate"));
 				Collection<String> author = new LinkedList<>();
-				author.add(rs.getString("author1"));
-				if (rs.getString("author2") != null)
-					author.add(rs.getString("author2"));
-				else if (rs.getString("author3") != null)
-					author.add(rs.getString("author3"));
+				String authors=rs.getString("author");
+				for (String s : authors.split(";")) {
+					author.add(s);
+				}
 				paper.setAuthors(author);
+				paper.setAbstct(rs.getString("abstct"));
+				paper.setFileURI(rs.getString("fileURI"));
+				Collection<String> keyword = new LinkedList<>();
+				String keywords=rs.getString("keyword");
+				for (String s : keywords.split(";")) {
+					keyword.add(s);
+				}
+				paper.setKeywords(keyword);
 				papers.add(paper);
 			}
 		}
@@ -124,20 +131,18 @@ public class PaperDao
 				paper.setTitle(rs.getString("title"));
 				paper.setPublishDate(rs.getDate("publishDate"));
 				Collection<String> author = new LinkedList<>();
-				author.add(rs.getString("author1"));
-				if (rs.getString("author2") != null)
-					author.add(rs.getString("author2"));
-				else if (rs.getString("author3") != null)
-					author.add(rs.getString("author3"));
+				String authors=rs.getString("author");
+				for (String s : authors.split(";")) {
+					author.add(s);
+				}
 				paper.setAuthors(author);
 				paper.setAbstct(rs.getString("abstct"));
 				paper.setFileURI(rs.getString("fileURI"));
 				Collection<String> keyword = new LinkedList<>();
-				keyword.add(rs.getString("keyword1"));
-				if (rs.getString("keyword2") != null)
-					keyword.add(rs.getString("keyword2"));
-				else if (rs.getString("keyword3") != null)
-					keyword.add(rs.getString("keyword3"));
+				String keywords=rs.getString("keyword");
+				for (String s : keywords.split(";")) {
+					keyword.add(s);
+				}
 				paper.setKeywords(keyword);
 			}
 			return paper;
@@ -163,33 +168,19 @@ public class PaperDao
 	                          Collection<String> authors, String abstct,
 	                          Collection<String> keywords)
 	{
-		int i = 0;
-		String author1 = "", author2 = "", author3 = "", keyword1 = "", keyword2 = "", keyword3 = "";
-		for (Iterator<String> it = authors.iterator(); it.hasNext(); )
-		{
-			i++;
-			if (i == 1)
-				author1 = (String) it.next();
-			else if (i == 2)
-				author2 = (String) it.next();
-			else if (i == 3)
-				author3 = (String) it.next();
+		String author = "",keyword = "";
+		for (String s : authors) {
+			author+=s;
+			author+=';';
 		}
-		i = 0;
-		for (Iterator<String> its = keywords.iterator(); its.hasNext(); )
-		{
-			i++;
-			if (i == 1)
-				keyword1 = (String) its.next();
-			else if (i == 2)
-				keyword2 = (String) its.next();
-			else if (i == 3)
-				keyword3 = (String) its.next();
+		for (String s : keywords) {
+			keyword+=s;
+			keyword+=';';
 		}
-		String sql = "insert into paper(title,fileURI,publishDate,author1,author2,author3," +
-				"abstct,keyword1,keyword2,keyword3) values" +
-				"('" + title + "','" + fileURI + "','" + publishDate + "','" + author1 + "','" + author2 + "','" + author3 + "','" +
-				abstct + "','" + keyword1 + "','" + keyword2 + "','" + keyword3 + "');";
+		String sql = "insert into paper(title,fileURI,publishDate,author," +
+				"abstct,keyword) values" +
+				"('" + title + "','" + fileURI + "','" + publishDate + "','" + author+ "','" +
+				abstct + "','" + keyword+"');";
 		try
 		{
 			stmt = newDao();
