@@ -1,25 +1,9 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>我的研究树</title>
-</head>
-<body>
-    <table class="table table-bordered table-striped table-hover">
-        <tbody>
-        <s:iterator value="trees">
-            <tr>
-                <s:property value="depth"/>
-                <s:property value="labelname"/>
-            </tr>
-        </s:iterator>
-        <s:iterator value="papers">
-            <tr>
-                <s:property value="title"/>
-            </tr>
-        </s:iterator>
-        </tbody>
-    </table>
-
-</body>
-</html>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
+<%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+<%@ include file="includes/header.jsp" %>
+<title>我的分类树|文献管理系统</title>
+<%@include file="includes/header2.jsp" %>
+hello world!
+<%@ include file="includes/footer.jsp" %>
