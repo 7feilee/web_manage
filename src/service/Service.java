@@ -156,7 +156,7 @@ public class Service
 		return userDao.deleteTreeLabel(labelname,user_id);
 	}
 
-	public Collection<Paper> getLabelPapers(int user_id, String labelname){
+	public Collection<Paper> getLabelAndChildrenPapers(int user_id, String labelname){
 		Collection<Paper> papers=new LinkedList<>();
 		LinkedList<Tree> queue=new LinkedList<>();
 		Tree ftree=new Tree();
@@ -179,6 +179,15 @@ public class Service
 				queue.remove();
 				size = queue.size();
 			}
+		}
+		return papers;
+	}
+
+	public Collection<Paper> getLabelPapers(int user_id, String labelname){
+		Collection<Integer> paperids=userDao.getTreePapers(labelname,user_id);
+		Collection<Paper> papers=new LinkedList<>();
+		for (Integer paperid : paperids) {
+			papers.add(paperDao.getPaperById(paperid));
 		}
 		return papers;
 	}
