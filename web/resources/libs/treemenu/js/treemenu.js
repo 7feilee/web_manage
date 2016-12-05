@@ -34,9 +34,9 @@
             }
 
             if (subtree.length > 0) {
-                subtree.hide();
+                //subtree.hide();
 
-                e.addClass('tree-closed');
+                e.addClass('tree-opened');
 
                 e.find(button).click(function () {
                     var li = $(this).parent('li');

@@ -12,6 +12,7 @@ public class ShowUserTree extends ActionSupport
 	private int uid;
 	private Collection<Tree> trees;
 	private Collection<Paper> papers;
+	private String frontEndTree;
 	//private String
 	
 	public ShowUserTree()
@@ -26,11 +27,27 @@ public class ShowUserTree extends ActionSupport
 	{
 		if (uid > 0)
 		{
-			Tree tree = service.getUserTree(uid);
+			//Tree tree = service.getUserTree(uid);
 			trees = service.getUserTreeList(uid);
 			papers = service.getLabelPapers(uid, "null");
 			if (trees != null)
+			{
+				frontEndTree = "";
+				int depth = -1;//当前深度
+				for (Tree tree : trees)
+				{
+					if (tree.getDepth() <= depth)
+						frontEndTree += "</li>\n";
+					for (; tree.getDepth() > depth; depth++)
+						frontEndTree += "<ul>\n";
+					for (; tree.getDepth() < depth; depth--)
+						frontEndTree += "</ul>\n</li>\n";
+					frontEndTree += "<li><span>" + tree.getLabelname() + "</span>\n";
+				}
+				for (; -1 < depth; depth--)
+					frontEndTree += "</li>\n</ul>\n";
 				return SUCCESS;
+			}
 			else
 				return ERROR;
 		}
@@ -74,5 +91,13 @@ public class ShowUserTree extends ActionSupport
 	public void setPapers(Collection<Paper> papers)
 	{
 		this.papers = papers;
+	}
+	public String getFrontEndTree()
+	{
+		return frontEndTree;
+	}
+	public void setFrontEndTree(String frontEndTree)
+	{
+		this.frontEndTree = frontEndTree;
 	}
 }
