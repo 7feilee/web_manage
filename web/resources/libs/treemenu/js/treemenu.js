@@ -76,7 +76,6 @@
                         el.addClass("tree-opened");
                         el.show();
                     }
-
                     el = el.parent();
                 }
             });
