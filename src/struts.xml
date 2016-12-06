@@ -5,8 +5,15 @@
 
 <struts>
   <include file="struts-default.xml"/>
+
   <constant name="struts.devMode" value="true"/>
   <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+
+  <package name="example" extends="json-default">
+    <action name="JSONExample" class="web.test.JSONExample">
+      <result type="json"/>
+    </action>
+  </package>
 
   <package name="actions" extends="struts-default">
     <action name="login" class="web.action.Login">
