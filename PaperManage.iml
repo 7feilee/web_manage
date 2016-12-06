@@ -15,7 +15,6 @@
           <fileset id="s2fileset" name="Default File Set " removed="false">
             <file>file://$MODULE_DIR$/src/struts.xml</file>
             <file>jar://$MODULE_DIR$/lib/struts2-core.jar!/struts-default.xml</file>
-            <file>jar://$MODULE_DIR$/lib/struts2-json-plugin.jar!/struts-plugin.xml</file>
             <file>jar://$MODULE_DIR$/lib/struts2-json-plugin-2.3.31.jar!/struts-plugin.xml</file>
           </fileset>
           <propertiesKeys disabled="false" />
