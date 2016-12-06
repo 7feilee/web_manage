@@ -29,10 +29,9 @@
                 $.ajax({
                     type: 'POST',
                     url: url,
-
                     success: function (result, status, xhr) {
                         $mid.addClass("hidden");
-                        $this.val(result).trigger("change.select2");
+                        $this.val(result.state).trigger("change.select2");
                         $this.attr("disabled", false);
                     },
                     error: function (xhr, status, error) {
@@ -71,7 +70,7 @@
                 }
             },
             "autoWidth": false
-        }).on('draw.dt', iniSelector()).on('init.dt', iniSelector());
+        }).on('draw.dt', iniSelector());
 
         $("select.clct").on("change", (function () {
             var $this = $(this);
@@ -89,10 +88,10 @@
             $.ajax({
                 type: 'POST',
                 url: url,
-
                 success: function (result, status, xhr) {
                     $mid.removeClass("loader primary");
                     $mid.addClass("glyphicon-ok success");
+                    $this.val(result.state).trigger("change.select2");
                     $this.attr("disabled", false);
                 },
                 error: function (xhr, status, error) {

@@ -33,7 +33,7 @@
 
                     success: function (result, status, xhr) {
                         $mid.addClass("hidden");
-                        $this.val(result).trigger("change.select2");
+                        $this.val(result.state).trigger("change.select2");
                         $this.attr("disabled", false);
                     },
                     error: function (xhr, status, error) {
@@ -72,7 +72,7 @@
                 }
             },
             "autoWidth": false
-        }).on('draw.dt', iniSelector()).on('init.dt', iniSelector());
+        }).on('draw.dt', iniSelector());
 
         $(".dtno").dataTable({
             lengthMenu: [5, 10, 15, 30, 50],
@@ -124,6 +124,7 @@
                 success: function (result, status, xhr) {
                     $mid.removeClass("loader primary");
                     $mid.addClass("glyphicon-ok success");
+                    $this.val(result.state).trigger("change.select2");
                     $this.attr("disabled", false);
                 },
                 error: function (xhr, status, error) {

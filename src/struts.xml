@@ -36,7 +36,9 @@
       <result name="success" type="redirectAction">listPapers</result>
     </action>
     <action name="showPaperState" class="web.action.ShowPaperState">
-      <result name="success">ajax/showPaperState.jsp</result>
+      <result name="success" type="json">
+        <param name="includeProperties">state</param>
+      </result>
     </action>
     <action name="changePaperState" class="web.action.ChangePaperState">
       <result name="success" type="chain">showPaperState</result>
