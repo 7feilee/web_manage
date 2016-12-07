@@ -7,7 +7,7 @@
 <!--include treemenu>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/treemenu/css/treemenu.css"/>
 <script src="${pageContext.request.contextPath}/resources/libs/treemenu/js/treemenu.js"></script-->
-<script src="resources/libs/jquery/js/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/libs/fancytree/css/skin-bootstrap/ui.fancytree.css"/>
 <script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
