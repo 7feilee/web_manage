@@ -24,13 +24,12 @@
                     return;
                 $this.attr("disabled", true);
                 pid = $this.attr("id").substring(3, 999);
-                var url = "<s:url action="showPaperState"/>?uid=" + uid + "&pid=" + pid;
                 var $mid = $("#ms_" + pid);
                 $mid.removeClass("hidden");
                 $.ajax({
                     type: 'POST',
-                    url: url,
-
+                    url: "<s:url action="showPaperState"/>",
+                    data: {"uid": uid, "pid": pid},
                     success: function (result, status, xhr) {
                         $mid.addClass("hidden");
                         $this.val(result.state).trigger("change.select2");
@@ -103,7 +102,7 @@
             },
             "ordering": false
         });
-        
+
         $("select.clct").on("change", (function () {
             var $this = $(this);
             var uid, pid, state;
@@ -113,14 +112,13 @@
             $this.attr("disabled", true);
             pid = $this.attr("id").substring(3, 999);
             state = $this.val();
-            var url = "<s:url action="changePaperState"/>?uid=" + uid + "&pid=" + pid + "&state=" + state;
             var $mid = $("#ms_" + pid);
             $mid.removeClass("hidden");
             $mid.addClass("loader primary");
             $.ajax({
                 type: 'POST',
-                url: url,
-
+                url: "<s:url action="changePaperState"/>",
+                data: {"uid": uid, "pid": pid, "state": state},
                 success: function (result, status, xhr) {
                     $mid.removeClass("loader primary");
                     $mid.addClass("glyphicon-ok success");
@@ -158,8 +156,7 @@
           else
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
-        <%}%>
-        的论文
+        <%}%>的论文
       </h1>
     </div>
     <div class="panel-body">

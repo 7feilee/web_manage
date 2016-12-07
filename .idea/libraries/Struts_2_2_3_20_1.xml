@@ -15,13 +15,13 @@
       <root url="jar://$PROJECT_DIR$/lib/javassist.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.39-bin.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/struts2-bootstrap-plugin-2.5.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/struts2-jquery-plugin-4.0.1-20160922.161421-11.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/annotations-java8.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/struts2-json-plugin-2.3.31.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/struts2-jquery-plugin-4.0.1.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/lib/struts2-bootstrap-plugin-2.5.0-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/struts2-jquery-plugin-4.0.1-20160922.161421-11-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/struts2-jquery-plugin-4.0.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>
