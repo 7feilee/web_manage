@@ -8,7 +8,11 @@
   <constant name="struts.devMode" value="true"/>
   <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
 
-  <package name="actions" extends="struts-default">
+  <package name="actions" extends="json-default">
+    <action name="JSONExample" class="web.test.JSONExample">
+      <result type="json"/>
+    </action>
+
     <action name="login" class="web.action.Login">
       <result name="success"/>
       <result name="error">login.jsp</result>
@@ -32,7 +36,9 @@
       <result name="success" type="redirectAction">listPapers</result>
     </action>
     <action name="showPaperState" class="web.action.ShowPaperState">
-      <result name="success">ajax/showPaperState.jsp</result>
+      <result name="success" type="json">
+        <param name="includeProperties">state</param>
+      </result>
     </action>
     <action name="changePaperState" class="web.action.ChangePaperState">
       <result name="success" type="chain">showPaperState</result>

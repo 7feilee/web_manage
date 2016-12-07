@@ -374,7 +374,7 @@ public class UserDao
 		}
 		return papers;
 	}
-	
+	//待讨论修改
 	public int deleteTreeLabel(String labelname, int user_id)
 	{
 		String sql = "SELECT label_father FROM user_tree where labelname='" + labelname + "' and user_id=" + user_id + ";";
