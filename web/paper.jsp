@@ -23,7 +23,8 @@
     <div class="panel-body">
       <%if (userp != null) {%>
       <div class="col-md-3 col-md-offset-9" style="margin-bottom: 15px">
-        <a href="addnote.jsp?paperid=${requestScope.get("id")}" class="btn btn-primary btn-block btn-hg">
+        <a href="${pageContext.request.contextPath}/noteedit.jsp?paperid=${requestScope.get("id")}"
+           class="btn btn-primary btn-block btn-hg">
           <span class="glyphicon glyphicon-edit"></span>&nbsp;写笔记
         </a>
       </div>

@@ -276,4 +276,60 @@ public class NoteDao
 			closeDao();
 		}
 	}
+	public int updateNote(int id, String title, String content, int operatorId, Timestamp editTime)
+	{// TODO: 2016/12/8 editTime
+		stmt = newDao();
+		String sql = "UPDATE note SET title='" + title + "', content='" + content + "' WHERE id=" + id + ";";
+		try
+		{
+			int result = stmt.executeUpdate(sql);
+			if (result > 0)
+			{
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.DELETE, Log.NOTE, id, operatorId) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			return result;//其他未知错误
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.NoteDao.updateNote");
+			e.printStackTrace();
+			return -1;
+		}
+		finally
+		{
+			closeDao();
+		}
+	}
+	public int deleteNote(int nid, int uid)
+	{
+		stmt = newDao();
+		String sql = "DELETE FROM note WHERE id=" + nid + ";";
+		try
+		{
+			int result = stmt.executeUpdate(sql);
+			if (result > 0)
+			{
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.DELETE, Log.NOTE, nid, uid) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			return result;//其他未知错误
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.NoteDao.deleteNote");
+			e.printStackTrace();
+			return -1;
+		}
+		finally
+		{
+			closeDao();
+		}
+	}
 }

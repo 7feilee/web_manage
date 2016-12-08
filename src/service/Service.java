@@ -79,7 +79,7 @@ public class Service
 		Collection<Integer> paperids = userDao.getPaperidByState(user_id, state);
 		for (Integer paperid : paperids)
 		{
-			int i = (int) paperid;
+			int i = paperid;
 			papers.add(paperDao.getPaperById(i));
 		}
 		return papers;
@@ -108,6 +108,11 @@ public class Service
 	{
 		Timestamp publishTime = new Timestamp(System.currentTimeMillis());
 		return noteDao.insertNote(authorId, paperId, title, content, publishTime);
+	}
+	public int editNote(int id, String title, String content, int operatorId)
+	{
+		Timestamp editTime = new Timestamp(System.currentTimeMillis());
+		return noteDao.updateNote(id,title,content,operatorId,editTime);
 	}
 	public Collection<Note> getNotesByUser(int uid)
 	{
@@ -248,5 +253,9 @@ public class Service
 	public int addLog(int type, int target, int targetid, int operatorid)
 	{
 		return logDao.insertLog(type, target, targetid, operatorid);
+	}
+	public int deleteNote(int nid, int uid)
+	{
+		return noteDao.deleteNote(nid,uid);
 	}
 }

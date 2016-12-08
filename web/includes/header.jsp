@@ -17,7 +17,7 @@
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/html5shiv.js"></script>
   <![endif]-->
   <sj:head jqueryui="false"/>
-  <sb:head/>
+  <sb:head compressed="true" includeScripts="false" includeScriptsValidation="false"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/flatui/css/flat-ui.min.css"
         type="text/css"/>
   <script type="text/javascript"
