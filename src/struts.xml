@@ -8,7 +8,7 @@
   <constant name="struts.devMode" value="true"/>
   <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
 
-  <package name="actions" extends="struts-default">
+  <package name="actions" extends="json-default">
     <action name="login" class="web.action.Login">
       <result name="success"/>
       <result name="error">login.jsp</result>
@@ -32,22 +32,39 @@
       <result name="success" type="redirectAction">listPapers</result>
     </action>
     <action name="showPaperState" class="web.action.ShowPaperState">
-      <result name="success">ajax/showPaperState.jsp</result>
+      <result name="success" type="json">
+        <param name="includeProperties">state</param>
+      </result>
     </action>
     <action name="changePaperState" class="web.action.ChangePaperState">
       <result name="success" type="chain">showPaperState</result>
     </action>
-    <action name="addtreelabel" class="web.action.AddTreeLabel">
-      <result name="success">usertree.jsp</result>
+    <action name="showNoteDetails" class="web.action.ShowNoteDetails">
+      <result name="success">note.jsp</result>
+    </action>
+    <action name="listNotes" class="web.action.ListNotes">
+      <result name="success">notelist.jsp</result>
+    </action>
+    <action name="addNote" class="web.action.AddNote">
+      <result name="success" type="redirectAction">listNotes</result>
+    </action>
+    <action name="listLogs" class="web.action.ListLogs">
+      <result name="success">logs.jsp</result>
+    </action>
+    <action name="addTreeLabel" class="web.action.AddTreeLabel">
+      <result name="success">editusertree.jsp</result>
     </action>
     <action name="showUserTree" class="web.action.ShowUserTree">
       <result name="success">showusertree.jsp</result>
     </action>
     <action name="deleteTreeLabel" class="web.action.DeleteTreeLabel">
-      <result name="success">usertree.jsp</result>
+      <result name="success">editusertree.jsp</result>
     </action>
     <action name="changePaperLabel" class="web.action.ChangePaperLabel">
-      <result name="success">usertree.jsp</result>
+      <result name="success">editusertree.jsp</result>
+    </action>
+    <action name="editUserTree" class="web.action.ShowUserTree">
+      <result name="success">editusertree.jsp</result>
     </action>
   </package>
 </struts>

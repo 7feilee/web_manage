@@ -2,7 +2,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<% Boolean useDatatable = false;%>
 <%--@ include file="includes/header.jsp" --%>
 <html>
 <head>
@@ -28,10 +27,6 @@
         <s:textfield name="paper_id" label="论文编号" labelCssClass="col-sm-1" elementCssClass="col-sm-11" requiredLabel="true"/>
         <s:submit value="提交" cssClass="btn btn-primary btn-block btn-hg"/>
     </s:form>
-
-
-
-
 </body>
 </html>
 <%--@ include file="includes/footer.jsp" --%>

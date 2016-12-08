@@ -1,4 +1,5 @@
 package dao;
+import model.Log;
 import model.Paper;
 
 import java.sql.*;
@@ -10,11 +11,8 @@ public class PaperDao
 {
 	private Statement stmt;
 	private Connection conn;
-	/**
-	 * 构造方法，进行数据库的连接
-	 */
-
-	public Statement newDao()
+	
+	private Statement newDao()
 	{
 		if (stmt!=null)
 			return stmt;
@@ -39,7 +37,7 @@ public class PaperDao
 		}
 	}
 
-	public int closeDao()
+	private int closeDao()
 	{
 		try
 		{
@@ -68,7 +66,7 @@ public class PaperDao
 	public Collection<Paper> getAllPapers()
 	{
 		Collection<Paper> papers = new LinkedList<>();
-		String sql = "select * from paper";
+		String sql = "select * from paper;";
 		stmt = newDao();
 		ResultSet rs=null;
 		try
@@ -154,19 +152,19 @@ public class PaperDao
 			return null;
 		}
 		finally {
-			if (rs!=null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			closeDao();
-		}
+		if (rs!=null)
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		closeDao();
+	}
 	}
 	
 	public int insertNewPaper(String title, String fileURI, Date publishDate,
 	                          Collection<String> authors, String abstct,
-	                          Collection<String> keywords)
+	                          Collection<String> keywords, int operater)
 	{
 		String author = "",keyword = "";
 		for (String s : authors) {
@@ -184,11 +182,20 @@ public class PaperDao
 		try
 		{
 			stmt = newDao();
-			int m = stmt.executeUpdate(sql);
-			if (m > 0)
-				return m;
-			else
-				return 0;
+			int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			int id;
+			if (rs.next())
+			{
+				id = rs.getInt(1);
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.ADD, Log.PAPER, id, operater) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			rs.close();
+			return -2;//其他未知错误
 		}
 		catch (SQLException e)
 		{

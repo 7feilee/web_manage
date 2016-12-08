@@ -8,22 +8,24 @@ public class Log implements Serializable
 	public static final int PAPER = 1;
 	public static final int NOTE = 2;
 	public static final int USER = 3;
-	public static final int TOREAD = 4;
-	public static final int READ = 5;
-	public static final int STUDIED = 6;
 	//操作类型
 	public static final int ADD = 1;
 	public static final int DELETE = 2;
 	public static final int EDIT = 3;
-	/**
-	 * 操作对象的ID
-	 */
+	//对收藏的操作,这种操作定义为type=4|5|6|7，target=1
+	public static final int NOTREAD = 4;
+	public static final int TOREAD = 5;
+	public static final int READ = 6;
+	public static final int STUDIED = 7;
+	public static final int UPDATETREELABLE = 8;
+	
 	private int id;
 	private Date time;
 	private Boolean isPrivate;
 	private int target;
+	private int targetid;
 	private int type;
-	private int operator;
+	private int operatorid;
 	
 	
 	public int getId()
@@ -66,12 +68,20 @@ public class Log implements Serializable
 	{
 		this.type = type;
 	}
-	public int getOperator()
+	public int getOperatorid()
 	{
-		return operator;
+		return operatorid;
 	}
-	public void setOperator(int operator)
+	public void setOperatorid(int operatorid)
 	{
-		this.operator = operator;
+		this.operatorid = operatorid;
+	}
+	public int getTargetid()
+	{
+		return targetid;
+	}
+	public void setTargetid(int targetid)
+	{
+		this.targetid = targetid;
 	}
 }

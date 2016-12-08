@@ -1,15 +1,19 @@
 package web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import model.Note;
 import model.Paper;
 import service.Service;
+
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 public class ShowPaperDetails extends ActionSupport
 {
 	private Paper paper;
 	private int id;
 	private Service service;
 	private String dateStr;
+	private Collection<Note> notes;
 	
 	public ShowPaperDetails()
 	{
@@ -24,7 +28,11 @@ public class ShowPaperDetails extends ActionSupport
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dateStr = sdf.format(paper.getPublishDate());
-			return SUCCESS;
+			notes = service.getNotesByPaper(id);
+			if (notes != null)
+				return SUCCESS;
+			//else
+			return ERROR;
 		}
 		return ERROR;
 	}
@@ -51,5 +59,13 @@ public class ShowPaperDetails extends ActionSupport
 	public void setDateStr(String dateStr)
 	{
 		this.dateStr = dateStr;
+	}
+	public Collection<Note> getNotes()
+	{
+		return notes;
+	}
+	public void setNotes(Collection<Note> notes)
+	{
+		this.notes = notes;
 	}
 }
