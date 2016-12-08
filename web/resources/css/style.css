@@ -131,6 +131,9 @@ th{
     vertical-align: middle !important;
 }
 
-.pagination li {
-    margin-right: 0 !important;
+span.fancytree-icon{
+    min-width: 0;
+    width: 0;
+    min-height: 0;
+    height: 0;
 }
