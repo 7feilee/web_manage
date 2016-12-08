@@ -15,7 +15,7 @@
         </s:iterator>
         <s:iterator value="papers">
             <tr>
-                <s:property value="title"></s:property></br>
+                <%--s:property value="title"></--s:property--%><br/>
             </tr>
         </s:iterator>
         </tbody>
