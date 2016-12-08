@@ -51,17 +51,20 @@
     <action name="listLogs" class="web.action.ListLogs">
       <result name="success">logs.jsp</result>
     </action>
-    <action name="addtreelabel" class="web.action.AddTreeLabel">
-      <result name="success">usertree.jsp</result>
+    <action name="addTreeLabel" class="web.action.AddTreeLabel">
+      <result name="success">editusertree.jsp</result>
     </action>
     <action name="showUserTree" class="web.action.ShowUserTree">
       <result name="success">showusertree.jsp</result>
     </action>
     <action name="deleteTreeLabel" class="web.action.DeleteTreeLabel">
-      <result name="success">usertree.jsp</result>
+      <result name="success">editusertree.jsp</result>
     </action>
     <action name="changePaperLabel" class="web.action.ChangePaperLabel">
-      <result name="success">usertree.jsp</result>
+      <result name="success">editusertree.jsp</result>
+    </action>
+    <action name="editUserTree" class="web.action.ShowUserTree">
+      <result name="success">editusertree.jsp</result>
     </action>
   </package>
 </struts>

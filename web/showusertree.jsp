@@ -7,7 +7,7 @@
 <!--include treemenu>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/treemenu/css/treemenu.css"/>
 <script src="${pageContext.request.contextPath}/resources/libs/treemenu/js/treemenu.js"></script-->
-<script src="resources/libs/jquery/js/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/libs/fancytree/css/skin-bootstrap/ui.fancytree.css"/>
 <script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
@@ -34,40 +34,8 @@
     $(document).ready(function () {
         var $tree = $("#tree");
         $tree.fancytree({
-            extensions: ["glyph", "dnd", "edit"],
-            glyph: glyph_opts,
-            dnd: {
-                autoExpandMS: 100,
-                focusOnClick: true,
-                preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-                preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-                dragStart: function(node, data) {
-                    /** This function MUST be defined to enable dragging for the tree.
-                     *  Return false to cancel dragging of node.
-                     */
-                    return true;
-                },
-                dragDrop: function(node, data) {
-                    /** This function MUST be defined to enable dropping of items on
-                     *  the tree.
-                     */
-                    data.otherNode.moveTo(node, data.hitMode);
-                },
-                dragEnter: function(node, data) {
-                  /* data.otherNode may be null for non-fancytree droppables.
-                   * Return false to disallow dropping on node. In this case
-                   * dragOver and dragLeave are not called.
-                   * Return 'over', 'before, or 'after' to force a hitMode.
-                   * Return ['before', 'after'] to restrict available hitModes.
-                   * Any other return value will calc the hitMode from the cursor position.
-                   */
-                  //这句话的意思是不允许仅排序的拖动
-                    return node.parent !== data.otherNode.parent;
-                }
-            },
-            edit: {
-                triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"]
-            }
+            extensions: ["glyph"],
+            glyph: glyph_opts
         });
         $tree.fancytree("getRootNode").visit(function(node){
             node.setExpanded(true);
