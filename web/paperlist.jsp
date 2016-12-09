@@ -114,7 +114,7 @@
     {
   %>
   <div class="col-md-3 col-md-offset-9">
-    <a href="addpaper.jsp" class="btn btn-primary btn-block btn-lg">
+    <a href="editpaper.jsp" class="btn btn-primary btn-block btn-lg">
       <span class="glyphicon glyphicon-plus"></span>&nbsp;新增论文
     </a>
   </div>

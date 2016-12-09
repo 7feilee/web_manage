@@ -70,7 +70,7 @@
                     "sSortDescending": ": 以降序排列此列"
                 }
             },
-            "autoWidth": false
+            autoWidth: false
         }).on('draw.dt', iniSelector());
 
         $(".dtno").dataTable({
@@ -100,7 +100,7 @@
                     "sSortDescending": ": 以降序排列此列"
                 }
             },
-            "ordering": false
+            ordering: false
         });
 
         $("select.clct").on("change", (function () {
@@ -145,7 +145,7 @@
 <div class="col-md-9">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h1 class="panel-title">
+      <h5 style="margin: 0">
         <%
           String sruid = request.getParameter("id");
           int iruid = -1;
@@ -157,7 +157,7 @@
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的论文
-      </h1>
+      </h5>
     </div>
     <div class="panel-body">
       <ul id="myTab" class="nav nav-tabs">
@@ -340,7 +340,7 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h1 class="panel-title">
+      <h5 style="margin: 0">
         <%
           if (userp != null && userp.getId() == iruid)
             out.print("我");
@@ -348,7 +348,7 @@
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的动态
-      </h1>
+      </h5>
     </div>
     <div class="panel-body">
       <table class="table table-bordered table-striped table-hover dtno">
@@ -375,7 +375,7 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h1 class="panel-title">
+      <h5 style="margin: 0">
         <%
           if (userp != null && userp.getId() == iruid)
             out.print("我");
@@ -383,7 +383,7 @@
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的笔记
-      </h1>
+      </h5>
     </div>
     <div class="panel-body">
       <s:if test="%{notes.isEmpty()}">
