@@ -276,4 +276,35 @@ public class NoteDao
 			closeDao();
 		}
 	}
+	public int updateNote(int id, String title, String content, Timestamp editTime)
+	{// TODO: 2016/12/8 editTime
+		stmt = newDao();
+		String sql = "UPDATE note SET title='"+title+"', content='"+content+"' WHERE id="+id+";";
+		try
+		{
+			int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next())
+			{
+				id = rs.getInt(1);
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.EDIT, Log.NOTE, id, getNoteById(id).getAuthor().getId()) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			rs.close();
+			return -2;//其他未知错误
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.NoteDao.updateNote");
+			e.printStackTrace();
+			return -1;
+		}
+		finally
+		{
+			closeDao();
+		}
+	}
 }

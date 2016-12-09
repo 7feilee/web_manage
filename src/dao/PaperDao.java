@@ -4,6 +4,7 @@ import model.Paper;
 
 import java.sql.*;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -81,17 +82,13 @@ public class PaperDao
 				paper.setPublishDate(rs.getDate("publishDate"));
 				Collection<String> author = new LinkedList<>();
 				String authors=rs.getString("author");
-				for (String s : authors.split(";")) {
-					author.add(s);
-				}
+				Collections.addAll(author, authors.split(";"));
 				paper.setAuthors(author);
 				paper.setAbstct(rs.getString("abstct"));
 				paper.setFileURI(rs.getString("fileURI"));
 				Collection<String> keyword = new LinkedList<>();
 				String keywords=rs.getString("keyword");
-				for (String s : keywords.split(";")) {
-					keyword.add(s);
-				}
+				Collections.addAll(keyword, keywords.split(";"));
 				paper.setKeywords(keyword);
 				papers.add(paper);
 			}

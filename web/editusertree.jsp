@@ -10,7 +10,7 @@
 <script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
 <script>
     $(document).ready(function () {
-        var count=1;
+        var count = 1;
         var $tree = $("#tree");
         $tree.fancytree({
             extensions: ["dnd", "edit"],
@@ -29,8 +29,7 @@
                     //这句话的意思是不允许仅排序的拖动
                     if (node.parent === data.otherNode.parent)
                         return ["over"];
-                    else
-                        return true;
+                    return true;
                 }
             },
             edit: {
@@ -42,16 +41,16 @@
         });
         $("#addChild").click(function () {
             var node = $("#tree").fancytree("getActiveNode");
-            if( !node ) {
+            if (!node) {
                 alert("请选择一个节点");
                 return;
             }
-            node.editCreateNode("child", "新节点"+count);
+            node.editCreateNode("child", "新节点" + count);
             count++;
         });
         $("#delNode").click(function () {
             var node = $("#tree").fancytree("getActiveNode");
-            if( !node ) {
+            if (!node) {
                 alert("请选择一个节点");
                 return;
             }
@@ -59,7 +58,7 @@
         });
         $("#editNode").click(function () {
             var node = $("#tree").fancytree("getActiveNode");
-            if( !node ) {
+            if (!node) {
                 alert("请选择一个节点");
                 return;
             }
@@ -87,6 +86,12 @@
     <s:property value="frontEndTree" escapeHtml="false"/>
   </div>
 </div>
+
+<%--<div class="row">--%>
+  <%--<div class="col-md-12">--%>
+    <%--<div class="alert alert-info" style=""><span class="glyphicon glyphicon-info-sign"></span> 支持拖拽，双击可即时编辑</div>--%>
+  <%--</div>--%>
+<%--</div>--%>
 <%--<h2 class="text-center" style="margin-bottom: 20px">添加新的标签</h2>--%>
 <%--<s:form theme="bootstrap" action="addtreelabel" cssClass="form-horizontal" id="validationForm">--%>
 <%--<s:textfield name="labelname" label="标签名" labelCssClass="col-sm-1" elementCssClass="col-sm-11" requiredLabel="true"/>--%>

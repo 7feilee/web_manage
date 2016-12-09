@@ -8,7 +8,7 @@ import service.Service;
 public class AddNote extends ActionSupport
 {
 	private int paperid;
-	
+	private int id;
 	private String title;
 	private String content;
 	private Service service;
@@ -21,23 +21,32 @@ public class AddNote extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		if (title != null)
-		{
-			User author = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
-			if (author == null)
+		if(id == 0)
+		{//新增笔记
+			if (title != null)
+			{
+				User author = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
+				if (author == null)
+					return ERROR;
+				Paper paper = service.getPaperById(paperid);
+				if (paper == null)
+					return ERROR;
+				if (service.addNote(title, content, author.getId(), paperid) > 0)
+					return SUCCESS;
 				return ERROR;
-			//else
-			Paper paper = service.getPaperById(paperid);
-			if (paper == null)
-				return ERROR;
-			//else
-			if (service.addNote(title, content, author.getId(), paperid) > 0)
-				return SUCCESS;
-			//else
+			}
 			return ERROR;
 		}
-		//else
-		return ERROR;
+		else
+		{//编辑笔记
+			if (title != null)
+			{
+				if (service.editNote(id, title, content) > 0)
+					return SUCCESS;
+				return ERROR;
+			}
+			return ERROR;
+		}
 	}
 	
 	public String getTitle()
@@ -63,5 +72,13 @@ public class AddNote extends ActionSupport
 	public void setPaperid(int paperid)
 	{
 		this.paperid = paperid;
+	}
+	public int getId()
+	{
+		return id;
+	}
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 }

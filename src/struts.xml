@@ -66,5 +66,11 @@
     <action name="editUserTree" class="web.action.ShowUserTree">
       <result name="success">editusertree.jsp</result>
     </action>
+    <action name="getPapersByTreeNodeName" class="web.action.GetPapersByTreeNodeName">
+      <result type="json" name="success"/>
+    </action>
+    <action name="editNote" class="web.action.ShowNoteDetails">
+      <result name="success">addnote.jsp</result>
+    </action>
   </package>
 </struts>

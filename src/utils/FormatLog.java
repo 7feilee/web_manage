@@ -117,7 +117,17 @@ public class FormatLog
 						+ note.getTitle() + "</a>";
 				result.setEvent(event);
 			}
-			// TODO: 2016/12/2 修改和删除笔记
+			else if (log.getType()==Log.EDIT)
+			{//编辑笔记
+				User operator = service.getUserById(log.getOperatorid());
+				Note note = service.getNoteById(log.getTargetid());
+				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
+						+ operator.getUsername() + "</a>" +
+						"修改了笔记：<a href='/showNoteDetails.action?id=" + note.getId() + "'>"
+						+ note.getTitle() + "</a>";
+				result.setEvent(event);
+			}
+			// TODO: 2016/12/2 删除笔记
 		}
 		else if (log.getTarget()==Log.USER)
 		{
