@@ -249,4 +249,43 @@ public class Service
 	{
 		return logDao.insertLog(type, target, targetid, operatorid);
 	}
+
+	public int resetTree(LinkedList<Tree> treelist,int user_id){
+		int size=treelist.size();
+		for (int i=0;i<size;i++){
+			int depth=treelist.get(i).getDepth();
+			if (depth==0)
+				treelist.get(i).setLabel_father("null");
+			else
+				for (int j=i;j<size;j++){
+					int cdepth=treelist.get(j).getDepth();
+					if (cdepth<depth){
+						if (cdepth==(depth+1)){
+							treelist.get(j).setLabel_father(treelist.get(j).getLabelname());
+						}
+					}
+					else
+						break;
+				}
+		}
+		int id=0;
+		Tree tree=null;
+		Tree ytree=null;
+		int result=-1;
+		for (int i=0;i<size;i++){
+			tree=treelist.get(i);
+			id=tree.getId();
+			ytree=userDao.getTreeById(id);
+			if (ytree==null)
+				result=userDao.addTreeLabel(tree.getLabelname(),tree.getLabel_father(),user_id);
+			else {
+				if (tree.getLabelname() != ytree.getLabelname())
+					result=userDao.updateTreeLabel(id, tree.getLabelname());
+				if (tree.getLabel_father() != ytree.getLabel_father())
+					result=userDao.updateLabelFather(id,tree.getLabel_father());
+			}
+		}
+		return result;
+	}
+
 }
