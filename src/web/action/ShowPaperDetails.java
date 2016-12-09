@@ -12,6 +12,8 @@ public class ShowPaperDetails extends ActionSupport
 	private Paper paper;
 	private int id;
 	private Service service;
+	private StringBuilder authors;
+	private StringBuilder keywords;
 	private String dateStr;
 	private Collection<Note> notes;
 	
@@ -28,6 +30,12 @@ public class ShowPaperDetails extends ActionSupport
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dateStr = sdf.format(paper.getPublishDate());
+			authors = new StringBuilder();
+			keywords = new StringBuilder();
+			for (String author : paper.getAuthors())
+				authors.append(author).append(";");
+			for (String keyword : paper.getKeywords())
+				keywords.append(keyword).append(";");
 			notes = service.getNotesByPaper(id);
 			if (notes != null)
 				return SUCCESS;
@@ -67,5 +75,21 @@ public class ShowPaperDetails extends ActionSupport
 	public void setNotes(Collection<Note> notes)
 	{
 		this.notes = notes;
+	}
+	public String getAuthors()
+	{
+		return authors.toString();
+	}
+	public void setAuthors(String authors)
+	{
+		this.authors = new StringBuilder(authors);
+	}
+	public String getKeywords()
+	{
+		return keywords.toString();
+	}
+	public void setKeywords(String keywords)
+	{
+		this.keywords = new StringBuilder(keywords);
 	}
 }

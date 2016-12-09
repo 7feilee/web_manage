@@ -58,7 +58,8 @@
     if (userp != null)
     {
   %>
-  <a class="btn btn-primary pull-right" href="">
+  <a class="btn btn-primary pull-right" href="<s:url action="editPaper">
+    <s:param name="id" value="id"/></s:url>">
     <span class="glyphicon glyphicon-edit"></span> 编辑</a>
   <%}%>
 </div>
@@ -67,13 +68,12 @@
   <div id="left" class="col-md-4" style="padding: 0 5px">
     <div class="well">
       <h5 class="page-header" style="margin-top: 20px">作者</h5>
-      <p class="lead">
-        <s:iterator value="paper.authors"><s:property/>;</s:iterator>
+      <p class="lead"><s:property value="authors"/></p>
       <h5 class="page-header">关键字</h5>
-      <p class="lead"><s:iterator value="paper.keywords"><s:property/>;</s:iterator></p>
+      <p class="lead"><s:property value="keywords"/></p>
       <h5 class="page-header">发表日期</h5>
       <p class="lead"><s:property value="dateStr"/></p>
-      <a href="<s:property value="paper.fileURI"/>" class="btn btn-block btn-hg btn-primary">
+      <a href="<s:property value="paper.fileURI"/>" target="_blank" class="btn btn-block btn-hg btn-primary">
         <span class="glyphicon glyphicon-download-alt"></span> 下载</a>
     </div>
   </div>
@@ -113,7 +113,7 @@
           <s:iterator value="notes">
             <tr>
               <td>
-                <a href='<s:url action="showNoteDetails"><s:param name="id" value="id" /></s:url>'>
+                <a href='<s:url action="showNoteDetails"><s:param name="id" value="id"/></s:url>'>
                   <s:property value="%{title}"/>
                 </a>
               </td>

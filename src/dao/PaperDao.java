@@ -5,7 +5,6 @@ import model.Paper;
 import java.sql.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class PaperDao
@@ -15,7 +14,7 @@ public class PaperDao
 	
 	private Statement newDao()
 	{
-		if (stmt!=null)
+		if (stmt != null)
 			return stmt;
 		try
 		{
@@ -37,17 +36,17 @@ public class PaperDao
 			return null;
 		}
 	}
-
+	
 	private int closeDao()
 	{
 		try
 		{
-			if (stmt!=null)
+			if (stmt != null)
 				stmt.close();
-			if (conn!=null)
+			if (conn != null)
 				conn.close();
-			stmt=null;
-			conn=null;
+			stmt = null;
+			conn = null;
 			return 1;
 		}
 		catch (SQLException e)
@@ -63,13 +62,13 @@ public class PaperDao
 			return -2;
 		}
 	}
-
+	
 	public Collection<Paper> getAllPapers()
 	{
 		Collection<Paper> papers = new LinkedList<>();
-		String sql = "select * from paper;";
+		String sql = "SELECT * FROM paper;";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -81,13 +80,13 @@ public class PaperDao
 				paper.setTitle(rs.getString("title"));
 				paper.setPublishDate(rs.getDate("publishDate"));
 				Collection<String> author = new LinkedList<>();
-				String authors=rs.getString("author");
+				String authors = rs.getString("author");
 				Collections.addAll(author, authors.split(";"));
 				paper.setAuthors(author);
 				paper.setAbstct(rs.getString("abstct"));
 				paper.setFileURI(rs.getString("fileURI"));
 				Collection<String> keyword = new LinkedList<>();
-				String keywords=rs.getString("keyword");
+				String keywords = rs.getString("keyword");
 				Collections.addAll(keyword, keywords.split(";"));
 				paper.setKeywords(keyword);
 				papers.add(paper);
@@ -99,11 +98,15 @@ public class PaperDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-			if (rs!=null)
-				try {
+		finally
+		{
+			if (rs != null)
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			closeDao();
@@ -115,7 +118,7 @@ public class PaperDao
 	{
 		String sql = "select * from paper where id='" + id + "';";
 		stmt = newDao();
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try
 		{
 			rs = stmt.executeQuery(sql);
@@ -126,16 +129,18 @@ public class PaperDao
 				paper.setTitle(rs.getString("title"));
 				paper.setPublishDate(rs.getDate("publishDate"));
 				Collection<String> author = new LinkedList<>();
-				String authors=rs.getString("author");
-				for (String s : authors.split(";")) {
+				String authors = rs.getString("author");
+				for (String s : authors.split(";"))
+				{
 					author.add(s);
 				}
 				paper.setAuthors(author);
 				paper.setAbstct(rs.getString("abstct"));
 				paper.setFileURI(rs.getString("fileURI"));
 				Collection<String> keyword = new LinkedList<>();
-				String keywords=rs.getString("keyword");
-				for (String s : keywords.split(";")) {
+				String keywords = rs.getString("keyword");
+				for (String s : keywords.split(";"))
+				{
 					keyword.add(s);
 				}
 				paper.setKeywords(keyword);
@@ -148,34 +153,34 @@ public class PaperDao
 			e.printStackTrace();
 			return null;
 		}
-		finally {
-		if (rs!=null)
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		closeDao();
-	}
+		finally
+		{
+			if (rs != null)
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException e)
+				{
+					e.printStackTrace();
+				}
+			closeDao();
+		}
 	}
 	
 	public int insertNewPaper(String title, String fileURI, Date publishDate,
 	                          Collection<String> authors, String abstct,
 	                          Collection<String> keywords, int operater)
 	{
-		String author = "",keyword = "";
-		for (String s : authors) {
-			author+=s;
-			author+=';';
-		}
-		for (String s : keywords) {
-			keyword+=s;
-			keyword+=';';
-		}
+		StringBuilder author = new StringBuilder(), keyword = new StringBuilder();
+		for (String s : authors)
+			author.append(s).append(";");
+		for (String s : keywords)
+			keyword.append(s).append(";");
 		String sql = "insert into paper(title,fileURI,publishDate,author," +
 				"abstct,keyword) values" +
-				"('" + title + "','" + fileURI + "','" + publishDate + "','" + author+ "','" +
-				abstct + "','" + keyword+"');";
+				"('" + title + "','" + fileURI + "','" + publishDate + "','" + author + "','" +
+				abstct + "','" + keyword + "');";
 		try
 		{
 			stmt = newDao();
@@ -199,7 +204,42 @@ public class PaperDao
 			e.printStackTrace();
 			return -1;
 		}
-		finally {
+		finally
+		{
+			closeDao();
+		}
+	}
+	public int updatePaper(int id, String title, Collection<String> authors, String fileURI, Collection<String> keywords, String abstct, Date publishDate, int uid)
+	{
+		StringBuilder author = new StringBuilder(), keyword = new StringBuilder();
+		for (String s : authors)
+			author.append(s).append(";");
+		for (String s : keywords)
+			keyword.append(s).append(";");
+		String sql = "UPDATE paper set title='" + title + "', fileURI='" + fileURI +
+				"', publishDate='" + publishDate + "', author='" + author +
+				"', abstct='" + abstct + "', keyword='" + keyword + "' WHERE id=" + id + ";";
+		try
+		{
+			stmt = newDao();
+			int result = stmt.executeUpdate(sql);
+			if(result>0)
+			{
+				LogDao logDao = new LogDao();
+				if (logDao.insertLog(Log.EDIT, Log.PAPER, id, uid) > 0)
+					return result;
+				else
+					return -3;//写入日志失败
+			}
+			return result;//其他未知错误
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			return -1;
+		}
+		finally
+		{
 			closeDao();
 		}
 	}

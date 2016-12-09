@@ -17,6 +17,7 @@ public class AddEditPaper extends ActionSupport
 	private String keyword;
 	private String abstct;
 	private String dateStr;
+	private int id;
 	
 	private Collection<String> authors;
 	private Collection<String> keywords;
@@ -32,23 +33,27 @@ public class AddEditPaper extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		if(title!=null)
+		if (title != null)
 		{
-			if(author !=null)
-				authors = Arrays.asList(author.split("\\|"));
-			if(keyword != null)
-				keywords = Arrays.asList(keyword.split("\\|"));
-			if(dateStr!= null && dateStr.matches("\\d{4}-\\d{2}-\\d{2}"))
+			if (author != null)
+				authors = Arrays.asList(author.split(";"));
+			if (keyword != null)
+				keywords = Arrays.asList(keyword.split(";"));
+			if (dateStr != null && dateStr.matches("\\d{4}-\\d{2}-\\d{2}"))
 			{
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				publishDate = sdf.parse(dateStr);
 			}
 			Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
-			if(obj == null)
+			if (obj == null)
 				return ERROR;
-			//else
 			int uid = ((User) obj).getId();
-			if (service.addPaper(title, authors, fileURI, keywords, abstct, publishDate, uid) > 0)
+			int result;
+			if (id == 0)
+				result = service.addPaper(title, authors, fileURI, keywords, abstct, publishDate, uid);
+			else
+				result = service.editPaper(id, title, authors, fileURI, keywords, abstct, publishDate, uid);
+			if (result > 0)
 				return SUCCESS;
 			else
 				return ERROR;
@@ -104,5 +109,13 @@ public class AddEditPaper extends ActionSupport
 	public void setDateStr(String dateStr)
 	{
 		this.dateStr = dateStr;
+	}
+	public int getId()
+	{
+		return id;
+	}
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 }

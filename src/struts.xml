@@ -28,7 +28,7 @@
     <action name="logout" class="web.action.Logout">
       <result type="redirect">index.jsp</result>
     </action>
-    <action name="addPaper" class="web.action.AddEditPaper">
+    <action name="addEditPaper" class="web.action.AddEditPaper">
       <result type="redirectAction">listPapers</result>
     </action>
     <action name="showPaperState" class="web.action.ShowPaperState">
