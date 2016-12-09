@@ -5,17 +5,37 @@
 <%@ include file="includes/header.jsp" %>
 <title>论文:<s:property value="paper.title"/>|文献管理系统</title>
 <%@include file="includes/header2.jsp" %>
-<h2 class="page-header text-center"><s:property value="paper.title"/></h2>
 
-<h5 class="text-center"><s:iterator value="paper.authors"><s:property/>&nbsp;</s:iterator></h5>
-<h5 class="page-header">摘要</h5>
-<p class="lead"><s:property value="paper.abstct"/></p>
-<h5 class="page-header">关键字</h5>
-<p class="lead"><s:iterator value="paper.keywords"><s:property/>&nbsp;</s:iterator></p>
-<h5 class="page-header">来源链接</h5>
-<a href="<s:property value="paper.fileURI"/>"><s:property value="paper.fileURI"/></a>
-
-
+<div class="page-header">
+  <span class="h3"><s:property value="paper.title"/></span>
+  <%
+    if (userp != null)
+    {
+  %>
+  <a class="btn btn-primary pull-right"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
+  <%}%>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-4" style="padding: 0 5px">
+    <div class="well">
+      <h5 class="page-header" style="margin-top: 20px">作者</h5>
+      <p class="lead">
+        <s:iterator value="paper.authors"><s:property/>;</s:iterator>
+      <h5 class="page-header">关键字</h5>
+      <p class="lead"><s:iterator value="paper.keywords"><s:property/>;</s:iterator></p>
+      <a href="<s:property value="paper.fileURI"/>" class="btn btn-block btn-hg btn-primary">
+        <span class="glyphicon glyphicon-download>"></span> 下载</a>
+    </div>
+  </div>
+  <div class="col-md-8" style="padding: 0 5px">
+    <div class="well">
+      <h5 class="page-header" style="margin-top: 20px">摘要</h5>
+      <p class="lead"><s:property value="paper.abstct"/></p>
+    </div>
+  </div>
+</div>
+<div class="row">
   <div class="panel panel-primary" style="margin-top: 30px">
     <div class="panel-heading">
       <h3 class="panel-title">大家的笔记</h3>
@@ -23,8 +43,7 @@
     <div class="panel-body">
       <%if (userp != null) {%>
       <div class="col-md-3 col-md-offset-9" style="margin-bottom: 15px">
-        <a href="${pageContext.request.contextPath}/noteedit.jsp?paperid=${requestScope.get("id")}"
-           class="btn btn-primary btn-block btn-hg">
+        <a href="editnote.jsp?paperid=${requestScope.get("id")}" class="btn btn-primary btn-block btn-hg">
           <span class="glyphicon glyphicon-edit"></span>&nbsp;写笔记
         </a>
       </div>

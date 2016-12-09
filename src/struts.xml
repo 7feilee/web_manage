@@ -70,7 +70,7 @@
       <result type="json" name="success"/>
     </action>
     <action name="editNote" class="web.action.ShowNoteDetails">
-      <result name="success">noteedit.jsp</result>
+      <result name="success">editnote.jsp</result>
     </action>
     <action name="deleteNote" class="web.action.DeleteNote">
       <result name="success">notelist.jsp</result>
