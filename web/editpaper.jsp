@@ -58,9 +58,9 @@
     <s:textfield name="title" label="篇名" labelCssClass="col-sm-1" elementCssClass="col-sm-11"
                  requiredLabel="true" value="%{paper.title}"/>
     <s:textfield name="author" label="作者" placeholder="多个作者请使用;分隔" labelCssClass="col-sm-1"
-                 elementCssClass="col-sm-11" value="%{authors}" data-role="tagsinput" />
+                 elementCssClass="col-sm-11" value="%{authors}"/>
     <s:textfield name="keyword" label="关键字" placeholder="多个关键字请使用;分隔" labelCssClass="col-sm-1"
-                 elementCssClass="col-sm-11" value="%{keywords}" data-role="tagsinput" />
+                 elementCssClass="col-sm-11" value="%{keywords}"/>
     <s:textfield name="fileURI" label="来源链接" labelCssClass="col-sm-1"
                  elementCssClass="col-sm-11" value="%{paper.fileURI}"/>
     <div class="form-group">
