@@ -22,6 +22,14 @@
     }
     ActionContext.getContext().put("paperid",paperid);
   %>|文献管理系统</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/wangeditor/css/wangEditor.min.css"/>
+<script src="${pageContext.request.contextPath}/resources/libs/wangeditor/js/wangEditor.min.js"></script>
+<script>
+  $(document).ready(function () {
+      var editor = new wangEditor("editor");
+      editor.create();
+  });
+</script>
 <%@include file="includes/header2.jsp" %>
 <div class="well">
   <h2 class="text-center" style="margin-bottom: 20px"><%
@@ -31,10 +39,11 @@
     	out.print("新增");
   %>笔记</h2>
   <s:form theme="bootstrap" action="addEditNote" cssClass="form-horizontal" id="validationForm">
-    <s:textfield name="title" label="题目" labelCssClass="col-sm-1" elementCssClass="col-sm-11" requiredLabel="true" value="%{note.title}"/>
-    <s:textarea name="content" label="内容" rows="15" labelCssClass="col-sm-1" elementCssClass="col-sm-11" value="%{note.content}"/>
-    <s:textfield name="paperid" cssClass="hidden" value='%{#paperid}'/>
-    <s:textfield name="id" cssClass="hidden" value='%{note.id}'/>
+    <s:textfield name="title" label="题目" labelCssClass="col-sm-1" elementCssClass="col-sm-11"
+                 requiredLabel="true" value="%{note.title}"/>
+    <s:textarea name="content" rows="15" elementCssClass="col-sm-12" id="editor" value="%{note.content}"/>
+    <s:textfield name="paperid" cssClass="hidden" value='%{#paperid}' readonly="true"/>
+    <s:textfield name="id" cssClass="hidden" value='%{note.id}' readonly="true"/>
     <s:submit value="提交" cssClass="btn btn-primary btn-block btn-hg"/>
   </s:form>
 </div>

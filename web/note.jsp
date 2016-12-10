@@ -55,6 +55,6 @@
   的笔记 &commat; <s:property value="dateStr"/>
 </small>
 <div class="content" style="margin-top: 40px">
-  <s:property value="note.content"/>
+  <s:property value="note.content" escapeHtml="false"/>
 </div>
 <%@ include file="includes/footer.jsp" %>
