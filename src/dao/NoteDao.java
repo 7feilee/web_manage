@@ -286,7 +286,7 @@ public class NoteDao
 			if (result > 0)
 			{
 				LogDao logDao = new LogDao();
-				if (logDao.insertLog(Log.DELETE, Log.NOTE, id, operatorId) > 0)
+				if (logDao.insertLog(Log.EDIT, Log.NOTE, id, operatorId) > 0)
 					return result;
 				else
 					return -3;//写入日志失败

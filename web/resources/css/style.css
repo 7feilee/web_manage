@@ -140,3 +140,6 @@ span.fancytree-icon{
     min-height: 0;
     height: 0;
 }
+pre{
+    padding: 0 !important;
+}
