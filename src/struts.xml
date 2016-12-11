@@ -78,5 +78,8 @@
     <action name="editPaper" class="web.action.ShowPaperDetails">
       <result>editpaper.jsp</result>
     </action>
+    <action name="editTree" class="web.action.EditUserTree">
+      <result type="redirectAction">showUserTree</result>
+    </action>
   </package>
 </struts>
