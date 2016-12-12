@@ -70,6 +70,12 @@
       <result>download.jsp</result>
     </action>
     <action name="Zip2Download" class="web.action.Download">
+      <result name="success" type="stream">
+        <param name="contentType">application/octet-stream;</param>
+        <param name="contentDisposition">attachment;filename="${fileName}"</param>
+        <param name="inputName">downloadFile</param>
+        <param name="bufferSize">102400000</param>
+      </result>
     </action>
   </package>
 </struts>

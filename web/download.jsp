@@ -4,6 +4,6 @@
     <title>下载</title>
 </head>
 <body>
-    <a herf="localhost:8080/Zip2Download?label_id=2">下载</a>
+    <a href="localhost:8080/Zip2Download?label_id=2">下载</a>
 </body>
 </html>
