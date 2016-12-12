@@ -77,7 +77,7 @@
                  <%--elementCssClass="col-sm-11" value="" readonly="true" data-link-format="yyyy-mm-dd"/>--%>
     <s:textarea name="abstct" label="摘要" rows="5" labelCssClass="col-sm-1"
                 elementCssClass="col-sm-11" value="%{paper.abstct}"/>
-    <s:textfield name="id" cssClass="hidden" value="%{#id}"/>
+    <s:textfield name="id" cssClass="hidden" value="%{#id}" readonly="true"/>
     <s:submit value="提交" cssClass="btn btn-primary btn-block btn-hg"/>
   </s:form>
 </div>

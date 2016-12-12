@@ -33,8 +33,8 @@
   <s:form theme="bootstrap" action="addEditNote" cssClass="form-horizontal" id="validationForm">
     <s:textfield name="title" label="题目" labelCssClass="col-sm-1" elementCssClass="col-sm-11" requiredLabel="true" value="%{note.title}"/>
     <s:textarea name="content" label="内容" rows="15" labelCssClass="col-sm-1" elementCssClass="col-sm-11" value="%{note.content}"/>
-    <s:textfield name="paperid" cssClass="hidden" value='%{#paperid}'/>
-    <s:textfield name="id" cssClass="hidden" value='%{note.id}'/>
+    <s:textfield name="paperid" cssClass="hidden" value='%{#paperid}' readonly="true"/>
+    <s:textfield name="id" cssClass="hidden" value='%{note.id}' readonly="true"/>
     <s:submit value="提交" cssClass="btn btn-primary btn-block btn-hg"/>
   </s:form>
 </div>
