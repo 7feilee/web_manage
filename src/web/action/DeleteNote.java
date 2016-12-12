@@ -18,6 +18,8 @@ public class DeleteNote extends ActionSupport
 	public String execute() throws Exception
 	{
 		User user = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
+		if(user == null)
+			return null;
 		if(service.deleteNote(id,user.getId())>0)
 			return SUCCESS;
 		return ERROR;

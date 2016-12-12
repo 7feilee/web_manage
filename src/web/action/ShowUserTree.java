@@ -44,7 +44,7 @@ public class ShowUserTree extends ActionSupport
 					frontEndTree.append("<ul>\n");
 				for (; tree.getDepth() < depth; depth--)
 					frontEndTree.append("</ul>\n</li>\n");
-				frontEndTree.append("<li><span>").append(tree.getLabelname()).append("</span>\n");
+				frontEndTree.append("<li id='").append(tree.getId()).append("'><span>").append(tree.getLabelname()).append("</span>\n");
 			}
 			for (; -1 < depth; depth--)
 				frontEndTree.append("</li>\n</ul>\n");
