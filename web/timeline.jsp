@@ -19,7 +19,15 @@
 <%@include file="includes/header2.jsp" %>
 </div></div><div style="overflow: visible"><div style="overflow: visible">
 <header style="margin-top: -27px">
-  <h1>我的阅读时间线</h1>
+  <h1><%
+    String sruid = request.getParameter("id");
+    int iruid = -1;
+    if (sruid != null)
+      iruid = Integer.valueOf(sruid);
+    if (userp != null && userp.getId() == iruid)
+      out.print("我");
+    else
+    {%><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/><%}%>的阅读时间线</h1>
 </header>
 
 <section id="cd-timeline" class="cd-container">
