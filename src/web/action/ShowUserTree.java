@@ -12,7 +12,7 @@ public class ShowUserTree extends ActionSupport
 	//private Tree tree;
 	private Service service;
 	private Collection<Tree> trees;
-	private Collection<Paper> papers;
+//	private Collection<Paper> papers;
 	private StringBuilder frontEndTree;
 	//private String
 	
@@ -31,7 +31,7 @@ public class ShowUserTree extends ActionSupport
 			return ERROR;
 		int uid = operator.getId();
 		trees = service.getUserTreeList(uid);
-		papers = service.getLabelPapers(uid, "null");
+//		papers = service.getLabelPapers(uid, "null");
 		if (trees != null)
 		{
 			frontEndTree = new StringBuilder();
@@ -75,15 +75,15 @@ public class ShowUserTree extends ActionSupport
 		this.trees = trees;
 	}
 	
-	public Collection<Paper> getPapers()
-	{
-		return papers;
-	}
-	
-	public void setPapers(Collection<Paper> papers)
-	{
-		this.papers = papers;
-	}
+//	public Collection<Paper> getPapers()
+//	{
+//		return papers;
+//	}
+//
+//	public void setPapers(Collection<Paper> papers)
+//	{
+//		this.papers = papers;
+//	}
 	public String getFrontEndTree()
 	{
 		return String.valueOf(frontEndTree);

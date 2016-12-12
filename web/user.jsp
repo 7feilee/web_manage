@@ -4,16 +4,38 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@ include file="includes/header.jsp" %>
 <title><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>的个人中心|文献管理系统</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css"/>
 <link rel="stylesheet" type="text/css"
       href="${pageContext.request.contextPath}/resources/libs/datatables/css/dataTables.bootstrap.min.css">
 <script type="text/javascript" charset="utf8"
         src="${pageContext.request.contextPath}/resources/libs/datatables/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8"
         src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/libs/fancytree/css/skin-bootstrap/ui.fancytree.css"/>
+<script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
 <!-- initiate datatable and ajax -->
 <script type="text/javascript" charset="utf-8">
+    var glyph_opts = {
+        map: {
+            doc: "glyphicon glyphicon-file",
+            docOpen: "glyphicon glyphicon-file",
+            checkbox: "glyphicon glyphicon-unchecked",
+            checkboxSelected: "glyphicon glyphicon-check",
+            checkboxUnknown: "glyphicon glyphicon-share",
+            dragHelper: "glyphicon glyphicon-play",
+            dropMarker: "glyphicon glyphicon-arrow-right",
+            error: "glyphicon glyphicon-warning-sign",
+            expanderClosed: "glyphicon glyphicon-menu-right",
+            expanderLazy: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
+            expanderOpen: "glyphicon glyphicon-menu-down",  // glyphicon-collapse-down
+            folder: "glyphicon glyphicon-folder-close",
+            folderOpen: "glyphicon glyphicon-folder-open",
+            loading: "glyphicon glyphicon-refresh glyphicon-spin"
+        }
+    };
     $(document).ready(function () {
-
         function iniSelector() {
             $('select.select').select2();
             $("select.clct").each(function () {
@@ -42,7 +64,6 @@
                 });
             });
         }
-
         $(".dt").dataTable({
             lengthMenu: [5, 10, 15, 30, 50],
             pageLength: 5,
@@ -72,7 +93,6 @@
             },
             autoWidth: false
         }).on('draw.dt', iniSelector());
-
         $(".dtno").dataTable({
             lengthMenu: [5, 10, 15, 30, 50],
             pageLength: 5,
@@ -102,7 +122,6 @@
             },
             ordering: false
         });
-
         $("select.clct").on("change", (function () {
             var $this = $(this);
             var uid, pid, state;
@@ -132,6 +151,21 @@
                 }
             });
         }));
+        var $tree = $("#tree");
+        $tree.fancytree({
+            extensions: ["glyph"],
+            glyph: glyph_opts,
+            activate: function (event, data) {
+                $(".fancytree-active").children(".fancytree-title").popover({
+                    placement: "right",
+                    title: "节点论文",
+                    content: "hello"
+                });
+            }
+        });
+        $tree.fancytree("getRootNode").visit(function (node) {
+            node.setExpanded(true);
+        });
     });
 </script>
 <%@include file="includes/header2.jsp" %>
@@ -141,12 +175,32 @@
   <s:if test="%{user.bio != null}">
     <div class="text-muted"><s:property value="%{user.bio}"/></div>
   </s:if>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <span class="panel-title h1">
+        <%
+          String sruid = request.getParameter("id");
+          int iruid = -1;
+          if (sruid != null)
+            iruid = Integer.valueOf(sruid);
+          if (userp != null && userp.getId() == iruid)
+            out.print("我");
+          else
+          {%>
+        <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
+        <%}%>的分类树
+      </span>
+      <a class="button button-tiny button-plain button-border button-circle pull-right" href="<s:url action="editUserTree"/>">
+        <span class="glyphicon glyphicon-edit"></span> 编辑</a>
+    </div>
+    <div class="panel-body">
+      <div id="tree">
+        <s:property value="frontEndTree" escapeHtml="false"/>
+      </div>
+    </div>
+  </div>
   <a class="btn btn-block btn-primary" href="<s:url action="showTimeLine"><s:param name="id" value="%{#request.id}"/></s:url>">
     <span class="glyphicon glyphicon-calendar"></span> <%
-    String sruid = request.getParameter("id");
-    int iruid = -1;
-    if (sruid != null)
-      iruid = Integer.valueOf(sruid);
     if (userp != null && userp.getId() == iruid)
       out.print("我");
     else
