@@ -6,6 +6,7 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@ include file="includes/header.jsp" %>
 <title>笔记:<s:property value="note.title"/>|文献管理系统</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/wangeditor/css/wangEditor.min.css"/>
 <%@include file="includes/header2.jsp" %>
 <div class="page-header" style="margin-bottom: 10px;">
   <span class="h3"><s:property value="note.title"/></span>
