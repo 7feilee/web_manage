@@ -87,8 +87,21 @@
             node.editStart();
         });
         $("#submit").click(function () {
-            var result = $tree.toDict(false,function (dict, node) {
-                
+            var result = $tree.fancytree("getTree").toDict(false,function (dict, node) {
+                delete dict.active;
+                delete dict.data;
+                delete dict.expanded;
+                delete dict.extraClasses;
+                delete dict.hideCheckbox;
+                delete dict.folder;
+                delete dict.icon;
+                delete dict.lazy;
+                delete dict.refKey;
+                delete dict.selected;
+                delete dict.statusNodeType;
+                delete dict.tooltip;
+                delete dict.unselectable;
+                delete dict.OTHER;
             });
             var url = "<s:url action="editTree"/>";
             var param = [{name: "data", value: JSON.stringify(result)}];
@@ -115,23 +128,6 @@
   <div id="tree" class="col-md-12">
     <s:property value="frontEndTree" escapeHtml="false"/>
   </div>
-</div>
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">您确定吗？</h4>
-      </div>
-      <div class="modal-body">确定要删除节点：<s:property value="note.title"/>吗？该操作无法恢复！</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">我后悔了</button>
-        <a type="button" class="btn btn-danger"
-           href="<s:url action="deleteNote"><s:param name="id" value="%{note.id}"/></s:url>">确定删除</a>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal -->
 </div>
 <%--<div class="row">--%>
 <%--<div class="col-md-12">--%>

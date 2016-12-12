@@ -65,7 +65,7 @@
 </div>
 </div>
 <div class="row">
-  <div id="left" class="col-md-4" style="padding: 0 5px">
+  <div id="left" class="col-md-4">
     <div class="well">
       <h5 class="page-header" style="margin-top: 20px">作者</h5>
       <p class="lead"><s:property value="authors"/></p>
@@ -77,7 +77,7 @@
         <span class="glyphicon glyphicon-download-alt"></span> 下载</a>
     </div>
   </div>
-  <div id="main" class="col-md-8" style="padding: 0 5px">
+  <div id="main" class="col-md-8">
     <div class="well">
       <h5 class="page-header" style="margin-top: 20px">摘要</h5>
       <p class="lead"><s:property value="paper.abstct"/></p>

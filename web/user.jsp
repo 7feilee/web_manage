@@ -141,16 +141,22 @@
   <s:if test="%{user.bio != null}">
     <div class="text-muted"><s:property value="%{user.bio}"/></div>
   </s:if>
+  <a class="btn btn-block btn-primary" href="<s:url action="showTimeLine"><s:param name="id" value="%{#request.id}"/></s:url>">
+    <span class="glyphicon glyphicon-calendar"></span> <%
+    String sruid = request.getParameter("id");
+    int iruid = -1;
+    if (sruid != null)
+      iruid = Integer.valueOf(sruid);
+    if (userp != null && userp.getId() == iruid)
+      out.print("我");
+    else
+    {%><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/><%}%>的阅读时间线</a>
 </div>
 <div class="col-md-9">
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h5 style="margin: 0">
         <%
-          String sruid = request.getParameter("id");
-          int iruid = -1;
-          if (sruid != null)
-            iruid = Integer.valueOf(sruid);
           if (userp != null && userp.getId() == iruid)
             out.print("我");
           else

@@ -15,12 +15,13 @@ public class EditUserTree extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
+		System.out.print(data);
 		return super.execute();
 	}
-	public String getData()
-	{
-		return data;
-	}
+//	public String getData()
+//	{
+//		return data;
+//	}
 	public void setData(String data)
 	{
 		this.data = data;
