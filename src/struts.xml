@@ -66,5 +66,10 @@
     <action name="editUserTree" class="web.action.ShowUserTree">
       <result name="success">editusertree.jsp</result>
     </action>
+    <action name="ZipDownload">
+      <result>download.jsp</result>
+    </action>
+    <action name="Zip2Download" class="web.action.Download">
+    </action>
   </package>
 </struts>

@@ -48,7 +48,7 @@ public class AddPaper extends ActionSupport
 				return ERROR;
 			//else
 			int uid = ((User) obj).getId();
-			if (service.addPaper(title, authors, fileURI, keywords, abstct, publishDate, uid) > 0)
+			if (service.addPaper(title, authors, fileURI, keywords, abstct, publishDate,"", uid) > 0)
 				return SUCCESS;
 			else
 				return ERROR;
