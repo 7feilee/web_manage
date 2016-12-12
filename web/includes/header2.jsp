@@ -23,22 +23,13 @@
         <li><a href="<s:url action="listNotes"/>">笔记</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <%
-          User userp = null;
-          if (CheckLogin.checkLogin())
-          {
-            userp = (User) session.getAttribute("user");
-        %>
+        <%if (userp!=null) {%>
         <li><a href="<s:url action="showUserDetails">
                        <s:param name="id">${sessionScope.user.id}</s:param>
                      </s:url>"><span class="glyphicon glyphicon-user"></span>&nbsp;
           ${sessionScope.user.username}
         </a></li>
-        <%
-        }
-        else
-        {
-        %>
+        <%}else {%>
         <li><a href="${pageContext.request.contextPath}/register.jsp"><span class="glyphicon glyphicon-user"></span>
           注册</a></li>
         <li><a href="${pageContext.request.contextPath}/login.jsp"><span class="glyphicon glyphicon-log-in"></span>

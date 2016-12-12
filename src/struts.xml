@@ -25,6 +25,15 @@
     <action name="showUserDetails" class="web.action.ShowUserDetails">
       <result>user.jsp</result>
     </action>
+    <action name="userPaper" class="web.action.ShowUserDetails">
+      <result>userpaper.jsp</result>
+    </action>
+    <action name="userNote" class="web.action.ShowUserDetails">
+      <result>usernote.jsp</result>
+    </action>
+    <action name="userLog" class="web.action.ShowUserDetails">
+      <result>userlog.jsp</result>
+    </action>
     <action name="logout" class="web.action.Logout">
       <result type="redirect">index.jsp</result>
     </action>

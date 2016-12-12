@@ -220,6 +220,7 @@
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的论文
       </span>
+      <a class="panel-title pull-right" href="<s:url action="userPaper"><s:param name="id" value="%{id}"/></s:url>">more..</a>
     </div>
     <div class="panel-body">
       <ul id="myTab" class="nav nav-tabs">
@@ -411,6 +412,7 @@
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的动态
       </span>
+      <a class="panel-title pull-right" href="<s:url action="userLog"><s:param name="id" value="%{id}"/></s:url>">more..</a>
     </div>
     <div class="panel-body">
       <table class="table table-bordered table-striped table-hover dtno">
@@ -446,6 +448,7 @@
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的笔记
       </span>
+      <a class="panel-title pull-right" href="<s:url action="userNote"><s:param name="id" value="%{id}"/></s:url>">more..</a>
     </div>
     <div class="panel-body">
       <s:if test="%{notes.isEmpty()}">

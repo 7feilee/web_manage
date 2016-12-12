@@ -2,6 +2,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+<%
+  User userp = null;
+  if (CheckLogin.checkLogin())
+    userp = (User) session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
