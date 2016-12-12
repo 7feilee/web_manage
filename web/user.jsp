@@ -177,7 +177,7 @@
   </s:if>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <span class="panel-title h1">
+      <span class="panel-title h6">
         <%
           String sruid = request.getParameter("id");
           int iruid = -1;
@@ -190,8 +190,10 @@
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的分类树
       </span>
+      <%if(userp != null && userp.getId() == iruid){%>
       <a class="button button-tiny button-plain button-border button-circle pull-right" href="<s:url action="editUserTree"/>">
-        <span class="glyphicon glyphicon-edit"></span> 编辑</a>
+        <span class="glyphicon glyphicon-edit"></span></a>
+      <%}%>
     </div>
     <div class="panel-body">
       <div id="tree">
@@ -209,7 +211,7 @@
 <div class="col-md-9">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h5 style="margin: 0">
+      <span class="panel-title h6">
         <%
           if (userp != null && userp.getId() == iruid)
             out.print("我");
@@ -217,7 +219,7 @@
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的论文
-      </h5>
+      </span>
     </div>
     <div class="panel-body">
       <ul id="myTab" class="nav nav-tabs">
@@ -400,7 +402,7 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h5 style="margin: 0">
+      <span class="panel-title h6">
         <%
           if (userp != null && userp.getId() == iruid)
             out.print("我");
@@ -408,7 +410,7 @@
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的动态
-      </h5>
+      </span>
     </div>
     <div class="panel-body">
       <table class="table table-bordered table-striped table-hover dtno">
@@ -435,7 +437,7 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h5 style="margin: 0">
+      <span class="panel-title h6">
         <%
           if (userp != null && userp.getId() == iruid)
             out.print("我");
@@ -443,7 +445,7 @@
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的笔记
-      </h5>
+      </span>
     </div>
     <div class="panel-body">
       <s:if test="%{notes.isEmpty()}">
