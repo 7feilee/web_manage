@@ -23,7 +23,7 @@ public class AddEditNote extends ActionSupport
 	{
 		if(id == 0)
 		{//新增笔记
-			if (title != null)
+			if (title != null && !title.matches("\\s*"))
 			{
 				User author = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
 				if (author == null)
@@ -39,7 +39,7 @@ public class AddEditNote extends ActionSupport
 		}
 		else
 		{//编辑笔记
-			if (title != null)
+			if (title != null && !title.matches("\\s*"))
 			{
 				User operator = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
 				if (operator == null)

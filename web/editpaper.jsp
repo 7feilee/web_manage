@@ -24,16 +24,13 @@
 %>|文献管理系统</title>
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/libs/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
+<%--<script src="${pageContext.request.contextPath}/resources/libs/tagsinput/bootstrap-tagsinput.js"></script>--%>
 <script
     src="${pageContext.request.contextPath}/resources/libs/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script
     src="${pageContext.request.contextPath}/resources/libs/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
     $(document).ready(function () {
-        /*$("#date").datetimepicker({
-            format: 'yyyy-mm-dd',
-            language: 'zh-CN'
-        });*/
         $('.form_date').datetimepicker({
             language:  'zh-CN',
             weekStart: 1,
@@ -44,6 +41,9 @@
             minView: 2,
             forceParse: 0
         });
+//        $("multslct").tagsinput({
+//            confirmKeys: [13, 59]
+//        });
     });
 </script>
 <%@include file="includes/header2.jsp" %>
@@ -77,7 +77,7 @@
                  <%--elementCssClass="col-sm-11" value="" readonly="true" data-link-format="yyyy-mm-dd"/>--%>
     <s:textarea name="abstct" label="摘要" rows="5" labelCssClass="col-sm-1"
                 elementCssClass="col-sm-11" value="%{paper.abstct}"/>
-    <s:textfield name="id" cssClass="hidden" value="%{#id}"/>
+    <s:textfield name="id" cssClass="hidden" value="%{#id}" readonly="true"/>
     <s:submit value="提交" cssClass="btn btn-primary btn-block btn-hg"/>
   </s:form>
 </div>

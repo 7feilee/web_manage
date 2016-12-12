@@ -33,7 +33,7 @@ public class AddEditPaper extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		if (title != null)
+		if (title != null && !title.matches("\\s*"))
 		{
 			if (author != null)
 				authors = Arrays.asList(author.split(";"));

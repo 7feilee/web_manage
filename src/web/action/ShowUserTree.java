@@ -2,6 +2,8 @@ package web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Paper;
 import model.Tree;
+import model.User;
+import org.apache.struts2.ServletActionContext;
 import service.Service;
 
 import java.util.Collection;
@@ -9,10 +11,9 @@ public class ShowUserTree extends ActionSupport
 {
 	//private Tree tree;
 	private Service service;
-	private int uid;
 	private Collection<Tree> trees;
 	private Collection<Paper> papers;
-	private String frontEndTree;
+	private StringBuilder frontEndTree;
 	//private String
 	
 	public ShowUserTree()
@@ -25,33 +26,34 @@ public class ShowUserTree extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		if (uid > 0)
+		User operator = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
+		if (operator == null)
+			return ERROR;
+		int uid = operator.getId();
+		trees = service.getUserTreeList(uid);
+		papers = service.getLabelPapers(uid, "null");
+		if (trees != null)
 		{
-			//Tree tree = service.getUserTree(uid);
-			trees = service.getUserTreeList(uid);
-			papers = service.getLabelPapers(uid, "null");
-			if (trees != null)
+			frontEndTree = new StringBuilder();
+			int depth = -1;//当前深度
+			for (Tree tree : trees)
 			{
-				frontEndTree = "";
-				int depth = -1;//当前深度
-				for (Tree tree : trees)
-				{
-					if (tree.getDepth() <= depth)
-						frontEndTree += "</li>\n";
-					for (; tree.getDepth() > depth; depth++)
-						frontEndTree += "<ul>\n";
-					for (; tree.getDepth() < depth; depth--)
-						frontEndTree += "</ul>\n</li>\n";
-					frontEndTree += "<li><span>" + tree.getLabelname() + "</span>\n";
-				}
-				for (; -1 < depth; depth--)
-					frontEndTree += "</li>\n</ul>\n";
-				return SUCCESS;
+				if (tree.getDepth() <= depth)
+					frontEndTree.append("</li>\n");
+				for (; tree.getDepth() > depth; depth++)
+					frontEndTree.append("<ul>\n");
+				for (; tree.getDepth() < depth; depth--)
+					frontEndTree.append("</ul>\n</li>\n");
+				frontEndTree.append("<li><span>").append(tree.getLabelname()).append("</span>\n");
 			}
-			else
-				return ERROR;
+			for (; -1 < depth; depth--)
+				frontEndTree.append("</li>\n</ul>\n");
+			if(frontEndTree.length()==0)
+				frontEndTree.append("<ul>\n<li>root</li>\n</ul>");
+			return SUCCESS;
 		}
-		return ERROR;
+		else
+			return ERROR;
 	}
 	/*
 	public Tree getTree() {
@@ -62,16 +64,6 @@ public class ShowUserTree extends ActionSupport
     public void setTree(Tree tree) {
         this.tree = tree;
     }*/
-	
-	public int getUid()
-	{
-		return uid;
-	}
-	
-	public void setUid(int uid)
-	{
-		this.uid = uid;
-	}
 	
 	public Collection<Tree> getTrees()
 	{
@@ -94,10 +86,10 @@ public class ShowUserTree extends ActionSupport
 	}
 	public String getFrontEndTree()
 	{
-		return frontEndTree;
+		return String.valueOf(frontEndTree);
 	}
 	public void setFrontEndTree(String frontEndTree)
 	{
-		this.frontEndTree = frontEndTree;
+		this.frontEndTree = new StringBuilder(frontEndTree);
 	}
 }

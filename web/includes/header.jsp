@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
-  <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet"/>
   <!-- made by shuaihuaiyi -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
