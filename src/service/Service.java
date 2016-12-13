@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 public class Service
 {
 	private UserDao userDao;
@@ -112,7 +113,7 @@ public class Service
 	public int editNote(int id, String title, String content, int operatorId)
 	{
 		Timestamp editTime = new Timestamp(System.currentTimeMillis());
-		return noteDao.updateNote(id,title,content,operatorId,editTime);
+		return noteDao.updateNote(id, title, content, operatorId, editTime);
 	}
 	public Collection<Note> getNotesByUser(int uid)
 	{
@@ -209,11 +210,12 @@ public class Service
 	{
 		return userDao.deleteTreeLabel(labelname, user_id);
 	}
-
-	public Collection<Paper> getLabelAndChildrenPapers(int user_id, String labelname){
-		Collection<Paper> papers=new LinkedList<>();
-		LinkedList<Tree> queue=new LinkedList<>();
-		Tree ftree=new Tree();
+	
+	public Collection<Paper> getLabelAndChildrenPapers(int user_id, String labelname)
+	{
+		Collection<Paper> papers = new LinkedList<>();
+		LinkedList<Tree> queue = new LinkedList<>();
+		Tree ftree = new Tree();
 		ftree.setLabelname(labelname);
 		queue.add(ftree);
 		int size = queue.size();
@@ -241,11 +243,13 @@ public class Service
 		}
 		return papers;
 	}
-
-	public Collection<Paper> getLabelPapers(int user_id, String labelname){
-		Collection<Integer> paperids=userDao.getTreePapers(labelname,user_id);
-		Collection<Paper> papers=new LinkedList<>();
-		for (Integer paperid : paperids) {
+	
+	public Collection<Paper> getLabelPapers(int user_id, String labelname)
+	{
+		Collection<Integer> paperids = userDao.getTreePapers(labelname, user_id);
+		Collection<Paper> papers = new LinkedList<>();
+		for (Integer paperid : paperids)
+		{
 			papers.add(paperDao.getPaperById(paperid));
 		}
 		return papers;
@@ -256,25 +260,30 @@ public class Service
 	}
 	public int deleteNote(int nid, int uid)
 	{
-		return noteDao.deleteNote(nid,uid);
+		return noteDao.deleteNote(nid, uid);
 	}
 	public int editPaper(int id, String title, Collection<String> authors, String fileURI, Collection<String> keywords, String abstct, Date publishDate, int uid)
 	{
 		java.sql.Date publishDate2 = new java.sql.Date(publishDate.getTime());
 		return paperDao.updatePaper(id, title, authors, fileURI, keywords, abstct, publishDate2, uid);
 	}
-
-	public int resetTree(LinkedList<Tree> treelist,int user_id){
-		int size=treelist.size();
-		for (int i=0;i<size;i++){
-			int depth=treelist.get(i).getDepth();
-			if (depth==0)
+	
+	public int resetTree(List<Tree> treelist, int user_id)
+	{
+		int size = treelist.size();
+		for (int i = 0; i < size; i++)
+		{
+			int depth = treelist.get(i).getDepth();
+			if (depth == 0)
 				treelist.get(i).setLabel_father("null");
 			else
-				for (int j=i;j<size;j++){
-					int cdepth=treelist.get(j).getDepth();
-					if (cdepth<depth){
-						if (cdepth==(depth+1)){
+				for (int j = i; j < size; j++)
+				{
+					int cdepth = treelist.get(j).getDepth();
+					if (cdepth < depth)
+					{
+						if (cdepth == (depth + 1))
+						{
 							treelist.get(j).setLabel_father(treelist.get(j).getLabelname());
 						}
 					}
@@ -282,21 +291,23 @@ public class Service
 						break;
 				}
 		}
-		int id=0;
-		Tree tree=null;
-		Tree ytree=null;
-		int result=-1;
-		for (int i=0;i<size;i++){
-			tree=treelist.get(i);
-			id=tree.getId();
-			ytree=userDao.getTreeById(id);
-			if (ytree==null)
-				result=userDao.addTreeLabel(tree.getLabelname(),tree.getLabel_father(),user_id);
-			else {
-				if (tree.getLabelname() != ytree.getLabelname())
-					result=userDao.updateTreeLabel(id, tree.getLabelname());
-				if (tree.getLabel_father() != ytree.getLabel_father())
-					result=userDao.updateLabelFather(id,tree.getLabel_father());
+		int id;
+		Tree tree;
+		Tree ytree;
+		int result = -1;
+		for (Tree aTreelist : treelist)
+		{
+			tree = aTreelist;
+			id = tree.getId();
+			ytree = userDao.getTreeById(id);
+			if (ytree == null)
+				result = userDao.addTreeLabel(tree.getLabelname(), tree.getLabel_father(), user_id);
+			else
+			{
+				if (!tree.getLabelname().equals(ytree.getLabelname()))
+					result = userDao.updateTreeLabel(id, tree.getLabelname());
+				if (!tree.getLabel_father().equals(ytree.getLabel_father()))
+					result = userDao.updateLabelFather(id, tree.getLabel_father());
 			}
 		}
 		return result;

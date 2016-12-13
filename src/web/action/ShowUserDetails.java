@@ -3,6 +3,7 @@ package web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Log;
 import model.Note;
+import model.Tree;
 import model.User;
 import service.Service;
 import utils.FormatLog;
@@ -16,6 +17,7 @@ public class ShowUserDetails extends ActionSupport
 	private Service service;
 	private Collection<Note> notes;
 	private Collection<FrontLog> logs;
+	private StringBuilder frontEndTree;
 	
 	public ShowUserDetails()
 	{
@@ -36,7 +38,30 @@ public class ShowUserDetails extends ActionSupport
 				if (logs1 != null)
 				{
 					logs = FormatLog.formatLogs(logs1);
-					return SUCCESS;
+					Collection<Tree> trees = service.getUserTreeList(id);
+					//papers = service.getLabelPapers(uid, "null");
+					if (trees != null)
+					{
+						frontEndTree = new StringBuilder();
+						int depth = -1;//当前深度
+						for (Tree tree : trees)
+						{
+							if (tree.getDepth() <= depth)
+								frontEndTree.append("</li>\n");
+							for (; tree.getDepth() > depth; depth++)
+								frontEndTree.append("<ul>\n");
+							for (; tree.getDepth() < depth; depth--)
+								frontEndTree.append("</ul>\n</li>\n");
+							frontEndTree.append("<li id='").append(tree.getId()).append("'><span>").append(tree.getLabelname()).append("</span>\n");
+						}
+						for (; -1 < depth; depth--)
+							frontEndTree.append("</li>\n</ul>\n");
+						if(frontEndTree.length()==0)
+							frontEndTree.append("<ul>\n<li>root</li>\n</ul>");
+						return SUCCESS;
+					}
+					else
+						return ERROR;
 				}
 				return ERROR;
 			}
@@ -76,5 +101,13 @@ public class ShowUserDetails extends ActionSupport
 	public void setLogs(Collection<FrontLog> logs)
 	{
 		this.logs = logs;
+	}
+	public StringBuilder getFrontEndTree()
+	{
+		return frontEndTree;
+	}
+	public void setFrontEndTree(StringBuilder frontEndTree)
+	{
+		this.frontEndTree = frontEndTree;
 	}
 }

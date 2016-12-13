@@ -60,14 +60,29 @@ public class ShowTimeLine extends ActionSupport
 				String time = sdf.format(log.getTime());
 				TimeLineContent timeLineContent = timeline.containsKey(time) ? timeline.get(time) : new TimeLineContent();
 				if (log.getType() == Log.TOREAD)
-					if (!timeLineContent.studied.contains(log.getTargetid()) && !timeLineContent.read.contains(log.getTargetid()))
-						timeLineContent.toRead.add(log.getTargetid());
+				{
+					if (timeLineContent.studied.contains(log.getTargetid()))
+						timeLineContent.studied.remove(log.getTargetid());
+					if (timeLineContent.read.contains(log.getTargetid()))
+						timeLineContent.read.remove(log.getTargetid());
+					timeLineContent.toRead.add(log.getTargetid());
+				}
 				else if (log.getType() == Log.READ)
-					if (!timeLineContent.studied.contains(log.getTargetid()) && !timeLineContent.toRead.contains(log.getTargetid()))
-						timeLineContent.read.add(log.getTargetid());
+				{
+					if (timeLineContent.studied.contains(log.getTargetid()))
+						timeLineContent.studied.remove(log.getTargetid());
+					if (timeLineContent.toRead.contains(log.getTargetid()))
+						timeLineContent.toRead.remove(log.getTargetid());
+					timeLineContent.read.add(log.getTargetid());
+				}
 				else if (log.getType() == Log.STUDIED)
-					if (!timeLineContent.toRead.contains(log.getTargetid()) && !timeLineContent.read.contains(log.getTargetid()))
-						timeLineContent.studied.add(log.getTargetid());
+				{
+					if (timeLineContent.toRead.contains(log.getTargetid()))
+						timeLineContent.toRead.remove(log.getTargetid());
+					if (timeLineContent.read.contains(log.getTargetid()))
+						timeLineContent.read.remove(log.getTargetid());
+					timeLineContent.studied.add(log.getTargetid());
+				}
 				timeline.put(time, timeLineContent);
 			}
 		}
@@ -78,40 +93,43 @@ public class ShowTimeLine extends ActionSupport
 			FrontLog frontLog = new FrontLog();
 			frontLog.setTime(entry.getKey());
 			TimeLineContent timeLineContent = entry.getValue();
-			StringBuilder event = new StringBuilder();
-			event.append("<tr>\n");
-			if (!timeLineContent.toRead.isEmpty())
+			if (timeLineContent != null)
 			{
-				event.append("<th class='danger'>【计划读】</th>\n<td>");
-				for (int paperid : timeLineContent.toRead)
+				StringBuilder event = new StringBuilder();
+				event.append("<tr>\n");
+				if (!timeLineContent.toRead.isEmpty())
 				{
-					Paper paper = service.getPaperById(paperid);
-					event.append("<a href='/showPaperDetails.action?id=").append(paperid).append("'>").append(paper.getTitle()).append("</a>, ");
+					event.append("<th class='danger'>【计划读】</th>\n<td>");
+					for (int paperid : timeLineContent.toRead)
+					{
+						Paper paper = service.getPaperById(paperid);
+						event.append("<a href='/showPaperDetails.action?id=").append(paperid).append("'>").append(paper.getTitle()).append("</a>, ");
+					}
+					event.append("</td>\n</tr>");
 				}
-				event.append("</td>\n</tr>");
-			}
-			if (!timeLineContent.read.isEmpty())
-			{
-				event.append("<th class='info'>【已粗读】</th>\n<td>");
-				for (int paperid : timeLineContent.read)
+				if (!timeLineContent.read.isEmpty())
 				{
-					Paper paper = service.getPaperById(paperid);
-					event.append("<a href='/showPaperDetails.action?id=").append(paperid).append("'>").append(paper.getTitle()).append("</a>, ");
+					event.append("<th class='info'>【已粗读】</th>\n<td>");
+					for (int paperid : timeLineContent.read)
+					{
+						Paper paper = service.getPaperById(paperid);
+						event.append("<a href='/showPaperDetails.action?id=").append(paperid).append("'>").append(paper.getTitle()).append("</a>, ");
+					}
+					event.append("</td>\n</tr>");
 				}
-				event.append("</td>\n</tr>");
-			}
-			if (!timeLineContent.studied.isEmpty())
-			{
-				event.append("<th class='success'>【已精读】</th>\n<td>");
-				for (int paperid : timeLineContent.studied)
+				if (!timeLineContent.studied.isEmpty())
 				{
-					Paper paper = service.getPaperById(paperid);
-					event.append("<a href='/showPaperDetails.action?id=").append(paperid).append("'>").append(paper.getTitle()).append("</a>, ");
+					event.append("<th class='success'>【已精读】</th>\n<td>");
+					for (int paperid : timeLineContent.studied)
+					{
+						Paper paper = service.getPaperById(paperid);
+						event.append("<a href='/showPaperDetails.action?id=").append(paperid).append("'>").append(paper.getTitle()).append("</a>, ");
+					}
+					event.append("</td>\n</tr>");
 				}
-				event.append("</td>\n</tr>");
+				frontLog.setEvent(String.valueOf(event));
+				result.add(frontLog);
 			}
-			frontLog.setEvent(String.valueOf(event));
-			result.add(frontLog);
 		}
 		return result;
 	}

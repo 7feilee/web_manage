@@ -12,8 +12,9 @@ public class ShowUserTree extends ActionSupport
 	//private Tree tree;
 	private Service service;
 	private Collection<Tree> trees;
-	private Collection<Paper> papers;
+	//private Collection<Paper> papers;
 	private StringBuilder frontEndTree;
+	private int uid;
 	//private String
 	
 	public ShowUserTree()
@@ -26,12 +27,8 @@ public class ShowUserTree extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		User operator = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
-		if (operator == null)
-			return ERROR;
-		int uid = operator.getId();
 		trees = service.getUserTreeList(uid);
-		papers = service.getLabelPapers(uid, "null");
+		//papers = service.getLabelPapers(uid, "null");
 		if (trees != null)
 		{
 			frontEndTree = new StringBuilder();
@@ -44,7 +41,7 @@ public class ShowUserTree extends ActionSupport
 					frontEndTree.append("<ul>\n");
 				for (; tree.getDepth() < depth; depth--)
 					frontEndTree.append("</ul>\n</li>\n");
-				frontEndTree.append("<li><span>").append(tree.getLabelname()).append("</span>\n");
+				frontEndTree.append("<li id='").append(tree.getId()).append("'><span>").append(tree.getLabelname()).append("</span>\n");
 			}
 			for (; -1 < depth; depth--)
 				frontEndTree.append("</li>\n</ul>\n");
@@ -75,15 +72,15 @@ public class ShowUserTree extends ActionSupport
 		this.trees = trees;
 	}
 	
-	public Collection<Paper> getPapers()
-	{
-		return papers;
-	}
-	
-	public void setPapers(Collection<Paper> papers)
-	{
-		this.papers = papers;
-	}
+//	//public Collection<Paper> getPapers()
+//	{
+//		return papers;
+//	}
+//
+//	public void setPapers(Collection<Paper> papers)
+//	{
+//		this.papers = papers;
+//	}
 	public String getFrontEndTree()
 	{
 		return String.valueOf(frontEndTree);
@@ -91,5 +88,9 @@ public class ShowUserTree extends ActionSupport
 	public void setFrontEndTree(String frontEndTree)
 	{
 		this.frontEndTree = new StringBuilder(frontEndTree);
+	}
+	public void setUid(int uid)
+	{
+		this.uid = uid;
 	}
 }

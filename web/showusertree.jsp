@@ -35,11 +35,31 @@
         var $tree = $("#tree");
         $tree.fancytree({
             extensions: ["glyph"],
-            glyph: glyph_opts
+            glyph: glyph_opts,
+            activate: function (event, data) {
+                $(".fancytree-active").children(".fancytree-title").popover({
+                    placement: "right",
+                    title: "节点论文",
+                    content: "hello"
+                });
+            }
         });
-        $tree.fancytree("getRootNode").visit(function(node){
+        $tree.fancytree("getRootNode").visit(function (node) {
             node.setExpanded(true);
         });
+        $(".fancytree-title").each(function (index, element) {
+            var content;
+            var title = element.text();
+            $.ajax({
+                url:"<s:url action="getPapersByTreeNodeName"/>",
+                data:{nodeName:title},
+            });
+            this.popover({
+                placement: "right",
+                title: "节点论文",
+                content: content
+            });
+        })
     });
 </script>
 <%@include file="includes/header2.jsp" %>
