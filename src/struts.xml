@@ -90,7 +90,7 @@
       <result>editpaper.jsp</result>
     </action>
     <action name="editTree" class="web.action.EditUserTree">
-      <result type="redirectAction">showUserTree</result>
+      <result type="redirectAction">showUserDetails</result>
     </action>
     <action name="showTimeLine" class="web.action.ShowTimeLine">
       <result>timeline.jsp</result>

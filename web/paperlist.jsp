@@ -251,10 +251,7 @@
         </td>
         <td><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
         <td><s:property value="%{publishDate}"/></td>
-        <%
-          if (userp != null)
-          {
-        %>
+        <%if (userp != null) {%>
         <td>
           <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                   class="form-control select select-primary clct" title="收藏状态">
@@ -271,9 +268,7 @@
         <td>
           <button pid="<s:property value="%{id}"/>" class="showmodel btn btn-primary disabled">载入中...</button>
         </td>
-        <%
-          }
-        %>
+        <%}%>
       </tr>
     </s:iterator>
     </tbody>
