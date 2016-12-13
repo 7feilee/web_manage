@@ -557,6 +557,7 @@ public class UserDao
 	public int updateTreeLabel(int id, String newlabelname)
 	{
 		String sql = "update user_tree set labelname='" + newlabelname + "' where id=" + id +";";
+		stmt=newDao();
 		try
 		{
 			return stmt.executeUpdate(sql);
@@ -574,6 +575,7 @@ public class UserDao
 	public int updateLabelFather(int id, String newlabel_father)
 	{
 		String sql = "update user_tree set label_father='" + newlabel_father + "' where id=" + id +";";
+		stmt=newDao();
 		try
 		{
 			return stmt.executeUpdate(sql);

@@ -252,34 +252,42 @@ public class Service
 	public int resetTree(List<Tree> treelist, int user_id)
 	{
 		int size = treelist.size();
-		for (int i = 0; i < size; i++)
-		{
-			int depth = treelist.get(i).getDepth();
-			if (depth == 0)
-				treelist.get(i).setLabel_father("null");
-			else
-				for (int j = i; j < size; j++)
-				{
-					int cdepth = treelist.get(j).getDepth();
-					if (cdepth < depth)
-					{
-						if (cdepth == (depth + 1))
-						{
-							treelist.get(j).setLabel_father(treelist.get(j).getLabelname());
-						}
-					} else
-						break;
-				}
-		}
 		int id = 0;
 		Tree tree = null;
 		Tree ytree = null;
 		int result = -1;
+		LinkedList<Tree> list2 = getUserTreeList(user_id);
 		LinkedList<Integer> ids = new LinkedList<>();
 		for (int i = 0; i < size; i++) {
 			tree = treelist.get(i);
 			id = tree.getId();
 			ids.add(id);
+		}
+		for (Tree tree1 : list2) {
+			if (ids.indexOf(tree1.getId()) == -1)
+				userDao.deleteTreeLabel(tree1.getLabelname(), user_id);
+		}
+		for (int i = 0; i < size; i++)
+		{
+			int depth = treelist.get(i).getDepth();
+			if (depth == 0)
+				treelist.get(i).setLabel_father("null");
+			for (int j = i + 1; j < size; j++)
+			{
+				int cdepth = treelist.get(j).getDepth();
+				if (cdepth > depth)
+				{
+					if (cdepth == (depth + 1))
+					{
+						treelist.get(j).setLabel_father(treelist.get(i).getLabelname());
+					}
+				} else
+					break;
+			}
+		}
+		for (int i = 0; i < size; i++) {
+			tree = treelist.get(i);
+			id = tree.getId();
 			ytree = userDao.getTreeById(id);
 			if (ytree == null)
 				result = userDao.addTreeLabel(tree.getLabelname(), tree.getLabel_father(), user_id);
@@ -289,11 +297,6 @@ public class Service
 				if (!tree.getLabel_father().equals(ytree.getLabel_father()))
 					result = userDao.updateLabelFather(id, tree.getLabel_father());
 			}
-		}
-		LinkedList<Tree> list2 = getUserTreeList(user_id);
-		for (Tree tree1 : list2) {
-			if (ids.indexOf(tree1.getId()) == -1)
-				userDao.deleteTreeLabel(tree1.getLabelname(), user_id);
 		}
 		return result;
 	}

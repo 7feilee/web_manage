@@ -262,16 +262,13 @@ public class PaperDao
 			e.printStackTrace();
 			return null;
 		}
-		finally{
-			if (rs!=null)
+		finally {
+			if (rs != null)
 				try {
 					rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-=======
-		finally
-		{
 			closeDao();
 		}
 	}
