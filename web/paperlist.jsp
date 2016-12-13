@@ -62,7 +62,6 @@
                 });
             });
         }
-
         $(".table").dataTable({
             lengthMenu: [25, 50, 100, 150, 300],
             pageLength: 50,
@@ -148,14 +147,41 @@
                 url:"<s:url action="getPaperNode"/>",
                 data:{uid:'<%=userp.getId()%>',pid:pid},
                 success: function (result, status, xhr) {
-                    $this.attr("nid",result.tree.id);
-                    $this.removeClass("disabled");
-                    $this.text(result.tree.labelname);
+                    if(result.tree.labelname!=="null") {
+                        $this.attr("nid", result.tree.id);
+                        $this.removeClass("disabled");
+                        $this.text(result.tree.labelname);
+                    }
+                    else{
+                        $this.text("未分类");
+                        $this.removeClass("disabled");
+                    }
                 }
             });
         }).click(function () {
+            var $this=$(this);
             //显示模态框
-            //激活
+            $('#myModal').modal('show');
+            //激活当前节点
+            $("#tree").fancytree("getTree").activateKey($(this).attr("nid"));
+            //提交修改
+            $("#submit").click(function () {
+                var node = $("#tree").fancytree("getActiveNode");
+                var newlabelname;
+                if( node ){
+                    newlabelname=node.title;
+                    $.ajax({
+                        url : "<s:url action="changePaperLabel"/>",
+                        data:{paper_id:$this.attr("pid"),newlabelname:newlabelname},
+                        success: function (result, status, xhr) {
+                            $this.text(newlabelname);
+                        }
+                    });
+                    $('#myModal').modal('hide');
+                }else{
+                    alert("请选中一个节点！");
+                }
+            });
         });
         <%}%>
     });
@@ -185,7 +211,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          <button type="button" class="btn btn-primary">提交更改</button>
+          <button id="submit" type="button" class="btn btn-primary">提交更改</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal -->

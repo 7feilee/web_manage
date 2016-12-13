@@ -72,7 +72,7 @@
       <result>editusertree.jsp</result>
     </action>
     <action name="changePaperLabel" class="web.action.ChangePaperLabel">
-      <result>editusertree.jsp</result>
+      <result type="json"/>
     </action>
     <action name="editUserTree" class="web.action.ShowUserTree">
       <result>editusertree.jsp</result>
