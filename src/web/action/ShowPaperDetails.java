@@ -1,9 +1,12 @@
 package web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import model.Log;
 import model.Note;
 import model.Paper;
 import service.Service;
+import utils.FormatLog;
+import web.model.FrontLog;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -16,6 +19,7 @@ public class ShowPaperDetails extends ActionSupport
 	private StringBuilder keywords;
 	private String dateStr;
 	private Collection<Note> notes;
+	private Collection<FrontLog> logs;
 	
 	public ShowPaperDetails()
 	{
@@ -38,7 +42,15 @@ public class ShowPaperDetails extends ActionSupport
 				keywords.append(keyword).append(";");
 			notes = service.getNotesByPaper(id);
 			if (notes != null)
-				return SUCCESS;
+			{
+				Collection<Log> logs1 = service.getLogsByPaper(id);
+				if (logs1 != null)
+				{
+					logs = FormatLog.formatLogs(logs1);
+					return SUCCESS;
+				}
+				return ERROR;
+			}
 			//else
 			return ERROR;
 		}
@@ -91,5 +103,13 @@ public class ShowPaperDetails extends ActionSupport
 	public void setKeywords(String keywords)
 	{
 		this.keywords = new StringBuilder(keywords);
+	}
+	public Collection<FrontLog> getLogs()
+	{
+		return logs;
+	}
+	public void setLogs(Collection<FrontLog> logs)
+	{
+		this.logs = logs;
 	}
 }

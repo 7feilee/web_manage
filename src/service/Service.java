@@ -134,6 +134,7 @@ public class Service
 	{
 		return logDao.getLogsByUser(uid);
 	}
+	public Collection<Log> getLogsByPaper(int pid){return logDao.getLogsByPaper(pid);}
 	public int addTreeLabel(String labelname, String label_father, int user_id)
 	{
 		return userDao.addTreeLabel(labelname, label_father, user_id);
