@@ -232,7 +232,7 @@
         <li><a href="#read" data-toggle="tab">已粗读</a></li>
         <li><a href="#studied" data-toggle="tab">已精读</a></li>
       </ul>
-      <div id="myTabContent" class="tab-content">
+      <div id="myTabContent" class="tab-content" style="padding-top: 10px;">
         <div id="toRead" class="tab-pane fade in active">
           <s:if test="%{user.toReadPapers.isEmpty()}">
             <h4 class="text-center">并没有计划要读的论文</h4>
