@@ -202,10 +202,6 @@ public class PaperDao
 		final String INSERT_SQL = "insert into paper(title,fileURI,publishDate,author," +
 				"abstct,keyword,resource) values(?,?,?,?,?,?,?)";
 
-//		String sql = "insert into paper(title,fileURI,publishDate,author," +
-//				"abstct,keyword,resource) values" +
-//				"('" + title + "','" + fileURI + "','" + publishDate + "','" + author+ "','" +
-//				abstct + "','" + keyword+"');";
 		try
 		{
 			PreparedStatement ps = newDao2().prepareStatement(INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
