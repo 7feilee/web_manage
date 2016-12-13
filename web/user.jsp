@@ -4,16 +4,38 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@ include file="includes/header.jsp" %>
 <title><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>的个人中心|文献管理系统</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css"/>
 <link rel="stylesheet" type="text/css"
       href="${pageContext.request.contextPath}/resources/libs/datatables/css/dataTables.bootstrap.min.css">
 <script type="text/javascript" charset="utf8"
         src="${pageContext.request.contextPath}/resources/libs/datatables/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8"
         src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/libs/fancytree/css/skin-bootstrap/ui.fancytree.css"/>
+<script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
 <!-- initiate datatable and ajax -->
 <script type="text/javascript" charset="utf-8">
+    var glyph_opts = {
+        map: {
+            doc: "glyphicon glyphicon-file",
+            docOpen: "glyphicon glyphicon-file",
+            checkbox: "glyphicon glyphicon-unchecked",
+            checkboxSelected: "glyphicon glyphicon-check",
+            checkboxUnknown: "glyphicon glyphicon-share",
+            dragHelper: "glyphicon glyphicon-play",
+            dropMarker: "glyphicon glyphicon-arrow-right",
+            error: "glyphicon glyphicon-warning-sign",
+            expanderClosed: "glyphicon glyphicon-menu-right",
+            expanderLazy: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
+            expanderOpen: "glyphicon glyphicon-menu-down",  // glyphicon-collapse-down
+            folder: "glyphicon glyphicon-folder-close",
+            folderOpen: "glyphicon glyphicon-folder-open",
+            loading: "glyphicon glyphicon-refresh glyphicon-spin"
+        }
+    };
     $(document).ready(function () {
-
         function iniSelector() {
             $('select.select').select2();
             $("select.clct").each(function () {
@@ -42,7 +64,6 @@
                 });
             });
         }
-
         $(".dt").dataTable({
             lengthMenu: [5, 10, 15, 30, 50],
             pageLength: 5,
@@ -70,9 +91,8 @@
                     "sSortDescending": ": 以降序排列此列"
                 }
             },
-            "autoWidth": false
+            autoWidth: false
         }).on('draw.dt', iniSelector());
-
         $(".dtno").dataTable({
             lengthMenu: [5, 10, 15, 30, 50],
             pageLength: 5,
@@ -100,9 +120,8 @@
                     "sSortDescending": ": 以降序排列此列"
                 }
             },
-            "ordering": false
+            ordering: false
         });
-
         $("select.clct").on("change", (function () {
             var $this = $(this);
             var uid, pid, state;
@@ -132,6 +151,54 @@
                 }
             });
         }));
+        var $tree = $("#tree");
+        $tree.fancytree({
+            extensions: ["glyph"],
+            glyph: glyph_opts
+//            activate: function (event, data) {
+//                $(".fancytree-active").children(".fancytree-title").popover("show");
+//                $(".fancytree-title").popover("hide");
+//                $(".fancytree-active").children(".fancytree-title").popover("show");
+//            }
+        });
+        $tree.fancytree("getRootNode").visit(function (node) {
+            node.setExpanded(true);
+        });
+        $(".fancytree-title").each(function () {
+            var $this = $(this);
+            $.ajax({
+                url:"<s:url action="getPapersByTreeNodeName"><s:param name="uid" value="%{id}"/></s:url>",
+                data:{'nodeName':$(this).text()},
+                success: function (result, status, xhr) {
+                    var context="";
+                    if(result.papers.length == 0)
+                        context = "没有论文";
+                    else
+                        result.papers.forEach(function (paper) {
+                            context+="<a href='<s:url action="showPaperDetails"/>?id="+paper.id+"'>"+paper.title+"</a>, ";
+                        });
+                    $this.popover({
+                        html:true,
+                        placement: "right",
+                        title: "节点论文",
+                        content: context
+                    });
+                },
+                error: function (xhr, status, error) {
+                    $this.popover({
+                        html:true,
+                        placement: "right",
+                        title: "节点论文",
+                        content: "加载失败！"
+                    });
+                }
+            });
+        }).click(function () {
+            $(".fancytree-title").popover("hide");
+            $(this).popover('show');
+        }).on('hidden.bs.popover',function () {
+            $(".fancytree-active").children(".fancytree-title").popover('show');
+        });
     });
 </script>
 <%@include file="includes/header2.jsp" %>
@@ -141,11 +208,9 @@
   <s:if test="%{user.bio != null}">
     <div class="text-muted"><s:property value="%{user.bio}"/></div>
   </s:if>
-</div>
-<div class="col-md-9">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h1 class="panel-title">
+      <span class="panel-title h6">
         <%
           String sruid = request.getParameter("id");
           int iruid = -1;
@@ -156,8 +221,39 @@
           else
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
+        <%}%>的分类树
+      </span>
+      <%if(userp != null && userp.getId() == iruid){%>
+      <a class="button button-tiny button-plain button-border button-circle pull-right" href="<s:url action="editUserTree"/>">
+        <span class="glyphicon glyphicon-edit"></span></a>
+      <%}%>
+    </div>
+    <div class="panel-body">
+      <div id="tree">
+        <s:property value="frontEndTree" escapeHtml="false"/>
+      </div>
+    </div>
+  </div>
+  <a class="btn btn-block btn-primary" href="<s:url action="showTimeLine"><s:param name="id" value="%{#request.id}"/></s:url>">
+    <span class="glyphicon glyphicon-calendar"></span> <%
+    if (userp != null && userp.getId() == iruid)
+      out.print("我");
+    else
+    {%><s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/><%}%>的阅读时间线</a>
+</div>
+<div class="col-md-9">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <span class="panel-title h6">
+        <%
+          if (userp != null && userp.getId() == iruid)
+            out.print("我");
+          else
+          {%>
+        <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的论文
-      </h1>
+      </span>
+      <a class="panel-title pull-right" href="<s:url action="userPaper"><s:param name="id" value="%{id}"/></s:url>">more..</a>
     </div>
     <div class="panel-body">
       <ul id="myTab" class="nav nav-tabs">
@@ -169,7 +265,7 @@
         <li><a href="#read" data-toggle="tab">已粗读</a></li>
         <li><a href="#studied" data-toggle="tab">已精读</a></li>
       </ul>
-      <div id="myTabContent" class="tab-content">
+      <div id="myTabContent" class="tab-content" style="padding-top: 10px;">
         <div id="toRead" class="tab-pane fade in active">
           <s:if test="%{user.toReadPapers.isEmpty()}">
             <h4 class="text-center">并没有计划要读的论文</h4>
@@ -340,7 +436,7 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h1 class="panel-title">
+      <span class="panel-title h6">
         <%
           if (userp != null && userp.getId() == iruid)
             out.print("我");
@@ -348,7 +444,8 @@
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的动态
-      </h1>
+      </span>
+      <a class="panel-title pull-right" href="<s:url action="userLog"><s:param name="id" value="%{id}"/></s:url>">more..</a>
     </div>
     <div class="panel-body">
       <table class="table table-bordered table-striped table-hover dtno">
@@ -375,7 +472,7 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h1 class="panel-title">
+      <span class="panel-title h6">
         <%
           if (userp != null && userp.getId() == iruid)
             out.print("我");
@@ -383,7 +480,8 @@
           {%>
         <s:property value="%{(user.name == null) ? (user.username) : (user.name)}"/>
         <%}%>的笔记
-      </h1>
+      </span>
+      <a class="panel-title pull-right" href="<s:url action="userNote"><s:param name="id" value="%{id}"/></s:url>">more..</a>
     </div>
     <div class="panel-body">
       <s:if test="%{notes.isEmpty()}">

@@ -3,7 +3,7 @@
 }
 
 .container {
-    margin-top: 80px;
+    padding-top: 80px;
 }
 
 .loader {
@@ -131,9 +131,12 @@ th{
     vertical-align: middle !important;
 }
 
+.pagination li {
+    margin-right: 0 !important;
+}
 span.fancytree-icon{
-    min-width: 0;
-    width: 0;
-    min-height: 0;
-    height: 0;
+    display: none;
+}
+pre{
+    padding: 0 !important;
 }

@@ -10,6 +10,25 @@
 <script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
 <script>
     $(document).ready(function () {
+        function Post(URL, PARAMTERS) {
+            //创建form表单
+            var temp_form = document.createElement("form");
+            temp_form.action = URL;
+            //如需打开新窗口，form的target属性要设置为'_blank'
+            temp_form.target = "_self";
+            temp_form.method = "post";
+            temp_form.style.display = "none";
+            //添加参数
+            for (var item in PARAMTERS) {
+                var opt = document.createElement("textarea");
+                opt.name = PARAMTERS[item].name;
+                opt.value = PARAMTERS[item].value;
+                temp_form.appendChild(opt);
+            }
+            document.body.appendChild(temp_form);
+            //提交数据
+            temp_form.submit();
+        }
         var count = 1;
         var $tree = $("#tree");
         $tree.fancytree({
@@ -54,6 +73,9 @@
                 alert("请选择一个节点");
                 return;
             }
+            while (node.hasChildren()) {
+                node.getFirstChild().moveTo(node.parent, "child");
+            }
             node.remove();
         });
         $("#editNode").click(function () {
@@ -63,6 +85,27 @@
                 return;
             }
             node.editStart();
+        });
+        $("#submit").click(function () {
+            var result = $tree.fancytree("getTree").toDict(false,function (dict, node) {
+                delete dict.active;
+                delete dict.data;
+                delete dict.expanded;
+                delete dict.extraClasses;
+                delete dict.hideCheckbox;
+                delete dict.folder;
+                delete dict.icon;
+                delete dict.lazy;
+                delete dict.refKey;
+                delete dict.selected;
+                delete dict.statusNodeType;
+                delete dict.tooltip;
+                delete dict.unselectable;
+                delete dict.OTHER;
+            });
+            var url = "<s:url action="editTree"/>";
+            var param = [{name: "data", value: JSON.stringify(result)}];
+            Post(url,param);
         });
     });
 </script>
@@ -76,7 +119,7 @@
         <button class="btn btn-sm btn-danger" id="delNode"><span class="glyphicon glyphicon-remove"></span> 删除</button>
       </div>
       <div class="btn-group pull-right">
-        <button class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+        <button id="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span> 提交</button>
       </div>
     </div>
   </div>
@@ -86,15 +129,11 @@
     <s:property value="frontEndTree" escapeHtml="false"/>
   </div>
 </div>
-<<<<<<< HEAD
-=======
-
 <%--<div class="row">--%>
-  <%--<div class="col-md-12">--%>
-    <%--<div class="alert alert-info" style=""><span class="glyphicon glyphicon-info-sign"></span> 支持拖拽，双击可即时编辑</div>--%>
-  <%--</div>--%>
+<%--<div class="col-md-12">--%>
+<%--<div class="alert alert-info" style=""><span class="glyphicon glyphicon-info-sign"></span> 支持拖拽，双击可即时编辑</div>--%>
 <%--</div>--%>
->>>>>>> origin/zzy-master
+<%--</div>--%>
 <%--<h2 class="text-center" style="margin-bottom: 20px">添加新的标签</h2>--%>
 <%--<s:form theme="bootstrap" action="addtreelabel" cssClass="form-horizontal" id="validationForm">--%>
 <%--<s:textfield name="labelname" label="标签名" labelCssClass="col-sm-1" elementCssClass="col-sm-11" requiredLabel="true"/>--%>

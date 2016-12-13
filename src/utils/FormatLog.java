@@ -49,7 +49,17 @@ public class FormatLog
 				Paper paper = service.getPaperById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
-						"添加了论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						"添加了论文：<a href='/showPaperDetails.action?id=" + log.getTargetid() + "'>"
+						+ paper.getTitle() + "</a>";
+				result.setEvent(event);
+			}
+			else if (log.getType() == Log.EDIT)
+			{//编辑论文
+				User operator = service.getUserById(log.getOperatorid());
+				Paper paper = service.getPaperById(log.getTargetid());
+				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
+						+ operator.getUsername() + "</a>" +
+						"修改了论文：<a href='/showPaperDetails.action?id=" + log.getTargetid() + "'>"
 						+ paper.getTitle() + "</a>";
 				result.setEvent(event);
 			}
@@ -59,7 +69,7 @@ public class FormatLog
 				Paper paper = service.getPaperById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
-						"不再阅读论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						"不再阅读论文：<a href='/showPaperDetails.action?id=" + log.getTargetid() + "'>"
 						+ paper.getTitle() + "</a>";
 				result.setEvent(event);
 			}
@@ -69,7 +79,7 @@ public class FormatLog
 				Paper paper = service.getPaperById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
-						"计划读论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						"计划读论文：<a href='/showPaperDetails.action?id=" + log.getTargetid() + "'>"
 						+ paper.getTitle() + "</a>";
 				result.setEvent(event);
 			}
@@ -79,7 +89,7 @@ public class FormatLog
 				Paper paper = service.getPaperById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
-						"已粗读论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						"已粗读论文：<a href='/showPaperDetails.action?id=" + log.getTargetid() + "'>"
 						+ paper.getTitle() + "</a>";
 				result.setEvent(event);
 			}
@@ -89,7 +99,7 @@ public class FormatLog
 				Paper paper = service.getPaperById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
-						"已精读论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						"已精读论文：<a href='/showPaperDetails.action?id=" + log.getTargetid() + "'>"
 						+ paper.getTitle() + "</a>";
 				result.setEvent(event);
 			}
@@ -99,11 +109,12 @@ public class FormatLog
 				Paper paper = service.getPaperById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
-						"更新了论文：<a href='/showPaperDetails.action?id=" + paper.getId() + "'>"
+						"更新了论文：<a href='/showPaperDetails.action?id=" + log.getTargetid() + "'>"
 						+ paper.getTitle() + "</a>的分类";
 				result.setEvent(event);
 			}
-			// TODO: 2016/12/2 修改和删除论文
+			
+			// TODO: 2016/12/2 删除论文
 		}
 		else if(log.getTarget()==Log.NOTE)
 		{
@@ -113,11 +124,28 @@ public class FormatLog
 				Note note = service.getNoteById(log.getTargetid());
 				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
 						+ operator.getUsername() + "</a>" +
-						"新增了笔记：<a href='/showNoteDetails.action?id=" + note.getId() + "'>"
+						"新增了笔记：<a href='/showNoteDetails.action?id=" + log.getTargetid() + "'>"
+						+ (note.getTitle()==null?"（已删除）":note.getTitle()) + "</a>";
+				result.setEvent(event);
+			}
+			else if (log.getType()==Log.EDIT)
+			{//编辑笔记
+				User operator = service.getUserById(log.getOperatorid());
+				Note note = service.getNoteById(log.getTargetid());
+				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
+						+ operator.getUsername() + "</a>" +
+						"修改了笔记：<a href='/showNoteDetails.action?id=" + log.getTargetid() + "'>"
 						+ note.getTitle() + "</a>";
 				result.setEvent(event);
 			}
-			// TODO: 2016/12/2 修改和删除笔记
+			else if (log.getType()==Log.DELETE)
+			{//删除笔记
+				User operator = service.getUserById(log.getOperatorid());
+				String event = "<a href='/showUserDetails.action?id=" + operator.getId() + "'>"
+						+ operator.getUsername() + "</a>" +
+						"删除了id="+log.getTargetid()+"的笔记";
+				result.setEvent(event);
+			}
 		}
 		else if (log.getTarget()==Log.USER)
 		{

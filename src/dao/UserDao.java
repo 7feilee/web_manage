@@ -20,7 +20,7 @@ public class UserDao
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "coding");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage?useSSL=false", "root", "coding");
 			stmt = conn.createStatement();
 			return stmt;
 		}
@@ -61,6 +61,44 @@ public class UserDao
 			System.err.println("MySQL驱动程序错误@dao.Dao.closeDao");
 			e.printStackTrace();
 			return -2;
+		}
+	}
+	public Tree getPaperNode(int uid, int pid)
+	{
+		String sql = "select labelname from user_paper_tree where user_id='" + uid + "' and paper_id='" + pid + "';";
+		ResultSet rs = null;
+		try
+		{
+			stmt = newDao();
+			rs = stmt.executeQuery(sql);
+			Tree tree = new Tree();
+			if (rs.next())
+				tree.setLabelname(rs.getString("labelname"));
+			sql = "SELECT id FROM user_tree WHERE labelname='"+tree.getLabelname()+"' AND user_id='"+uid+"';";
+			rs.close();
+			rs = stmt.executeQuery(sql);
+			if (rs.next())
+				tree.setId(rs.getInt("id"));
+			return tree;
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.UserDao.getPaperState");
+			e.printStackTrace();
+			return null;
+		}
+		finally
+		{
+			if (rs != null)
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException e)
+				{
+					e.printStackTrace();
+				}
+			closeDao();
 		}
 	}
 	public User getUserByUsername(String username)

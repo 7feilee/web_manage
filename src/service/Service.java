@@ -10,7 +10,9 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
-public class Service {
+import java.util.List;
+public class Service
+{
 	private UserDao userDao;
 	private PaperDao paperDao;
 	private NoteDao noteDao;
@@ -66,8 +68,9 @@ public class Service {
 	private Collection<Paper> getPaperByState(int user_id, int state) {
 		Collection<Paper> papers = new LinkedList<>();
 		Collection<Integer> paperids = userDao.getPaperidByState(user_id, state);
-		for (Integer paperid : paperids) {
-			int i = (int) paperid;
+		for (Integer paperid : paperids)
+		{
+			int i = paperid;
 			papers.add(paperDao.getPaperById(i));
 		}
 		return papers;
@@ -79,7 +82,12 @@ public class Service {
 		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords, "C:\\Users\\JevonsAn\\Desktop\\MOOC_特征与学习机制_王永固.pdf", operater);
 	}
 
-	public int getPaperState(int user_id, int paper_id) {
+	public Tree getPaperNode(int uid, int pid)
+	{
+		return userDao.getPaperNode(uid,pid);
+	}
+	public int getPaperState(int user_id, int paper_id)
+	{
 		return userDao.getPaperState(user_id, paper_id);
 	}
 
@@ -96,7 +104,13 @@ public class Service {
 		return noteDao.insertNote(authorId, paperId, title, content, publishTime);
 	}
 
-	public Collection<Note> getNotesByUser(int uid) {
+	public int editNote(int id, String title, String content, int operatorId)
+	{
+		Timestamp editTime = new Timestamp(System.currentTimeMillis());
+		return noteDao.updateNote(id, title, content, operatorId, editTime);
+	}
+	public Collection<Note> getNotesByUser(int uid)
+	{
 		return noteDao.getNotesByUser(uid);
 	}
 
@@ -210,10 +224,12 @@ public class Service {
 		return papers;
 	}
 
-	public Collection<Paper> getLabelPapers(int user_id, String labelname) {
+	public Collection<Paper> getLabelPapers(int user_id, String labelname)
+	{
 		Collection<Integer> paperids = userDao.getTreePapers(labelname, user_id);
 		Collection<Paper> papers = new LinkedList<>();
-		for (Integer paperid : paperids) {
+		for (Integer paperid : paperids)
+		{
 			papers.add(paperDao.getPaperById(paperid));
 		}
 		return papers;
@@ -223,17 +239,32 @@ public class Service {
 		return logDao.insertLog(type, target, targetid, operatorid);
 	}
 
-	public int resetTree(LinkedList<Tree> treelist, int user_id) {
+	public int deleteNote(int nid, int uid)
+	{
+		return noteDao.deleteNote(nid, uid);
+	}
+	public int editPaper(int id, String title, Collection<String> authors, String fileURI, Collection<String> keywords, String abstct, Date publishDate, int uid)
+	{
+		java.sql.Date publishDate2 = new java.sql.Date(publishDate.getTime());
+		return paperDao.updatePaper(id, title, authors, fileURI, keywords, abstct, publishDate2, uid);
+	}
+	
+	public int resetTree(List<Tree> treelist, int user_id)
+	{
 		int size = treelist.size();
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size; i++)
+		{
 			int depth = treelist.get(i).getDepth();
 			if (depth == 0)
 				treelist.get(i).setLabel_father("null");
 			else
-				for (int j = i; j < size; j++) {
+				for (int j = i; j < size; j++)
+				{
 					int cdepth = treelist.get(j).getDepth();
-					if (cdepth < depth) {
-						if (cdepth == (depth + 1)) {
+					if (cdepth < depth)
+					{
+						if (cdepth == (depth + 1))
+						{
 							treelist.get(j).setLabel_father(treelist.get(j).getLabelname());
 						}
 					} else

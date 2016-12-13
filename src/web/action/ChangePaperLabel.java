@@ -23,10 +23,10 @@ public class ChangePaperLabel  extends ActionSupport{
 
     @Override
     public String execute() throws Exception {
-        Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
-        if(obj == null)
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
+        if(user == null)
             return ERROR;
-        int uid = ((User) obj).getId();
+        int uid = user.getId();
         int res=service.updatePaperlabel(uid,paper_id,newlabelname);
         if(res > 0)
             return SUCCESS;

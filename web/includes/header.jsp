@@ -2,10 +2,14 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+<%
+  User userp = null;
+  if (CheckLogin.checkLogin())
+    userp = (User) session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
-  <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet"/>
   <!-- made by shuaihuaiyi -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +21,7 @@
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/html5shiv.js"></script>
   <![endif]-->
   <sj:head jqueryui="false"/>
-  <sb:head/>
+  <sb:head compressed="true" includeScripts="false" includeScriptsValidation="false"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/flatui/css/flat-ui.min.css"
         type="text/css"/>
   <script type="text/javascript"

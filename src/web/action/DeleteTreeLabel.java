@@ -19,11 +19,10 @@ public class DeleteTreeLabel extends ActionSupport{
     @Override
     public String execute() throws Exception
     {
-        Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
-        if(obj == null)
+        User user = ((User) ServletActionContext.getRequest().getSession().getAttribute("user"));
+        if(user == null)
             return ERROR;
-        int uid = ((User) obj).getId();
-        int res = service.deleteTreeLabel(uid,labelname);
+        int res = service.deleteTreeLabel(user.getId(),labelname);
         if(res > 0)
             return SUCCESS;
         else
