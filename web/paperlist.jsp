@@ -10,8 +10,29 @@
         src="${pageContext.request.contextPath}/resources/libs/datatables/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8"
         src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
-<!-- initiate datatable and ajax -->
+<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/libs/fancytree/css/skin-bootstrap/ui.fancytree.css"/>
+<script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
 <script type="text/javascript" charset="utf-8">
+    var glyph_opts = {
+        map: {
+            doc: "glyphicon glyphicon-file",
+            docOpen: "glyphicon glyphicon-file",
+            checkbox: "glyphicon glyphicon-unchecked",
+            checkboxSelected: "glyphicon glyphicon-check",
+            checkboxUnknown: "glyphicon glyphicon-share",
+            dragHelper: "glyphicon glyphicon-play",
+            dropMarker: "glyphicon glyphicon-arrow-right",
+            error: "glyphicon glyphicon-warning-sign",
+            expanderClosed: "glyphicon glyphicon-menu-right",
+            expanderLazy: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
+            expanderOpen: "glyphicon glyphicon-menu-down",  // glyphicon-collapse-down
+            folder: "glyphicon glyphicon-folder-close",
+            folderOpen: "glyphicon glyphicon-folder-open",
+            loading: "glyphicon glyphicon-refresh glyphicon-spin"
+        }
+    };
     $(document).ready(function () {
         function iniSelector() {
             $('select.select').select2();
@@ -28,7 +49,7 @@
                 $.ajax({
                     type: 'POST',
                     url: "<s:url action="showPaperState"/>",
-                    data: {uid:uid,pid:pid},
+                    data: {uid: uid, pid: pid},
                     success: function (result, status, xhr) {
                         $mid.addClass("hidden");
                         $this.val(result.state).trigger("change.select2");
@@ -71,7 +92,6 @@
             },
             "autoWidth": false
         }).on('draw.dt', iniSelector());
-
         $("select.clct").on("change", (function () {
             var $this = $(this);
             var uid, pid, state;
@@ -87,7 +107,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<s:url action="changePaperState"/>',
-                data: {uid:uid,pid:pid,state:state},
+                data: {uid: uid, pid: pid, state: state},
                 success: function (result, status, xhr) {
                     $mid.removeClass("loader primary");
                     $mid.addClass("glyphicon-ok success");
@@ -101,6 +121,43 @@
                 }
             });
         }));
+        <%if(userp!=null){%>
+        //设定用户树
+        $.ajax({
+            url: "<s:url action="showUserTree"/>",
+            success: function (result, status, xhr) {
+                var $tree = $("#tree");
+                $tree.html(result.frontEndTree);
+                $tree.fancytree({
+                    extensions: ["glyph"],
+                    glyph: glyph_opts
+                });
+                $tree.fancytree("getRootNode").visit(function (node) {
+                    node.setExpanded(true);
+                });
+            },
+            error: function (xhr, status, error) {
+                $("#tree").text("用户分类树载入失败，请刷新重试");
+            }
+        });
+        $(".showmodel").each(function () {
+            var $this = $(this);
+            var pid = $this.attr("pid");
+            //得到分类情况
+            $.ajax({
+                url:"<s:url action="getPaperNode"/>",
+                data:{uid:'<%=userp.getId()%>',pid:pid},
+                success: function (result, status, xhr) {
+                    $this.attr("nid",result.tree.id);
+                    $this.removeClass("disabled");
+                    $this.text(result.tree.labelname);
+                }
+            });
+        }).click(function () {
+            //显示模态框
+            //激活
+        });
+        <%}%>
     });
 </script>
 
@@ -113,6 +170,26 @@
     if (userp != null)
     {
   %>
+  <!-- 模态框（Modal） -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title" id="myModalLabel">编辑收藏</h4>
+        </div>
+        <div class="modal-body">
+          <div id="tree"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary">提交更改</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
   <div class="col-md-3 col-md-offset-9">
     <a href="editpaper.jsp" class="btn btn-primary btn-block btn-lg">
       <span class="glyphicon glyphicon-plus"></span>&nbsp;新增论文
@@ -128,12 +205,13 @@
     <tr>
       <th width="40%">篇名</th>
       <th width="20%">作者</th>
-      <th width="20%">发表时间</th>
+      <th width="10%">发表时间</th>
       <%
         if (userp != null)
         {
       %>
-      <th width="20%">收藏</th>
+      <th width="20%">阅读状态</th>
+      <th width="10">分类</th>
       <%}%>
     </tr>
     </thead>
@@ -163,6 +241,9 @@
             <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
                   style="font-size: 20px;text-align: center;"></span>
           </div>
+        </td>
+        <td>
+          <button pid="<s:property value="%{id}"/>" class="showmodel btn btn-primary disabled">载入中...</button>
         </td>
         <%
           }

@@ -10,7 +10,6 @@
 
   <package name="actions" extends="json-default">
     <action name="login" class="web.action.Login">
-      <result/>
       <result name="error">login.jsp</result>
     </action>
     <action name="listPapers" class="web.action.ListPapers">
@@ -64,7 +63,10 @@
       <result>editusertree.jsp</result>
     </action>
     <action name="showUserTree" class="web.action.ShowUserTree">
-      <result>showusertree.jsp</result>
+      <result type="json"><param name="includeProperties">frontEndTree</param></result>
+    </action>
+    <action name="getPaperNode" class="web.action.GetPaperNode">
+      <result type="json"/>
     </action>
     <action name="deleteTreeLabel" class="web.action.DeleteTreeLabel">
       <result>editusertree.jsp</result>

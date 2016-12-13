@@ -92,7 +92,10 @@ public class Service
 		java.sql.Date publishDate2 = new java.sql.Date(publishDate.getTime());
 		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords, operater);
 	}
-	
+	public Tree getPaperNode(int uid, int pid)
+	{
+		return userDao.getPaperNode(uid,pid);
+	}
 	public int getPaperState(int user_id, int paper_id)
 	{
 		return userDao.getPaperState(user_id, paper_id);
