@@ -185,6 +185,10 @@ public class Service {
 		Tree ftree = new Tree();
 		ftree.setLabelname(labelname);
 		queue.add(ftree);
+		Collection<Integer> paperids = userDao.getTreePapers(ftree.getLabelname(), user_id);
+		for (Integer paperid : paperids) {
+			papers.add(getPaperById(paperid));
+		}
 		int size = queue.size();
 		while (size != 0) {
 			for (int i = 0; i < size; i++) {
@@ -192,8 +196,8 @@ public class Service {
 				int d = queue.getFirst().getDepth();
 				for (Tree tree1 : ctree) {
 					if (tree1 != null) {
-						Collection<Integer> paperids = userDao.getTreePapers(tree1.getLabelname(), user_id);
-						for (Integer paperid : paperids) {
+						Collection<Integer> paperids2 = userDao.getTreePapers(tree1.getLabelname(), user_id);
+						for (Integer paperid : paperids2) {
 							papers.add(getPaperById(paperid));
 						}
 						queue.add(tree1);
@@ -267,8 +271,8 @@ public class Service {
 		return new BufferedInputStream(paperDao.getPaperBSbyid(paper_id));
 	}
 
-	public FileInputStream getPaperFSbyid(int paper_id){
-		return (FileInputStream) paperDao.getPaperBSbyid(paper_id);
+	public InputStream getPaperFSbyid(int paper_id){
+		return paperDao.getPaperBSbyid(paper_id);
 	}
 
 	public Tree getTreeByid(int id){
