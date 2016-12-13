@@ -10,6 +10,7 @@ public class GetPapersByTreeNodeName extends ActionSupport
 	private Collection<Paper> papers;
 	private String nodeName;
 	private Service service;
+	private int uid;
 	public GetPapersByTreeNodeName()
 	{
 		super();
@@ -18,7 +19,10 @@ public class GetPapersByTreeNodeName extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		return super.execute();
+		papers = service.getLabelPapers(uid,nodeName);
+		if(papers!=null)
+			return SUCCESS;
+		return ERROR;
 	}
 	/*public String getNodeName()
 	{
@@ -39,5 +43,13 @@ public class GetPapersByTreeNodeName extends ActionSupport
 	public String getNodeName()
 	{
 		return nodeName;
+	}
+	public int getUid()
+	{
+		return uid;
+	}
+	public void setUid(int uid)
+	{
+		this.uid = uid;
 	}
 }

@@ -76,7 +76,7 @@
       <result>editusertree.jsp</result>
     </action>
     <action name="getPapersByTreeNodeName" class="web.action.GetPapersByTreeNodeName">
-      <result type="json"><param name="includeProperties">papers</param></result>
+      <result type="json"><param name="includeProperties">papers\[\d+\]\.title,papers\[\d+\]\.id</param></result>
     </action>
     <action name="editNote" class="web.action.ShowNoteDetails">
       <result>editnote.jsp</result>

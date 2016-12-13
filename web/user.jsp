@@ -154,17 +154,50 @@
         var $tree = $("#tree");
         $tree.fancytree({
             extensions: ["glyph"],
-            glyph: glyph_opts,
-            activate: function (event, data) {
-                $(".fancytree-active").children(".fancytree-title").popover({
-                    placement: "right",
-                    title: "节点论文",
-                    content: "hello"
-                });
-            }
+            glyph: glyph_opts
+//            activate: function (event, data) {
+//                $(".fancytree-active").children(".fancytree-title").popover("show");
+//                $(".fancytree-title").popover("hide");
+//                $(".fancytree-active").children(".fancytree-title").popover("show");
+//            }
         });
         $tree.fancytree("getRootNode").visit(function (node) {
             node.setExpanded(true);
+        });
+        $(".fancytree-title").each(function () {
+            var $this = $(this);
+            $.ajax({
+                url:"<s:url action="getPapersByTreeNodeName"><s:param name="uid" value="%{id}"/></s:url>",
+                data:{'nodeName':$(this).text()},
+                success: function (result, status, xhr) {
+                    var context="";
+                    if(result.papers.length == 0)
+                        context = "没有论文";
+                    else
+                        result.papers.forEach(function (paper) {
+                            context+="<a href='<s:url action="showPaperDetails"/>?id="+paper.id+"'>"+paper.title+"</a>, ";
+                        });
+                    $this.popover({
+                        html:true,
+                        placement: "right",
+                        title: "节点论文",
+                        content: context
+                    });
+                },
+                error: function (xhr, status, error) {
+                    $this.popover({
+                        html:true,
+                        placement: "right",
+                        title: "节点论文",
+                        content: "加载失败！"
+                    });
+                }
+            });
+        }).click(function () {
+            $(".fancytree-title").popover("hide");
+            $(this).popover('show');
+        }).on('hidden.bs.popover',function () {
+            $(".fancytree-active").children(".fancytree-title").popover('show');
         });
     });
 </script>
