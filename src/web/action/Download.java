@@ -16,21 +16,13 @@ public class Download extends ActionSupport {
     private static final String FilePath = "F:\\chengxu\\JAVA2\\web_manage\\zip\\";
     private InputStream dfile;
     private String fileName;
-    private FileInputStream in;
-
-    public FileInputStream getIn() {
+    private InputStream in;
+    
+    public InputStream getIn() {
         try {
-            ServletActionContext.getResponse().setHeader("Content-Disposition","attachment;fileName="
+            ServletActionContext.getResponse().setHeader("Content-Disposition", "attachment;fileName="
                     + java.net.URLEncoder.encode(tmpFileName, "UTF-8"));
-
-            File file = new File(FilePath + tmpFileName);
-            if (file.exists()) {
-                //ServletActionContext.getServletContext().getResourceAsStream(file);
-                in = new FileInputStream(file);
-            }
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
+            in = ServletActionContext.getServletContext().getResourceAsStream(tmpFileName);
         }
         catch (UnsupportedEncodingException e){
             e.printStackTrace();

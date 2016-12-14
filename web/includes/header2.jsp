@@ -14,7 +14,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp">logo</a>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp"><span class="	glyphicon glyphicon-home"></span> </a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-01">
       <ul class="nav navbar-nav">

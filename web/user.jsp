@@ -177,6 +177,7 @@
                         result.papers.forEach(function (paper) {
                             context+="<a href='<s:url action="showPaperDetails"/>?id="+paper.id+"'>"+paper.title+"</a>, ";
                         });
+                    context += "<a class='btn btn-primary btn-block btn-sm' href='zip/download.zip' download='download'>下载</a>";
                     $this.popover({
                         html:true,
                         placement: "right",
