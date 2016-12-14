@@ -13,34 +13,27 @@ public class Download extends ActionSupport {
     private Service service;
     private String tmpFileName;
     private String tpath;
-    private static final String FilePath = "F:\\chengxu\\JAVA2\\web_manage\\zip\\";
+    private static final String FilePath = "D:\\";
     private InputStream dfile;
     private String fileName;
-    private FileInputStream in;
+    //private InputStream in;
 
-    public FileInputStream getIn() {
+    public InputStream getIn() {
         try {
-            ServletActionContext.getResponse().setHeader("Content-Disposition","attachment;fileName="
+            ServletActionContext.getResponse().setHeader("Content-Disposition", "attachment;fileName="
                     + java.net.URLEncoder.encode(tmpFileName, "UTF-8"));
-
-            File file = new File(FilePath + tmpFileName);
-            if (file.exists()) {
-                //ServletActionContext.getServletContext().getResourceAsStream(file);
-                in = new FileInputStream(file);
-            }
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
+            InputStream in = ServletActionContext.getServletContext().getResourceAsStream(tmpFileName);
+            return in;
         }
         catch (UnsupportedEncodingException e){
             e.printStackTrace();
+            return null;
         }
-        return in;
     }
 
-    public void setIn(FileInputStream in) {
+    /*public void setIn(FileInputStream in) {
         this.in = in;
-    }
+    }*/
 
     public String getTpath() {
         return tpath;
@@ -100,7 +93,7 @@ public class Download extends ActionSupport {
         tmpFileName = labelname.concat(".zip");
         byte[] buffer = new byte[1024];
         //String strZipPath = FilePath + tmpFileName;
-        String strZipPath = tmpFileName;
+        String strZipPath = FilePath+tmpFileName;
         try {
             FileOutputStream fos=new FileOutputStream(strZipPath);
             ZipOutputStream out = new ZipOutputStream(fos);

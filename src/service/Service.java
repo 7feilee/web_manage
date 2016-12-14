@@ -79,7 +79,7 @@ public class Service
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
 						String abstct, Date publishDate, String sourceURL, int operater) {
 		java.sql.Date publishDate2 = new java.sql.Date(publishDate.getTime());
-		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords, "C:\\Users\\JevonsAn\\Desktop\\MOOC_特征与学习机制_王永固.pdf", operater);
+		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords, title, operater);
 	}
 
 	public Tree getPaperNode(int uid, int pid)

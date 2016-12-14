@@ -196,9 +196,15 @@ public class PaperDao
 	                          Collection<String> keywords,String sourceURL, int operater)
 	{
 		String author = "",keyword = "";
+		String firstauthor="";
+		int n=0;
 		for (String s : authors) {
 			author+=s;
 			author+=';';
+			if (n==0){
+				firstauthor=s;
+				n++;
+			}
 		}
 		for (String s : keywords) {
 			keyword+=s;
@@ -216,8 +222,9 @@ public class PaperDao
 			ps.setString(4, author);
 			ps.setString(5,abstct);
 			ps.setString(6,keyword);
-			if (!sourceURL.equals("")) {
-				File file = new File(sourceURL);
+			String URL="G:\\Chrome下载\\".concat(sourceURL).concat(".pdf");
+			if (!URL.equals("")) {
+				File file = new File(URL);
 				if (file.exists())
 					ps.setBinaryStream(7, new FileInputStream(file), (int) file.length());
 			}
