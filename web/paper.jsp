@@ -42,6 +42,35 @@
             },
             autoWidth: false
         });
+        $(".dtno").dataTable({
+            lengthMenu: [5, 10, 15, 30, 50],
+            pageLength: 5,
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "每页显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "表格内搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            ordering: false
+        });
         var leftHeight = $("#left").height();
         var mainHeight = $("#main").height();
         if(leftHeight < mainHeight)
@@ -130,6 +159,37 @@
           </tbody>
         </table>
       </s:else>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <span class="panel-title h6">
+        大家的动态
+      </span>
+    </div>
+    <div class="panel-body">
+      <table class="table table-bordered table-striped table-hover dtno">
+        <thead>
+        <tr>
+          <th>时间</th>
+          <th>事件</th>
+        </tr>
+        </thead>
+        <tbody>
+        <s:iterator value="logs">
+          <tr>
+            <td>
+              <s:property value="time"/>
+            </td>
+            <td>
+              <s:property value="event" escapeHtml="false"/>
+            </td>
+          </tr>
+        </s:iterator>
+        </tbody>
+      </table>
     </div>
   </div>
 <%@ include file="includes/footer.jsp" %>

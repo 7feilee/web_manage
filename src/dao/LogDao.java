@@ -146,6 +146,49 @@ public class LogDao
 		}
 		return logs;
 	}
+	public Collection<Log> getLogsByPaper(int pid)
+	{
+		Collection<Log> logs = new LinkedList<>();
+		String sql = "select * from log WHERE targetid='" + pid + "' AND target='"+Log.PAPER+"';";
+		stmt = newDao();
+		ResultSet rs = null;
+		try
+		{
+			rs = stmt.executeQuery(sql);
+			Log log;
+			while (rs.next())
+			{
+				log = new Log();
+				log.setId(rs.getInt("id"));
+				log.setOperatorid(rs.getInt("operatorid"));
+				log.setTarget(rs.getInt("target"));
+				log.setTargetid(rs.getInt("targetid"));
+				log.setTime(rs.getTimestamp("time"));
+				log.setType(rs.getInt("type"));
+				logs.add(log);
+			}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL查询错误@dao.LogDao.getLogsByUser");
+			e.printStackTrace();
+			return null;
+		}
+		finally
+		{
+			if (rs != null)
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException e)
+				{
+					e.printStackTrace();
+				}
+			closeDao();
+		}
+		return logs;
+	}
 	public int insertLog(int type, int target, int targetid, int operatorid)
 	{
 		stmt = newDao();
