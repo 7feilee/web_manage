@@ -193,18 +193,12 @@ public class PaperDao
 
 	public int insertNewPaper(String title, String fileURI, Date publishDate,
 	                          Collection<String> authors, String abstct,
-	                          Collection<String> keywords,String sourceURL, int operater)
+	                          Collection<String> keywords,java.io.File sourceFile, int operater)
 	{
 		String author = "",keyword = "";
-		String firstauthor="";
-		int n=0;
 		for (String s : authors) {
 			author+=s;
 			author+=';';
-			if (n==0){
-				firstauthor=s;
-				n++;
-			}
 		}
 		for (String s : keywords) {
 			keyword+=s;
@@ -212,22 +206,24 @@ public class PaperDao
 		}
 
 		final String INSERT_SQL = "insert into paper(title,fileURI,publishDate,author," +
+				"abstct,keyword) values(?,?,?,?,?,?)";
+		final String INSERT_SQL2 = "insert into paper(title,fileURI,publishDate,author," +
 				"abstct,keyword,resource) values(?,?,?,?,?,?,?)";
 		try
 		{
-			PreparedStatement ps = newDao2().prepareStatement(INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps;
+			if (sourceFile==null)
+				ps = newDao2().prepareStatement(INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
+			else
+				ps = newDao2().prepareStatement(INSERT_SQL2,Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, title);
 			ps.setString(2, fileURI);
 			ps.setDate(3, publishDate);
 			ps.setString(4, author);
 			ps.setString(5,abstct);
 			ps.setString(6,keyword);
-			String URL="G:\\Chrome下载\\".concat(sourceURL).concat(".pdf");
-			if (!URL.equals("")) {
-				File file = new File(URL);
-				if (file.exists())
-					ps.setBinaryStream(7, new FileInputStream(file), (int) file.length());
-			}
+			if (sourceFile.exists())
+				ps.setBinaryStream(7, new FileInputStream(sourceFile), (int) sourceFile.length());
 			int result = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			int id;

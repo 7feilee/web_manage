@@ -12,77 +12,31 @@ public class Download extends ActionSupport {
     private int label_id;
     private Service service;
     private String tmpFileName;
-    private String tpath;
-    private static final String FilePath = "D:\\";
     private InputStream dfile;
     private String fileName;
-    //private InputStream in;
 
-    public InputStream getIn() {
-        try {
-            ServletActionContext.getResponse().setHeader("Content-Disposition", "attachment;fileName="
-                    + java.net.URLEncoder.encode(tmpFileName, "UTF-8"));
-            InputStream in = ServletActionContext.getServletContext().getResourceAsStream(tmpFileName);
-            return in;
-        }
-        catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-            return null;
-        }
+    public String getTmpFileName() {
+        return tmpFileName;
     }
-
-    /*public void setIn(FileInputStream in) {
-        this.in = in;
-    }*/
-
-    public String getTpath() {
-        return tpath;
+    public void setTmpFileName(String tmpFileName) {
+        this.tmpFileName = tmpFileName;
     }
-
-    public void setTpath(String tpath) {
-        this.tpath = tpath;
+    public String getFileName() throws UnsupportedEncodingException {
+        return new String(tmpFileName.getBytes(), "ISO8859-1");
     }
-
-    public String getFileName() {
-        return fileName;
-    }
-
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-
     public int getLabel_id() {
         return label_id;
     }
     public void setLabel_id(int label_id) {
         this.label_id = label_id;
     }
-
-
-    public InputStream getDfile(){
-        try {
-            ServletActionContext.getResponse().setHeader("Content-Disposition","attachment;fileName="
-                + java.net.URLEncoder.encode(tmpFileName, "UTF-8"));
-
-            File file = new File(FilePath + tmpFileName);//ServletActionContext.getServletContext().getResourceAsStream(file);
-            FileInputStream in = null;
-            if (file.exists()) {
-                //ServletActionContext.getServletContext().getResourceAsStream(file);
-                in = new FileInputStream(file);
-            }
-            return in;
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-            return null;
-        }
-        catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-            return null;
-        }
+    public InputStream getDfile() throws UnsupportedEncodingException, FileNotFoundException {
+        return ServletActionContext.getServletContext().getResourceAsStream("/zip/".concat(tmpFileName));
     }
-
-    public String execute() throws Exception{
+    public String execute(){
         service=new Service();
         Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
         if(obj == null)
@@ -93,7 +47,8 @@ public class Download extends ActionSupport {
         tmpFileName = labelname.concat(".zip");
         byte[] buffer = new byte[1024];
         //String strZipPath = FilePath + tmpFileName;
-        String strZipPath = FilePath+tmpFileName;
+        String realPath=ServletActionContext.getServletContext().getRealPath("/zip/");
+        String strZipPath = realPath+tmpFileName;
         try {
             FileOutputStream fos=new FileOutputStream(strZipPath);
             ZipOutputStream out = new ZipOutputStream(fos);
@@ -116,6 +71,7 @@ public class Download extends ActionSupport {
                 fis.close();
             }
             out.close();
+            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
