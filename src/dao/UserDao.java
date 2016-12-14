@@ -108,19 +108,24 @@ public class UserDao
 		try
 		{
 			stmt = newDao();
-			rss = stmt.executeQuery(sql);
-			if (rss.next())
-			{
-				stmt = newDao();
-				User user = new User();
-				user.setUsername(rss.getString("username"));
-				user.setPassword(rss.getString("password"));
-				user.setId(rss.getInt("id"));
-				user.setBio(rss.getString("bio"));
-				user.setBlogURL(rss.getString("blogURL"));
-				user.setImgURI(rss.getString("imgURI"));
-				user.setEmail(rss.getString("email"));
-				user.setName(rss.getString("name"));
+			if (stmt != null) {
+				rss = stmt.executeQuery(sql);
+			}
+			if (rss != null) {
+				User user =null;
+				if (rss.next())
+                {
+                    stmt = newDao();
+                    user=new User();
+                    user.setUsername(rss.getString("username"));
+                    user.setPassword(rss.getString("password"));
+                    user.setId(rss.getInt("id"));
+                    user.setBio(rss.getString("bio"));
+                    user.setBlogURL(rss.getString("blogURL"));
+                    user.setImgURI(rss.getString("imgURI"));
+                    user.setEmail(rss.getString("email"));
+                    user.setName(rss.getString("name"));
+                }
 				return user;
 			}
 			else
@@ -155,22 +160,27 @@ public class UserDao
 		try
 		{
 			stmt = newDao();
-			rs = stmt.executeQuery(sql);
-			if (rs.next())
-			{
-				User user = new User();
-				user.setUsername(rs.getString("username"));
-				user.setPassword(rs.getString("password"));
-				user.setId(rs.getInt(1));
-				user.setBio(rs.getString("bio"));
-				user.setBlogURL(rs.getString("blogURL"));
-				user.setImgURI(rs.getString("imgURI"));
-				user.setEmail(rs.getString("email"));
-				user.setName(rs.getString("name"));
-				return user;
+			if (stmt != null) {
+				rs = stmt.executeQuery(sql);
 			}
-			else
-				return null;
+			if (rs != null) {
+				if (rs.next())
+                {
+                    User user = new User();
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setId(rs.getInt(1));
+                    user.setBio(rs.getString("bio"));
+                    user.setBlogURL(rs.getString("blogURL"));
+                    user.setImgURI(rs.getString("imgURI"));
+                    user.setEmail(rs.getString("email"));
+                    user.setName(rs.getString("name"));
+                    return user;
+                }
+                else
+                    return null;
+			}
+			return null;
 		}
 		catch (SQLException e)
 		{
@@ -199,11 +209,16 @@ public class UserDao
 		String sql = "INSERT INTO user(username, password) VALUES ('" + username + "','" + password + "');";
 		try
 		{
-			int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			ResultSet rs = stmt.getGeneratedKeys();
+			int result = 0;
+			if (stmt != null) {
+				result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			}
+			ResultSet rs = null;
+			if (stmt != null) {
+				rs = stmt.getGeneratedKeys();
+			}
 			int id;
-			if (rs.next())
-			{
+			if (rs != null && rs.next()) {
 				id = rs.getInt(1);
 				LogDao logDao = new LogDao();
 				if (logDao.insertLog(Log.ADD, Log.USER, id, id) > 0)
@@ -211,7 +226,9 @@ public class UserDao
 				else
 					return -3;//写入日志失败
 			}
-			rs.close();
+			if (rs != null) {
+				rs.close();
+			}
 			return -2;//其他未知错误
 		}
 		catch (SQLException e)
@@ -388,23 +405,22 @@ public class UserDao
 				tree1.setLabel_father(rs.getString("label_father"));
 				trees.add(tree1);
 			}
+			return trees;
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+			return null;
 		}
 		finally {
-			if (rs != null)
-				try
-				{
+			if (rs != null) {
+				try {
 					rs.close();
-				}
-				catch (SQLException e)
-				{
+				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+			}
 			closeDao();
-			return trees;
 		}
 	}
 
@@ -420,9 +436,12 @@ public class UserDao
 				tree.setId(rs.getInt("id"));
 				tree.setLabelname(rs.getString("labelname"));
 				tree.setLabel_father(rs.getString("label_father"));
+				return tree;
 			}
+			return null;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 		finally {
 			if (rs != null)
@@ -435,8 +454,6 @@ public class UserDao
 					e.printStackTrace();
 				}
 			closeDao();
-			return tree;
-
 		}
 	}
 
@@ -453,10 +470,12 @@ public class UserDao
 			{
 				papers.add(rs.getInt(1));
 			}
+			return papers;
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+			return null;
 		}
 		finally {
 			if (rs != null)
@@ -466,7 +485,7 @@ public class UserDao
 					e.printStackTrace();
 				}
 			closeDao();
-			return papers;
+
 		}
 	}
 
@@ -538,6 +557,7 @@ public class UserDao
 	public int updateTreeLabel(int id, String newlabelname)
 	{
 		String sql = "update user_tree set labelname='" + newlabelname + "' where id=" + id +";";
+		stmt=newDao();
 		try
 		{
 			return stmt.executeUpdate(sql);
@@ -555,6 +575,7 @@ public class UserDao
 	public int updateLabelFather(int id, String newlabel_father)
 	{
 		String sql = "update user_tree set label_father='" + newlabel_father + "' where id=" + id +";";
+		stmt=newDao();
 		try
 		{
 			return stmt.executeUpdate(sql);

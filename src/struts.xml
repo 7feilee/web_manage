@@ -95,5 +95,16 @@
     <action name="showTimeLine" class="web.action.ShowTimeLine">
       <result>timeline.jsp</result>
     </action>
+    <action name="ZipDownload">
+      <result>download.jsp</result>
+    </action>
+    <action name="Zip2Download" class="web.action.Download">
+      <result name="success" type="stream">
+        <param name="contentType">application/octet-stream</param>
+        <param name="contentDisposition">attachment;filename="${fileName}"</param>
+        <param name="inputName">in</param>
+        <param name="bufferSize">2097152</param>
+      </result>
+    </action>
   </package>
 </struts>

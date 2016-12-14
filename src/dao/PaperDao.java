@@ -2,6 +2,7 @@ package dao;
 import model.Log;
 import model.Paper;
 
+import java.io.*;
 import java.sql.*;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,7 +37,29 @@ public class PaperDao
 			return null;
 		}
 	}
-	
+
+	private Connection newDao2()
+	{
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/papermanage", "root", "coding");
+			return conn;
+		}
+		catch (SQLException e)
+		{
+			System.err.println("MySQL连接错误@dao.Dao");
+			e.printStackTrace();
+			return null;
+		}
+		catch (Exception e)
+		{
+			System.err.println("MySQL驱动程序错误@dao.Dao");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	private int closeDao()
 	{
 		try
@@ -167,25 +190,39 @@ public class PaperDao
 			closeDao();
 		}
 	}
-	
+
 	public int insertNewPaper(String title, String fileURI, Date publishDate,
 	                          Collection<String> authors, String abstct,
-	                          Collection<String> keywords, int operater)
+	                          Collection<String> keywords,String sourceURL, int operater)
 	{
-		StringBuilder author = new StringBuilder(), keyword = new StringBuilder();
-		for (String s : authors)
-			author.append(s).append(";");
-		for (String s : keywords)
-			keyword.append(s).append(";");
-		String sql = "insert into paper(title,fileURI,publishDate,author," +
-				"abstct,keyword) values" +
-				"('" + title + "','" + fileURI + "','" + publishDate + "','" + author + "','" +
-				abstct + "','" + keyword + "');";
+		String author = "",keyword = "";
+		for (String s : authors) {
+			author+=s;
+			author+=';';
+		}
+		for (String s : keywords) {
+			keyword+=s;
+			keyword+=';';
+		}
+
+		final String INSERT_SQL = "insert into paper(title,fileURI,publishDate,author," +
+				"abstct,keyword,resource) values(?,?,?,?,?,?,?)";
 		try
 		{
-			stmt = newDao();
-			int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			ResultSet rs = stmt.getGeneratedKeys();
+			PreparedStatement ps = newDao2().prepareStatement(INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, title);
+			ps.setString(2, fileURI);
+			ps.setDate(3, publishDate);
+			ps.setString(4, author);
+			ps.setString(5,abstct);
+			ps.setString(6,keyword);
+			if (!sourceURL.equals("")) {
+				File file = new File(sourceURL);
+				if (file.exists())
+					ps.setBinaryStream(7, new FileInputStream(file), (int) file.length());
+			}
+			int result = ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
 			int id;
 			if (rs.next())
 			{
@@ -203,9 +240,35 @@ public class PaperDao
 		{
 			e.printStackTrace();
 			return -1;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return -4;
+		} finally {
+			closeDao();
 		}
-		finally
-		{
+	}
+
+	public InputStream getPaperBSbyid(int paper_id){
+		String sql="Select resource from paper where id="+paper_id+";";
+		stmt=newDao();
+		ResultSet rs=null;
+		try {
+			rs=stmt.executeQuery(sql);
+			if (rs.next()){
+				return rs.getBinaryStream(1);
+			}
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			closeDao();
 		}
 	}
