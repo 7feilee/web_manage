@@ -1,4 +1,4 @@
-﻿package web.action;
+package web.action;
 import model.*;
 import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionSupport;
