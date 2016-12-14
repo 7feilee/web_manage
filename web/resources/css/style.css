@@ -140,3 +140,6 @@ span.fancytree-icon{
 pre{
     padding: 0 !important;
 }
+.popover{
+    width: 500px;
+}

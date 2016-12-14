@@ -35,7 +35,7 @@ public class EditUserTree extends ActionSupport
 		for (JSONTree tree : trees)
 			treeList.addAll(tree.toTreeList());
 		if (service.resetTree(treeList, user.getId()) > 0)
-			return SUCCESS;
+			ServletActionContext.getResponse().sendRedirect("showUserDetails?id="+user.getId());
 		return ERROR;
 	}
 	
