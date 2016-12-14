@@ -61,7 +61,7 @@
                  elementCssClass="col-sm-11" value="%{authors}"/>
     <s:textfield name="keyword" label="关键字" placeholder="多个关键字请使用;分隔" labelCssClass="col-sm-1"
                  elementCssClass="col-sm-11" value="%{keywords}"/>
-    <s:textfield name="fileURI" label="来源链接" labelCssClass="col-sm-1"
+    <s:file name="fileURI" label="源文件" labelCssClass="col-sm-1"
                  elementCssClass="col-sm-11" value="%{paper.fileURI}"/>
     <div class="form-group">
       <label for="dtp_input2" class="col-sm-1 control-label">发表日期</label>

@@ -111,9 +111,100 @@
                 }
             });
         }));
+        <%if(userp!=null){%>
+        //设定用户树
+        $.ajax({
+            url: "<s:url action="showUserTree"/>",
+            success: function (result, status, xhr) {
+                var $tree = $("#tree");
+                $tree.html(result.frontEndTree);
+                $tree.fancytree({
+                    extensions: ["glyph"],
+                    glyph: glyph_opts
+                });
+                $tree.fancytree("getRootNode").visit(function (node) {
+                    node.setExpanded(true);
+                });
+            },
+            error: function (xhr, status, error) {
+                $("#tree").text("用户分类树载入失败，请刷新重试");
+            }
+        });
+        $(".showmodel").each(function () {
+            var $this = $(this);
+            var pid = $this.attr("pid");
+            //得到分类情况
+            $.ajax({
+                url:"<s:url action="getPaperNode"/>",
+                data:{uid:'<%=userp.getId()%>',pid:pid},
+                success: function (result, status, xhr) {
+                    if(result.tree.labelname!==null) {
+                        $this.attr("nid", result.tree.id);
+                        $this.removeClass("disabled");
+                        $this.text(result.tree.labelname);
+                    }
+                    else{
+                        $this.text("未分类");
+                        $this.removeClass("disabled");
+                    }
+                }
+            });
+        }).click(function () {
+            var $this=$(this);
+            //显示模态框
+            $('#myModal').modal('show');
+            //激活当前节点
+            $("#tree").fancytree("getTree").activateKey($(this).attr("nid"));
+            //提交修改
+            $("#submit").click(function () {
+                var node = $("#tree").fancytree("getActiveNode");
+                var newlabelname;
+                if( node ){
+                    newlabelname=node.title;
+                    $.ajax({
+                        url : "<s:url action="changePaperLabel"/>",
+                        data:{paper_id:$this.attr("pid"),newlabelname:newlabelname},
+                        success: function (result, status, xhr) {
+                            $this.text(newlabelname);
+                        }
+                    });
+                    $('#myModal').modal('hide');
+                }else{
+                    alert("请选中一个节点！");
+                }
+            });
+        });
+        <%}%>
     });
 </script>
 <%@include file="includes/header2.jsp" %>
+<%
+  if (userp != null)
+  {
+%>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">编辑收藏</h4>
+      </div>
+      <div class="modal-body">
+        <div id="tree"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="submit" type="button" class="btn btn-primary">提交更改</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+<%
+    }
+%>
 <div class="col-md-12">
 <ol class="breadcrumb">
   <li><a href="<s:url action="showUserDetails"><s:param name="id" value="%{id}"/></s:url>">个人中心</a></li>
@@ -145,6 +236,7 @@
             {
           %>
           <th width="20%">收藏</th>
+          <th width="10">分类</th>
           <%}%>
         </tr>
         </thead>
@@ -175,6 +267,9 @@
                             style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
               </div>
             </td>
+            <td>
+              <button pid="<s:property value="%{id}"/>" class="showmodel btn btn-primary disabled">载入中...</button>
+            </td>
             <%
               }
             %>
@@ -194,12 +289,13 @@
         <tr>
           <th width="40%">篇名</th>
           <th width="20%">作者</th>
-          <th width="20%">发表时间</th>
+          <th width="10%">发表时间</th>
           <%
             if (userp != null && userp.getId() == iruid)
             {
           %>
           <th width="20%">收藏</th>
+          <th width="10">分类</th>
           <%}%>
         </tr>
         </thead>
@@ -230,6 +326,9 @@
                             style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
               </div>
             </td>
+            <td>
+              <button pid="<s:property value="%{id}"/>" class="showmodel btn btn-primary disabled">载入中...</button>
+            </td>
             <%
               }
             %>
@@ -249,12 +348,13 @@
         <tr>
           <th width="40%">篇名</th>
           <th width="20%">作者</th>
-          <th width="20%">发表时间</th>
+          <th width="10%">发表时间</th>
           <%
             if (userp != null && userp.getId() == iruid)
             {
           %>
-          <th width="20%">收藏</th>
+          <th width="20%">阅读状态</th>
+          <th width="10">分类</th>
           <%}%>
         </tr>
         </thead>
@@ -284,6 +384,9 @@
                       <span id="ms_<s:property value="%{id}"/>" class="glyphicon loader hidden primary"
                             style="font-size: 20px;vertical-align: middle;text-align: center;"></span>
               </div>
+            </td>
+            <td>
+              <button pid="<s:property value="%{id}"/>" class="showmodel btn btn-primary disabled">载入中...</button>
             </td>
             <%
               }

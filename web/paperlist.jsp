@@ -147,7 +147,7 @@
                 url:"<s:url action="getPaperNode"/>",
                 data:{uid:'<%=userp.getId()%>',pid:pid},
                 success: function (result, status, xhr) {
-                    if(result.tree.labelname!=="null") {
+                    if(result.tree.labelname!==null) {
                         $this.attr("nid", result.tree.id);
                         $this.removeClass("disabled");
                         $this.text(result.tree.labelname);
