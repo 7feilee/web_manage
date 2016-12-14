@@ -28,8 +28,6 @@ public class EditUserTree extends ActionSupport
 		if (user == null)
 			return ERROR;
 		List<Tree> treeList = new LinkedList<>();
-//		data = data.replace("\"", "");
-//		int depth = 0;
 		JSONArray jsonArray = JSONArray.fromObject(data);
 		JSONTree[] trees = (JSONTree[]) JSONArray.toArray(jsonArray, JSONTree.class);
 		for (JSONTree tree : trees)

@@ -54,6 +54,10 @@
                         $mid.addClass("hidden");
                         $this.val(result.state).trigger("change.select2");
                         $this.attr("disabled", false);
+                        if(result.state == 0)
+                            $this.parent().parent().find(".showmodel").addClass("disabled").text("未分类");
+                        else
+                            getTreeNode($this.parent().parent().find(".showmodel"));
                     },
                     error: function (xhr, status, error) {
                         $mid.addClass("hidden");
@@ -61,6 +65,28 @@
                     }
                 });
             });
+        }
+        function getTreeNode ($this) {
+            var pid = $this.attr("pid");
+            //对于已经收藏的论文，得到分类情况
+            if ($this.parent().parent().find("select").val() != 0)
+                $.ajax({
+                    url: "<s:url action="getPaperNode"/>",
+                    data: {uid: '<%=userp.getId()%>', pid: pid},
+                    success: function (result, status, xhr) {
+                        if (result.tree.labelname != null && result.tree.labelname != 'null') {
+                            $this.attr("nid", result.tree.id);
+                            $this.removeClass("disabled");
+                            $this.text(result.tree.labelname);
+                        }
+                        else {
+                            $this.text("未分类");
+                            $this.removeClass("disabled");
+                        }
+                    }
+                });
+            else
+                $this.text("未分类");
         }
         $(".table").dataTable({
             lengthMenu: [25, 50, 100, 150, 300],
@@ -112,6 +138,10 @@
                     $mid.addClass("glyphicon-ok success");
                     $this.val(result.state).trigger("change.select2");
                     $this.attr("disabled", false);
+                    if(result.state == 0)
+                        $this.parent().parent().find(".showmodel").addClass("disabled").text("未分类");
+                    else
+                        getTreeNode($this.parent().parent().find(".showmodel"));
                 },
                 error: function (xhr, status, error) {
                     $mid.removeClass("loader primary");
@@ -139,49 +169,32 @@
                 $("#tree").text("用户分类树载入失败，请刷新重试");
             }
         });
-        $(".showmodel").each(function () {
-            var $this = $(this);
-            var pid = $this.attr("pid");
-            //得到分类情况
-            $.ajax({
-                url:"<s:url action="getPaperNode"/>",
-                data:{uid:'<%=userp.getId()%>',pid:pid},
-                success: function (result, status, xhr) {
-                    if(result.tree.labelname!==null) {
-                        $this.attr("nid", result.tree.id);
-                        $this.removeClass("disabled");
-                        $this.text(result.tree.labelname);
-                    }
-                    else{
-                        $this.text("未分类");
-                        $this.removeClass("disabled");
-                    }
-                }
-            });
-        }).click(function () {
-            var $this=$(this);
+        $(".showmodel").click(function () {
+            $("#submit").attr("pid",$(this).attr("pid"));
             //显示模态框
             $('#myModal').modal('show');
             //激活当前节点
             $("#tree").fancytree("getTree").activateKey($(this).attr("nid"));
-            //提交修改
-            $("#submit").click(function () {
-                var node = $("#tree").fancytree("getActiveNode");
-                var newlabelname;
-                if( node ){
-                    newlabelname=node.title;
-                    $.ajax({
-                        url : "<s:url action="changePaperLabel"/>",
-                        data:{paper_id:$this.attr("pid"),newlabelname:newlabelname},
-                        success: function (result, status, xhr) {
-                            $this.text(newlabelname);
-                        }
-                    });
-                    $('#myModal').modal('hide');
-                }else{
-                    alert("请选中一个节点！");
-                }
-            });
+        });
+        //提交修改
+        $("#submit").click(function () {
+            $this = $(this);
+            var node = $("#tree").fancytree("getActiveNode");
+            var newlabelname;
+            if (node) {
+                newlabelname = node.title;
+                $.ajax({
+                    url: "<s:url action="changePaperLabel"/>",
+                    data: {paper_id: $this.attr("pid"), newlabelname: newlabelname},
+                    success: function (result, status, xhr) {
+                        $(".showmodel[pid="+$this.attr("pid")+"]").text(newlabelname);
+                        $(".showmodel[pid="+$this.attr("pid")+"]").attr("nid", node.key);
+                    }
+                });
+                $('#myModal').modal('hide');
+            } else {
+                alert("请选中一个节点！");
+            }
         });
         <%}%>
     });
@@ -251,7 +264,10 @@
         </td>
         <td><s:iterator value="authors"><s:property/>&nbsp;</s:iterator></td>
         <td><s:property value="%{publishDate}"/></td>
-        <%if (userp != null) {%>
+        <%
+          if (userp != null)
+          {
+        %>
         <td>
           <select id="ps_<s:property value="%{id}"/>" style="width: 75%; min-width: 0; float: left"
                   class="form-control select select-primary clct" title="收藏状态">

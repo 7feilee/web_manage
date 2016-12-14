@@ -20,8 +20,29 @@
         src="${pageContext.request.contextPath}/resources/libs/datatables/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8"
         src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.bootstrap.min.js"></script>
-<!-- initiate datatable and ajax -->
+<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/libs/fancytree/css/skin-bootstrap/ui.fancytree.css"/>
+<script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
 <script type="text/javascript" charset="utf-8">
+    var glyph_opts = {
+        map: {
+            doc: "glyphicon glyphicon-file",
+            docOpen: "glyphicon glyphicon-file",
+            checkbox: "glyphicon glyphicon-unchecked",
+            checkboxSelected: "glyphicon glyphicon-check",
+            checkboxUnknown: "glyphicon glyphicon-share",
+            dragHelper: "glyphicon glyphicon-play",
+            dropMarker: "glyphicon glyphicon-arrow-right",
+            error: "glyphicon glyphicon-warning-sign",
+            expanderClosed: "glyphicon glyphicon-menu-right",
+            expanderLazy: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
+            expanderOpen: "glyphicon glyphicon-menu-down",  // glyphicon-collapse-down
+            folder: "glyphicon glyphicon-folder-close",
+            folderOpen: "glyphicon glyphicon-folder-open",
+            loading: "glyphicon glyphicon-refresh glyphicon-spin"
+        }
+    };
     $(document).ready(function () {
         function iniSelector() {
             $('select.select').select2();
@@ -38,11 +59,15 @@
                 $.ajax({
                     type: 'POST',
                     url: "<s:url action="showPaperState"/>",
-                    data: {uid:uid,pid:pid},
+                    data: {uid: uid, pid: pid},
                     success: function (result, status, xhr) {
                         $mid.addClass("hidden");
                         $this.val(result.state).trigger("change.select2");
                         $this.attr("disabled", false);
+                        if(result.state == 0)
+                            $this.parent().parent().find(".showmodel").addClass("disabled").text("未分类");
+                        else
+                            getTreeNode($this.parent().parent().find(".showmodel"));
                     },
                     error: function (xhr, status, error) {
                         $mid.addClass("hidden");
@@ -51,7 +76,28 @@
                 });
             });
         }
-
+        function getTreeNode ($this) {
+            var pid = $this.attr("pid");
+            //对于已经收藏的论文，得到分类情况
+            if ($this.parent().parent().find("select").val() != 0)
+                $.ajax({
+                    url: "<s:url action="getPaperNode"/>",
+                    data: {uid: '<%=userp.getId()%>', pid: pid},
+                    success: function (result, status, xhr) {
+                        if (result.tree.labelname != null && result.tree.labelname != 'null') {
+                            $this.attr("nid", result.tree.id);
+                            $this.removeClass("disabled");
+                            $this.text(result.tree.labelname);
+                        }
+                        else {
+                            $this.text("未分类");
+                            $this.removeClass("disabled");
+                        }
+                    }
+                });
+            else
+                $this.text("未分类");
+        }
         $(".table").dataTable({
             lengthMenu: [25, 50, 100, 150, 300],
             pageLength: 50,
@@ -81,7 +127,6 @@
             },
             "autoWidth": false
         }).on('draw.dt', iniSelector());
-
         $("select.clct").on("change", (function () {
             var $this = $(this);
             var uid, pid, state;
@@ -97,12 +142,16 @@
             $.ajax({
                 type: 'POST',
                 url: '<s:url action="changePaperState"/>',
-                data: {uid:uid,pid:pid,state:state},
+                data: {uid: uid, pid: pid, state: state},
                 success: function (result, status, xhr) {
                     $mid.removeClass("loader primary");
                     $mid.addClass("glyphicon-ok success");
                     $this.val(result.state).trigger("change.select2");
                     $this.attr("disabled", false);
+                    if(result.state == 0)
+                        $this.parent().parent().find(".showmodel").addClass("disabled").text("未分类");
+                    else
+                        getTreeNode($this.parent().parent().find(".showmodel"));
                 },
                 error: function (xhr, status, error) {
                     $mid.removeClass("loader primary");
@@ -130,49 +179,32 @@
                 $("#tree").text("用户分类树载入失败，请刷新重试");
             }
         });
-        $(".showmodel").each(function () {
-            var $this = $(this);
-            var pid = $this.attr("pid");
-            //得到分类情况
-            $.ajax({
-                url:"<s:url action="getPaperNode"/>",
-                data:{uid:'<%=userp.getId()%>',pid:pid},
-                success: function (result, status, xhr) {
-                    if(result.tree.labelname!==null) {
-                        $this.attr("nid", result.tree.id);
-                        $this.removeClass("disabled");
-                        $this.text(result.tree.labelname);
-                    }
-                    else{
-                        $this.text("未分类");
-                        $this.removeClass("disabled");
-                    }
-                }
-            });
-        }).click(function () {
-            var $this=$(this);
+        $(".showmodel").click(function () {
+            $("#submit").attr("pid",$(this).attr("pid"));
             //显示模态框
             $('#myModal').modal('show');
             //激活当前节点
             $("#tree").fancytree("getTree").activateKey($(this).attr("nid"));
-            //提交修改
-            $("#submit").click(function () {
-                var node = $("#tree").fancytree("getActiveNode");
-                var newlabelname;
-                if( node ){
-                    newlabelname=node.title;
-                    $.ajax({
-                        url : "<s:url action="changePaperLabel"/>",
-                        data:{paper_id:$this.attr("pid"),newlabelname:newlabelname},
-                        success: function (result, status, xhr) {
-                            $this.text(newlabelname);
-                        }
-                    });
-                    $('#myModal').modal('hide');
-                }else{
-                    alert("请选中一个节点！");
-                }
-            });
+        });
+        //提交修改
+        $("#submit").click(function () {
+            $this = $(this);
+            var node = $("#tree").fancytree("getActiveNode");
+            var newlabelname;
+            if (node) {
+                newlabelname = node.title;
+                $.ajax({
+                    url: "<s:url action="changePaperLabel"/>",
+                    data: {paper_id: $this.attr("pid"), newlabelname: newlabelname},
+                    success: function (result, status, xhr) {
+                        $(".showmodel[pid="+$this.attr("pid")+"]").text(newlabelname);
+                        $(".showmodel[pid="+$this.attr("pid")+"]").attr("nid", node.key);
+                    }
+                });
+                $('#myModal').modal('hide');
+            } else {
+                alert("请选中一个节点！");
+            }
         });
         <%}%>
     });
@@ -187,9 +219,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-          &times;
-        </button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">编辑收藏</h4>
       </div>
       <div class="modal-body">
