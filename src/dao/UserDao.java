@@ -257,7 +257,10 @@ public class UserDao
 			if (rs.next())
 			{
 				id = rs.getInt(1);
-				sql2 = "UPDATE user_paper_tree SET state=" + state + " WHERE id=" + id + ";";
+				if (state!=0)
+					sql2 = "UPDATE user_paper_tree SET state=" + state + " WHERE id=" + id + ";";
+				else
+					sql2 = "DELETE from user_paper_tree  WHERE id=" + id + ";";
 			}
 			else
 			{

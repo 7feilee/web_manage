@@ -137,6 +137,34 @@ public class Service
 		return tree;
 	}
 
+	public LinkedList<Tree> getUserLabelTreeList(int user_id, String labelname) {
+		LinkedList<Tree> trees = new LinkedList<>();
+		LinkedList<Tree> queue = new LinkedList<>();
+		Tree ftree = new Tree();
+		ftree.setLabelname(labelname);
+		int depth = -1;
+		ftree.setDepth(depth);
+		queue.add(ftree);
+		int size = queue.size();
+		while (size != 0) {
+			for (int i = 0; i < size; i++) {
+				Collection<Tree> ctree = userDao.getChildTree(user_id, queue.getFirst().getLabelname());
+				int pos = trees.indexOf(queue.getFirst());
+				int d = queue.getFirst().getDepth();
+				for (Tree tree1 : ctree) {
+					if (tree1 != null) {
+						tree1.setDepth(d + 1);
+						trees.add(++pos, tree1);
+						queue.add(tree1);
+					}
+				}
+				queue.remove();
+				size = queue.size();
+			}
+		}
+		return trees;
+	}
+
 	public LinkedList<Tree> getUserTreeList(int user_id) {
 		LinkedList<Tree> trees = new LinkedList<>();
 		LinkedList<Tree> queue = new LinkedList<>();
@@ -225,10 +253,10 @@ public class Service
 		return papers;
 	}
 
-	public Collection<Paper> getLabelPapers(int user_id, String labelname)
+	public LinkedList<Paper> getLabelPapers(int user_id, String labelname)
 	{
 		Collection<Integer> paperids = userDao.getTreePapers(labelname, user_id);
-		Collection<Paper> papers = new LinkedList<>();
+		LinkedList<Paper> papers = new LinkedList<>();
 		for (Integer paperid : paperids)
 		{
 			papers.add(paperDao.getPaperById(paperid));
