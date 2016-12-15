@@ -222,8 +222,10 @@ public class PaperDao
 			ps.setString(4, author);
 			ps.setString(5,abstct);
 			ps.setString(6,keyword);
-			if (sourceFile.exists())
-				ps.setBinaryStream(7, new FileInputStream(sourceFile), (int) sourceFile.length());
+			if (sourceFile!=null) {
+				if (sourceFile.exists())
+					ps.setBinaryStream(7, new FileInputStream(sourceFile), (int) sourceFile.length());
+			}
 			int result = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			int id;
@@ -239,8 +241,7 @@ public class PaperDao
 			rs.close();
 			return -2;//其他未知错误
 		}
-		catch (SQLException e)
-		{
+		catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
 		} catch (FileNotFoundException e) {
@@ -275,20 +276,38 @@ public class PaperDao
 			closeDao();
 		}
 	}
-	public int updatePaper(int id, String title, Collection<String> authors, String fileURI, Collection<String> keywords, String abstct, Date publishDate, int uid)
+	public int updatePaper(int id, String title, Collection<String> authors, String fileURI, Collection<String> keywords, String abstct, Date publishDate,java.io.File sourceFile, int uid)
 	{
-		StringBuilder author = new StringBuilder(), keyword = new StringBuilder();
+		String author = "", keyword = "";
 		for (String s : authors)
-			author.append(s).append(";");
+			author = author.concat(s).concat(";");
 		for (String s : keywords)
-			keyword.append(s).append(";");
-		String sql = "UPDATE paper set title='" + title + "', fileURI='" + fileURI +
-				"', publishDate='" + publishDate + "', author='" + author +
-				"', abstct='" + abstct + "', keyword='" + keyword + "' WHERE id=" + id + ";";
+			keyword = keyword.concat(s).concat(";");
+		final String UPDATE_SQL = "update paper SET title=? , fileURI=? , publishDate=? ,author=? ," +
+				"abstct=? ,keyword=?  where id=?";
+		final String UPDATE_SQL2 = "update paper SET title=? , fileURI=? , publishDate=? ,author=? ," +
+				"abstct=? ,keyword=? , resource=? where id=?";
 		try
 		{
-			stmt = newDao();
-			int result = stmt.executeUpdate(sql);
+			PreparedStatement ps;
+			if (sourceFile==null)
+				ps = newDao2().prepareStatement(UPDATE_SQL,Statement.RETURN_GENERATED_KEYS);
+			else
+				ps = newDao2().prepareStatement(UPDATE_SQL2,Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, title);
+			ps.setString(2, fileURI);
+			ps.setDate(3, publishDate);
+			ps.setString(4, author);
+			ps.setString(5,abstct);
+			ps.setString(6,keyword);
+			if (sourceFile!=null) {
+				if (sourceFile.exists())
+					ps.setBinaryStream(7, new FileInputStream(sourceFile), (int) sourceFile.length());
+				ps.setInt(8,id);
+			}
+			else
+				ps.setInt(7,id);
+			int result = ps.executeUpdate();
 			if(result>0)
 			{
 				LogDao logDao = new LogDao();
@@ -303,9 +322,10 @@ public class PaperDao
 		{
 			e.printStackTrace();
 			return -1;
-		}
-		finally
-		{
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return -4;
+		} finally {
 			closeDao();
 		}
 	}

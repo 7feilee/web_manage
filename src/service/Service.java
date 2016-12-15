@@ -244,10 +244,10 @@ public class Service
 	{
 		return noteDao.deleteNote(nid, uid);
 	}
-	public int editPaper(int id, String title, Collection<String> authors, String fileURI, Collection<String> keywords, String abstct, Date publishDate, int uid)
+	public int editPaper(int id, String title, Collection<String> authors, String fileURI, Collection<String> keywords, String abstct, Date publishDate, java.io.File sourceFile, int uid)
 	{
 		java.sql.Date publishDate2 = new java.sql.Date(publishDate.getTime());
-		return paperDao.updatePaper(id, title, authors, fileURI, keywords, abstct, publishDate2, uid);
+		return paperDao.updatePaper(id, title, authors, fileURI, keywords, abstct, publishDate2,sourceFile, uid);
 	}
 	
 	public int resetTree(List<Tree> treelist, int user_id)
