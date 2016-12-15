@@ -4,6 +4,7 @@ import model.User;
 import org.apache.struts2.ServletActionContext;
 import service.Service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,7 +14,9 @@ public class AddEditPaper extends ActionSupport
 {
 	private String title;
 	private String author;
-	private String fileURI;
+	private File file;
+	private String fileFileName;
+	private String fileContentType;
 	private String keyword;
 	private String abstct;
 	private String dateStr;
@@ -50,9 +53,9 @@ public class AddEditPaper extends ActionSupport
 			int uid = ((User) obj).getId();
 			int result;
 			if (id == 0)
-				result = service.addPaper(title, authors, fileURI, keywords, abstct, publishDate,"" ,uid);
+				result = service.addPaper(title, authors, null, keywords, abstct, publishDate,"" ,uid);
 			else
-				result = service.editPaper(id, title, authors, fileURI, keywords, abstct, publishDate, uid);
+				result = service.editPaper(id, title, authors, null, keywords, abstct, publishDate, uid);
 			if (result > 0)
 				return SUCCESS;
 			else
@@ -77,14 +80,6 @@ public class AddEditPaper extends ActionSupport
 	public void setAuthor(String author)
 	{
 		this.author = author;
-	}
-	public String getFileURI()
-	{
-		return fileURI;
-	}
-	public void setFileURI(String fileURI)
-	{
-		this.fileURI = fileURI;
 	}
 	public String getKeyword()
 	{
@@ -117,5 +112,29 @@ public class AddEditPaper extends ActionSupport
 	public void setId(int id)
 	{
 		this.id = id;
+	}
+	public File getFile()
+	{
+		return file;
+	}
+	public void setFile(File file)
+	{
+		this.file = file;
+	}
+	public String getFileFileName()
+	{
+		return fileFileName;
+	}
+	public void setFileFileName(String fileFileName)
+	{
+		this.fileFileName = fileFileName;
+	}
+	public String getFileContentType()
+	{
+		return fileContentType;
+	}
+	public void setFileContentType(String fileContentType)
+	{
+		this.fileContentType = fileContentType;
 	}
 }

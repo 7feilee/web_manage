@@ -24,26 +24,27 @@
 %>|文献管理系统</title>
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/libs/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
-<%--<script src="${pageContext.request.contextPath}/resources/libs/tagsinput/bootstrap-tagsinput.js"></script>--%>
 <script
     src="${pageContext.request.contextPath}/resources/libs/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script
     src="${pageContext.request.contextPath}/resources/libs/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/libs/bootstrapfileinput/css/fileinput.min.css"/>
+<script src="${pageContext.request.contextPath}/resources/libs/bootstrapfileinput/js/fileinput.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libs/bootstrapfileinput/js/locales/zh.js"></script>
 <script>
     $(document).ready(function () {
         $('.form_date').datetimepicker({
             language:  'zh-CN',
             weekStart: 1,
-            //todayBtn: 1,
             autoclose: 1,
-            //todayHighlight: 1,
             startView: 2,
             minView: 2,
             forceParse: 0
         });
-//        $("multslct").tagsinput({
-//            confirmKeys: [13, 59]
-//        });
+        $("#fileinput").fileinput({
+            
+        });
     });
 </script>
 <%@include file="includes/header2.jsp" %>
@@ -54,15 +55,15 @@
     else
       out.print("添加");
   %>论文</h2>
-  <s:form theme="bootstrap" action="addEditPaper" cssClass="form-horizontal" id="validationForm">
+  <s:form theme="bootstrap" action="addEditPaper" cssClass="form-horizontal" id="validationForm" method="POST" enctype="multipart/form-data">
     <s:textfield name="title" label="篇名" labelCssClass="col-sm-1" elementCssClass="col-sm-11"
                  requiredLabel="true" value="%{paper.title}"/>
     <s:textfield name="author" label="作者" placeholder="多个作者请使用;分隔" labelCssClass="col-sm-1"
                  elementCssClass="col-sm-11" value="%{authors}"/>
     <s:textfield name="keyword" label="关键字" placeholder="多个关键字请使用;分隔" labelCssClass="col-sm-1"
                  elementCssClass="col-sm-11" value="%{keywords}"/>
-    <s:file name="fileURI" label="源文件" labelCssClass="col-sm-1"
-                 elementCssClass="col-sm-11" value="%{paper.fileURI}"/>
+    <s:file name="file" label="源文件" labelCssClass="col-sm-1" accept="application/pdf"
+                 elementCssClass="col-sm-11" id="fileinput"/>
     <div class="form-group">
       <label for="dtp_input2" class="col-sm-1 control-label">发表日期</label>
       <div class="col-sm-11">

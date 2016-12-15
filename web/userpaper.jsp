@@ -180,6 +180,8 @@
             }
         });
         $(".showmodel").click(function () {
+            if($(this).hasClass("disabled"))
+                return;
             $("#submit").attr("pid",$(this).attr("pid"));
             //显示模态框
             $('#myModal').modal('show');
