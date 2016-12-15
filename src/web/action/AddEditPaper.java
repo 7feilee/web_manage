@@ -38,9 +38,9 @@ public class AddEditPaper extends ActionSupport
 	{
 		if (title != null && !title.matches("\\s*"))
 		{
-			if (author != null)
+			if (author != null && !title.matches("\\s*"))
 				authors = Arrays.asList(author.split(";"));
-			if (keyword != null)
+			if (keyword != null && !title.matches("\\s*"))
 				keywords = Arrays.asList(keyword.split(";"));
 			if (dateStr != null && dateStr.matches("\\d{4}-\\d{2}-\\d{2}"))
 			{
@@ -51,11 +51,12 @@ public class AddEditPaper extends ActionSupport
 			if (obj == null)
 				return ERROR;
 			int uid = ((User) obj).getId();
+			String fileURI = file==null?null:"true";
 			int result;
 			if (id == 0)
-				result = service.addPaper(title, authors, null, keywords, abstct, publishDate,file ,uid);
+				result = service.addPaper(title, authors, fileURI, keywords, abstct, publishDate,file ,uid);
 			else
-				result = service.editPaper(id, title, authors, null, keywords, abstct, publishDate,file, uid);
+				result = service.editPaper(id, title, authors, fileURI, keywords, abstct, publishDate,file, uid);
 			if (result > 0)
 				return SUCCESS;
 			else
