@@ -102,14 +102,14 @@
       <p class="lead"><s:property value="keywords"/></p>
       <h5 class="page-header">发表日期</h5>
       <p class="lead"><s:property value="dateStr"/></p>
-      <a href="<s:property value="paper.fileURI"/>" target="_blank" class="btn btn-block btn-hg btn-primary">
-        <span class="glyphicon glyphicon-download-alt"></span> 下载</a>
     </div>
   </div>
   <div id="main" class="col-md-8">
     <div class="well">
       <h5 class="page-header" style="margin-top: 20px">摘要</h5>
       <p class="lead"><s:property value="paper.abstct"/></p>
+      <a href="<s:url action="downloadFile"><s:param name="paper_id" value="%{id}"/></s:url>" target="_blank" class="btn btn-block btn-hg btn-primary">
+        <img src="resources/img/阅读全文.svg" style=""> 阅读全文</a>
     </div>
   </div>
 </div>

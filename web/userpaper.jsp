@@ -25,25 +25,87 @@
       href="${pageContext.request.contextPath}/resources/libs/fancytree/css/skin-bootstrap/ui.fancytree.css"/>
 <script src="${pageContext.request.contextPath}/resources/libs/fancytree/js/jquery.fancytree-all.js"></script>
 <script type="text/javascript" charset="utf-8">
-    var glyph_opts = {
-        map: {
-            doc: "glyphicon glyphicon-file",
-            docOpen: "glyphicon glyphicon-file",
-            checkbox: "glyphicon glyphicon-unchecked",
-            checkboxSelected: "glyphicon glyphicon-check",
-            checkboxUnknown: "glyphicon glyphicon-share",
-            dragHelper: "glyphicon glyphicon-play",
-            dropMarker: "glyphicon glyphicon-arrow-right",
-            error: "glyphicon glyphicon-warning-sign",
-            expanderClosed: "glyphicon glyphicon-menu-right",
-            expanderLazy: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
-            expanderOpen: "glyphicon glyphicon-menu-down",  // glyphicon-collapse-down
-            folder: "glyphicon glyphicon-folder-close",
-            folderOpen: "glyphicon glyphicon-folder-open",
-            loading: "glyphicon glyphicon-refresh glyphicon-spin"
-        }
-    };
     $(document).ready(function () {
+        $(".table").dataTable({
+            lengthMenu: [25, 50, 100, 150, 300],
+            pageLength: 50,
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "每页显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "表格内搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            "autoWidth": false
+        })<%if(userp != null && userp.getId() == iruid){%>.on('draw.dt', iniSelector());
+        $("select.clct").on("change", (function () {
+            var $this = $(this);
+            var uid, pid, state;
+            uid = 0${sessionScope.user.id};
+            if (uid == 0)
+                return;
+            $this.attr("disabled", true);
+            pid = $this.attr("id").substring(3, 999);
+            state = $this.val();
+            var $mid = $("#ms_" + pid);
+            $mid.removeClass("hidden");
+            $mid.addClass("loader primary");
+            $.ajax({
+                type: 'POST',
+                url: '<s:url action="changePaperState"/>',
+                data: {uid: uid, pid: pid, state: state},
+                success: function (result, status, xhr) {
+                    $mid.removeClass("loader primary");
+                    $mid.addClass("glyphicon-ok success");
+                    $this.val(result.state).trigger("change.select2");
+                    $this.attr("disabled", false);
+                    if(result.state == 0)
+                        $this.parent().parent().find(".showmodel").addClass("disabled").text("未分类");
+                    else
+                        getTreeNode($this.parent().parent().find(".showmodel"));
+                },
+                error: function (xhr, status, error) {
+                    $mid.removeClass("loader primary");
+                    $mid.addClass("glyphicon-remove danger");
+                    $this.attr("disabled", false);
+                }
+            });
+        }));
+        var glyph_opts = {
+            map: {
+                doc: "glyphicon glyphicon-file",
+                docOpen: "glyphicon glyphicon-file",
+                checkbox: "glyphicon glyphicon-unchecked",
+                checkboxSelected: "glyphicon glyphicon-check",
+                checkboxUnknown: "glyphicon glyphicon-share",
+                dragHelper: "glyphicon glyphicon-play",
+                dropMarker: "glyphicon glyphicon-arrow-right",
+                error: "glyphicon glyphicon-warning-sign",
+                expanderClosed: "glyphicon glyphicon-menu-right",
+                expanderLazy: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
+                expanderOpen: "glyphicon glyphicon-menu-down",  // glyphicon-collapse-down
+                folder: "glyphicon glyphicon-folder-close",
+                folderOpen: "glyphicon glyphicon-folder-open",
+                loading: "glyphicon glyphicon-refresh glyphicon-spin"
+            }
+        };
         function iniSelector() {
             $('select.select').select2();
             $("select.clct").each(function () {
@@ -98,69 +160,6 @@
             else
                 $this.text("未分类");
         }
-        $(".table").dataTable({
-            lengthMenu: [25, 50, 100, 150, 300],
-            pageLength: 50,
-            language: {
-                "sProcessing": "处理中...",
-                "sLengthMenu": "每页显示 _MENU_ 项结果",
-                "sZeroRecords": "没有匹配结果",
-                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                "sInfoPostFix": "",
-                "sSearch": "表格内搜索:",
-                "sUrl": "",
-                "sEmptyTable": "表中数据为空",
-                "sLoadingRecords": "载入中...",
-                "sInfoThousands": ",",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上页",
-                    "sNext": "下页",
-                    "sLast": "末页"
-                },
-                "oAria": {
-                    "sSortAscending": ": 以升序排列此列",
-                    "sSortDescending": ": 以降序排列此列"
-                }
-            },
-            "autoWidth": false
-        }).on('draw.dt', iniSelector());
-        $("select.clct").on("change", (function () {
-            var $this = $(this);
-            var uid, pid, state;
-            uid = 0${sessionScope.user.id};
-            if (uid == 0)
-                return;
-            $this.attr("disabled", true);
-            pid = $this.attr("id").substring(3, 999);
-            state = $this.val();
-            var $mid = $("#ms_" + pid);
-            $mid.removeClass("hidden");
-            $mid.addClass("loader primary");
-            $.ajax({
-                type: 'POST',
-                url: '<s:url action="changePaperState"/>',
-                data: {uid: uid, pid: pid, state: state},
-                success: function (result, status, xhr) {
-                    $mid.removeClass("loader primary");
-                    $mid.addClass("glyphicon-ok success");
-                    $this.val(result.state).trigger("change.select2");
-                    $this.attr("disabled", false);
-                    if(result.state == 0)
-                        $this.parent().parent().find(".showmodel").addClass("disabled").text("未分类");
-                    else
-                        getTreeNode($this.parent().parent().find(".showmodel"));
-                },
-                error: function (xhr, status, error) {
-                    $mid.removeClass("loader primary");
-                    $mid.addClass("glyphicon-remove danger");
-                    $this.attr("disabled", false);
-                }
-            });
-        }));
-        <%if(userp!=null){%>
         //设定用户树
         $.ajax({
             url: "<s:url action="showUserTree"/>",
@@ -213,7 +212,7 @@
 </script>
 <%@include file="includes/header2.jsp" %>
 <%
-  if (userp != null)
+  if (userp != null && userp.getId() == iruid)
   {
 %>
 <!-- 模态框（Modal） -->

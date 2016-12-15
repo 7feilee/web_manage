@@ -15,7 +15,7 @@ public class DownloadFile extends ActionSupport {
     private String fileName;
     public String getFileName() throws UnsupportedEncodingException {
         Paper paper=service.getPaperById(paper_id);
-        return new String((paper.getTitle()).concat(".zip").getBytes(), "ISO8859-1");
+        return new String((paper.getTitle()).concat(".pdf").getBytes(), "ISO8859-1");
     }
     public void setFileName(String fileName) {
         this.fileName = fileName;

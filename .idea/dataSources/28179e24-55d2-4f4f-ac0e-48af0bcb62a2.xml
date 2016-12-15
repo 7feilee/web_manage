@@ -108,7 +108,6 @@
     <column id="34" parent="12" name="fileURI">
       <Position>3</Position>
       <DataType>varchar(1000)|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="35" parent="12" name="publishDate">
       <Position>4</Position>

@@ -97,17 +97,17 @@
     <action name="showTimeLine" class="web.action.ShowTimeLine">
       <result>timeline.jsp</result>
     </action>
-    <action name="DownloadFile" class="web.action.DownloadFile">
+    <action name="downloadFile" class="web.action.DownloadFile">
       <result name="success" type="stream">
-        <param name="contentType">text/plain</param>
-        <param name="contentDisposition">attachment;filename="${fileName}"</param>
+        <param name="contentType">application/pdf</param>
+        <param name="contentDisposition">filename="${fileName}"</param>
         <param name="inputName">dfile</param>
         <param name="bufferSize">2097152</param>
       </result>
     </action>
-    <action name="Zip2Download" class="web.action.Download">
+    <action name="zip2Download" class="web.action.Download">
       <result name="success" type="stream">
-        <param name="contentType">text/plain</param>
+        <param name="contentType">application/x-zip-compressed</param>
         <param name="contentDisposition">attachment;filename="${fileName}"</param>
         <param name="inputName">dfile</param>
         <param name="bufferSize">2097152</param>

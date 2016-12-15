@@ -43,7 +43,13 @@
             forceParse: 0
         });
         $("#fileinput").fileinput({
-            
+            language: "zh",
+            allowedFileExtensions: ["pdf"],
+            showPreview: false,
+            maxFileCount: 1,
+            maxFileSize: 102400,
+            showRemove:false,
+            showUpload:false
         });
     });
 </script>
