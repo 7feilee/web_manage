@@ -78,7 +78,9 @@ public class Service
 
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
 						String abstct, Date publishDate, java.io.File sourceFile, int operater) {
-		java.sql.Date publishDate2 = new java.sql.Date(publishDate.getTime());
+		java.sql.Date publishDate2=null;
+		if(publishDate!=null)
+			publishDate2 = new java.sql.Date(publishDate.getTime());
 		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords, sourceFile, operater);
 	}
 

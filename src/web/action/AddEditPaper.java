@@ -28,6 +28,8 @@ public class AddEditPaper extends ActionSupport
 	
 	private Service service;
 	
+	private String errMsg;
+	
 	public AddEditPaper()
 	{
 		super();
@@ -49,7 +51,10 @@ public class AddEditPaper extends ActionSupport
 			}
 			Object obj = ServletActionContext.getRequest().getSession().getAttribute("user");
 			if (obj == null)
+			{
+				errMsg = "登录状态无效，请重新登录！";
 				return ERROR;
+			}
 			int uid = ((User) obj).getId();
 			String fileURI = file==null?null:"true";
 			int result;
@@ -60,10 +65,13 @@ public class AddEditPaper extends ActionSupport
 			if (result > 0)
 				return SUCCESS;
 			else
+			{
+				errMsg = "数据库没电了>_<";
 				return ERROR;
+			}
 		}
-		else
-			return ERROR;
+		errMsg = "标题不能为空！";
+		return ERROR;
 	}
 	
 	public String getTitle()
@@ -137,5 +145,13 @@ public class AddEditPaper extends ActionSupport
 	public void setFileContentType(String fileContentType)
 	{
 		this.fileContentType = fileContentType;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

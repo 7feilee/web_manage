@@ -8,6 +8,7 @@ public class ChangePaperState extends ActionSupport
 	private int pid;
 	private int state;
 	private Service service;
+	private String errMsg;
 	
 	public ChangePaperState()
 	{
@@ -18,7 +19,7 @@ public class ChangePaperState extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		int result = service.updatePaperState(uid,pid,state);
+		int result = service.updatePaperState(uid, pid, state);
 		if (result > 0)
 			return SUCCESS;
 		//else
@@ -48,5 +49,13 @@ public class ChangePaperState extends ActionSupport
 	public void setState(int state)
 	{
 		this.state = state;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

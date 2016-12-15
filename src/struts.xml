@@ -5,11 +5,15 @@
 
 <struts>
   <include file="struts-default.xml"/>
-  <constant name="struts.devMode" value="true"/>
+  <constant name="struts.devMode" value="false"/>
   <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
   <constant name="struts.multipart.maxSize" value="104857600"/>
+  <constant name="struts.i18n.encoding" value="UTF-8" />
 
   <package name="actions" extends="json-default">
+    <global-results>
+      <result name="error">error.jsp</result>
+    </global-results>
     <action name="login" class="web.action.Login">
       <result name="error">login.jsp</result>
     </action>
@@ -112,6 +116,9 @@
         <param name="inputName">dfile</param>
         <param name="bufferSize">2097152</param>
       </result>
+    </action>
+    <action name="test" class="web.action.test">
+      <result>test.jsp</result>
     </action>
   </package>
 </struts>

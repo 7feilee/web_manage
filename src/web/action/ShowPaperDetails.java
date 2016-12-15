@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 public class ShowPaperDetails extends ActionSupport
 {
+	private String errMsg;
 	private Paper paper;
 	private int id;
 	private Service service;
@@ -49,11 +50,13 @@ public class ShowPaperDetails extends ActionSupport
 					logs = FormatLog.formatLogs(logs1);
 					return SUCCESS;
 				}
+				errMsg = "获取日志失败";
 				return ERROR;
 			}
-			//else
+			errMsg = "获取笔记失败";
 			return ERROR;
 		}
+		errMsg = "获取论文失败";
 		return ERROR;
 	}
 	public int getId()
@@ -111,5 +114,13 @@ public class ShowPaperDetails extends ActionSupport
 	public void setLogs(Collection<FrontLog> logs)
 	{
 		this.logs = logs;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

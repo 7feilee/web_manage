@@ -3,12 +3,13 @@ package web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import model.User;
 import org.apache.struts2.ServletActionContext;
-import service.*;
+import service.Service;
 import utils.Security;
 
 import javax.servlet.http.Cookie;
 public class Login extends ActionSupport
 {
+	private String errMsg;
 	private String username;
 	private String password;
 	private Service service;
@@ -30,7 +31,7 @@ public class Login extends ActionSupport
 			User user = service.getUserById(uid);
 			ServletActionContext.getRequest().getSession().setAttribute("user", user);
 			//设置cookie
-			if(autoLogin!=null && autoLogin.equals("on"))
+			if (autoLogin != null && autoLogin.equals("on"))
 			{
 				String token = Security.MD5(username + password);
 				Cookie uidCookie = new Cookie("uid", uid.toString());
@@ -41,7 +42,7 @@ public class Login extends ActionSupport
 				ServletActionContext.getResponse().addCookie(utokenCookie);
 			}
 			//请求重定向
-			ServletActionContext.getResponse().sendRedirect("showUserDetails?id="+uid.toString());
+			ServletActionContext.getResponse().sendRedirect("showUserDetails?id=" + uid.toString());
 			return SUCCESS;
 		}
 		else
@@ -74,5 +75,13 @@ public class Login extends ActionSupport
 	public void setAutoLogin(String autoLogin)
 	{
 		this.autoLogin = autoLogin;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

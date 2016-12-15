@@ -9,6 +9,7 @@ import utils.Security;
 import javax.servlet.http.Cookie;
 public class Register extends ActionSupport
 {
+	private String errMsg;
 	private Service service;
 	private String username;
 	private String password;
@@ -75,5 +76,13 @@ public class Register extends ActionSupport
 	public int getId()
 	{
 		return id;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

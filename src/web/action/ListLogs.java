@@ -9,6 +9,7 @@ import web.model.FrontLog;
 import java.util.Collection;
 public class ListLogs extends ActionSupport
 {
+	private String errMsg;
 	private Collection<FrontLog> logs;
 	private Service service;
 	public ListLogs()
@@ -22,11 +23,12 @@ public class ListLogs extends ActionSupport
 	{
 		
 		Collection<Log> logs1 = service.getAllLogs();
-		if(logs1 !=null)
+		if (logs1 != null)
 		{
 			logs = FormatLog.formatLogs(logs1);
 			return SUCCESS;
 		}
+		errMsg = "数据库没电了>_<";
 		return ERROR;
 	}
 	public Collection<FrontLog> getLogs()
@@ -36,5 +38,13 @@ public class ListLogs extends ActionSupport
 	public void setLogs(Collection<FrontLog> logs)
 	{
 		this.logs = logs;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

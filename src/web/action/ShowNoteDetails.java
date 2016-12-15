@@ -2,11 +2,12 @@ package web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import model.Note;
-import model.Paper;
 import service.Service;
+
 import java.text.SimpleDateFormat;
 public class ShowNoteDetails extends ActionSupport
 {
+	private String errMsg;
 	private Note note;
 	private int id;
 	private Service service;
@@ -52,5 +53,13 @@ public class ShowNoteDetails extends ActionSupport
 	public void setNote(Note note)
 	{
 		this.note = note;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

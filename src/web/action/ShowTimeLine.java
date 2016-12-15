@@ -11,6 +11,7 @@ import java.util.*;
 
 public class ShowTimeLine extends ActionSupport
 {
+	private String errMsg;
 	private Service service;
 	private Collection<FrontLog> logs;
 	private int id;
@@ -26,10 +27,16 @@ public class ShowTimeLine extends ActionSupport
 	{
 		user = service.getUserById(id);
 		if (user == null)
+		{
+			errMsg = "无法获取用户，请检查id";
 			return ERROR;
+		}
 		Collection<Log> logs1 = service.getLogsByUser(id);
 		if (logs1 == null)
+		{
+			errMsg = "无法读取日志";
 			return ERROR;
+		}
 		logs = toTimeLine(logs1);
 		return SUCCESS;
 	}
@@ -148,6 +155,14 @@ public class ShowTimeLine extends ActionSupport
 	public User getUser()
 	{
 		return user;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 //	public void setLogs(Collection<FrontLog> logs)
 //	{

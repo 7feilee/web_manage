@@ -5,6 +5,7 @@ import model.Tree;
 import service.Service;
 public class GetPaperNode extends ActionSupport
 {
+	private String errMsg;
 	private int uid;
 	private int pid;
 	private Tree tree;
@@ -18,8 +19,8 @@ public class GetPaperNode extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		tree = service.getPaperNode(uid,pid);
-		if(tree!=null)
+		tree = service.getPaperNode(uid, pid);
+		if (tree != null)
 			return SUCCESS;
 		return ERROR;
 	}
@@ -31,7 +32,7 @@ public class GetPaperNode extends ActionSupport
 	{
 		this.tree = tree;
 	}
-//	public int getPid()
+	//	public int getPid()
 //	{
 //		return pid;
 //	}
@@ -42,5 +43,13 @@ public class GetPaperNode extends ActionSupport
 	public void setUid(int uid)
 	{
 		this.uid = uid;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

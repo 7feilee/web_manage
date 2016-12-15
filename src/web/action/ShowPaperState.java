@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import service.Service;
 public class ShowPaperState extends ActionSupport
 {
+	private String errMsg;
 	private int uid;
 	private int pid;
 	private int state;
@@ -18,7 +19,7 @@ public class ShowPaperState extends ActionSupport
 	@Override
 	public String execute() throws Exception
 	{
-		state = service.getPaperState(uid,pid);
+		state = service.getPaperState(uid, pid);
 		if (state >= 0)
 			return SUCCESS;
 		//else
@@ -43,5 +44,13 @@ public class ShowPaperState extends ActionSupport
 	public int getState()
 	{
 		return state;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }

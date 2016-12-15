@@ -108,7 +108,7 @@
     <div class="well">
       <h5 class="page-header" style="margin-top: 20px">摘要</h5>
       <p class="lead"><s:property value="paper.abstct"/></p>
-      <s:if test="%{fileURI!=null}">
+      <s:if test="%{paper.fileURI!=null}">
       <a href="<s:url action="downloadFile"><s:param name="paper_id" value="%{id}"/></s:url>" target="_blank" class="btn btn-block btn-hg btn-primary">
         <img src="resources/img/阅读全文.svg" style="max-width:1em;max-height:1em;"> 阅读全文</a>
       </s:if>

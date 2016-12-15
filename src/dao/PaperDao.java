@@ -283,10 +283,10 @@ public class PaperDao
 			author = author.concat(s).concat(";");
 		for (String s : keywords)
 			keyword = keyword.concat(s).concat(";");
-		final String UPDATE_SQL = "update paper SET title=? , fileURI=? , publishDate=? ,author=? ," +
+		final String UPDATE_SQL = "update paper SET title=? , publishDate=? ,author=? ," +
 				"abstct=? ,keyword=?  where id=?";
-		final String UPDATE_SQL2 = "update paper SET title=? , fileURI=? , publishDate=? ,author=? ," +
-				"abstct=? ,keyword=? , resource=? where id=?";
+		final String UPDATE_SQL2 = "update paper SET title=? , publishDate=? ,author=? ," +
+				"abstct=? ,keyword=? , resource=? , fileURI=? where id=?";
 		try
 		{
 			PreparedStatement ps;
@@ -296,17 +296,20 @@ public class PaperDao
 				ps = newDao2().prepareStatement(UPDATE_SQL2,Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, title);
 			ps.setString(2, fileURI);
-			ps.setDate(3, publishDate);
-			ps.setString(4, author);
-			ps.setString(5,abstct);
-			ps.setString(6,keyword);
+			ps.setDate(2, publishDate);
+			ps.setString(3, author);
+			ps.setString(4,abstct);
+			ps.setString(5,keyword);
 			if (sourceFile!=null) {
 				if (sourceFile.exists())
-					ps.setBinaryStream(7, new FileInputStream(sourceFile), (int) sourceFile.length());
+				{
+					ps.setString(7, fileURI);
+					ps.setBinaryStream(6, new FileInputStream(sourceFile), (int) sourceFile.length());
+				}
 				ps.setInt(8,id);
 			}
 			else
-				ps.setInt(7,id);
+				ps.setInt(6,id);
 			int result = ps.executeUpdate();
 			if(result>0)
 			{

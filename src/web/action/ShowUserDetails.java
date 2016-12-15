@@ -12,6 +12,7 @@ import web.model.FrontLog;
 import java.util.Collection;
 public class ShowUserDetails extends ActionSupport
 {
+	private String errMsg;
 	private User user;
 	private int id;
 	private Service service;
@@ -56,18 +57,20 @@ public class ShowUserDetails extends ActionSupport
 						}
 						for (; -1 < depth; depth--)
 							frontEndTree.append("</li>\n</ul>\n");
-						if(frontEndTree.length()==0)
+						if (frontEndTree.length() == 0)
 							frontEndTree.append("<ul>\n<li>root</li>\n</ul>");
 						return SUCCESS;
 					}
-					else
-						return ERROR;
+					errMsg = "获取用户分类树出错";
+					return ERROR;
 				}
+				errMsg = "读取用户动态出错";
 				return ERROR;
 			}
-			//else
+			errMsg = "读取笔记出错";
 			return ERROR;
 		}
+		errMsg = "无法获取该id的用户";
 		return ERROR;
 	}
 	public User getUser()
@@ -109,5 +112,13 @@ public class ShowUserDetails extends ActionSupport
 	public void setFrontEndTree(StringBuilder frontEndTree)
 	{
 		this.frontEndTree = frontEndTree;
+	}
+	public String getErrMsg()
+	{
+		return errMsg;
+	}
+	public void setErrMsg(String errMsg)
+	{
+		this.errMsg = errMsg;
 	}
 }
