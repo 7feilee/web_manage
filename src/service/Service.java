@@ -77,9 +77,9 @@ public class Service
 	}
 
 	public int addPaper(String title, Collection<String> authors, String fileURI, Collection<String> keywords,
-						String abstct, Date publishDate, String sourceURL, int operater) {
+						String abstct, Date publishDate, java.io.File sourceFile, int operater) {
 		java.sql.Date publishDate2 = new java.sql.Date(publishDate.getTime());
-		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords, "C:\\Users\\JevonsAn\\Desktop\\MOOC_特征与学习机制_王永固.pdf", operater);
+		return paperDao.insertNewPaper(title, fileURI, publishDate2, authors, abstct, keywords, sourceFile, operater);
 	}
 
 	public Tree getPaperNode(int uid, int pid)
@@ -256,7 +256,7 @@ public class Service
 		int id = 0;
 		Tree tree = null;
 		Tree ytree = null;
-		int result = -1;
+		int result = 1;
 		LinkedList<Tree> list2 = getUserTreeList(user_id);
 		LinkedList<Integer> ids = new LinkedList<>();
 		for (int i = 0; i < size; i++) {
@@ -266,7 +266,7 @@ public class Service
 		}
 		for (Tree tree1 : list2) {
 			if (ids.indexOf(tree1.getId()) == -1)
-				userDao.deleteTreeLabel(tree1.getLabelname(), user_id);
+				result = userDao.deleteTreeLabel(tree1.getLabelname(), user_id);
 		}
 		for (int i = 0; i < size; i++)
 		{
@@ -293,8 +293,14 @@ public class Service
 			if (ytree == null)
 				result = userDao.addTreeLabel(tree.getLabelname(), tree.getLabel_father(), user_id);
 			else {
-				if (!tree.getLabelname().equals(ytree.getLabelname()))
+				if (!tree.getLabelname().equals(ytree.getLabelname())){
+					Collection<Paper> papers=getLabelPapers(user_id,ytree.getLabelname());
+					for (Paper paper : papers) {
+						updatePaperlabel(user_id,paper.getId(),tree.getLabelname());
+					}
 					result = userDao.updateTreeLabel(id, tree.getLabelname());
+				}
+
 				if (!tree.getLabel_father().equals(ytree.getLabel_father()))
 					result = userDao.updateLabelFather(id, tree.getLabel_father());
 			}

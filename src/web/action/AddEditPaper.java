@@ -53,7 +53,7 @@ public class AddEditPaper extends ActionSupport
 			int uid = ((User) obj).getId();
 			int result;
 			if (id == 0)
-				result = service.addPaper(title, authors, null, keywords, abstct, publishDate,"" ,uid);
+				result = service.addPaper(title, authors, fileURI, keywords, abstct, publishDate,null ,uid);
 			else
 				result = service.editPaper(id, title, authors, null, keywords, abstct, publishDate, uid);
 			if (result > 0)
