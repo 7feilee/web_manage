@@ -34,7 +34,8 @@ public class ShowPaperDetails extends ActionSupport
 		if (paper != null)
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			dateStr = sdf.format(paper.getPublishDate());
+			if(paper.getPublishDate()!=null)
+				dateStr = sdf.format(paper.getPublishDate());
 			authors = new StringBuilder();
 			keywords = new StringBuilder();
 			for (String author : paper.getAuthors())

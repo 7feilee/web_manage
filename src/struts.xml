@@ -16,6 +16,7 @@
     </global-results>
     <action name="login" class="web.action.Login">
       <result name="error">login.jsp</result>
+      <result>login.jsp</result>
     </action>
     <action name="listPapers" class="web.action.ListPapers">
       <result>paperlist.jsp</result>

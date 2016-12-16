@@ -175,7 +175,7 @@
                         result.papers.forEach(function (paper) {
                             context+="<a href='<s:url action="showPaperDetails"/>?id="+paper.id+"'>"+paper.title+"</a>, ";
                         });
-                    context += "<a class='btn btn-primary btn-block btn-sm' href='<s:url action="zip2Download"/>?label_id="+node.key+"' download='download'>下载</a>";
+                    context += "<a class='btn btn-primary btn-block btn-sm' href='<s:url action="zip2Download"/>?label_id="+node.key+"'>下载</a>";
                     $this.popover({
                         html:true,
                         placement: "right",
@@ -199,42 +199,6 @@
                 $(".fancytree-active").children(".fancytree-title").popover('show');
             });
         });
-        <%--$(".fancytree-title").each(function () {--%>
-            <%--var $this = $(this);--%>
-            <%--$.ajax({--%>
-                <%--url:"<s:url action="getPapersByTreeNodeName"><s:param name="uid" value="%{id}"/></s:url>",--%>
-                <%--data:{'nodeName':$(this).text()},--%>
-                <%--success: function (result, status, xhr) {--%>
-                    <%--var context="";--%>
-                    <%--if(result.papers.length == 0)--%>
-                        <%--context = "没有论文";--%>
-                    <%--else--%>
-                        <%--result.papers.forEach(function (paper) {--%>
-                            <%--context+="<a href='<s:url action="showPaperDetails"/>?id="+paper.id+"'>"+paper.title+"</a>, ";--%>
-                        <%--});--%>
-                    <%--context += "<a class='btn btn-primary btn-block btn-sm' href='zip/download.zip' download='download'>下载</a>";--%>
-                    <%--$this.popover({--%>
-                        <%--html:true,--%>
-                        <%--placement: "right",--%>
-                        <%--title: "节点论文",--%>
-                        <%--content: context--%>
-                    <%--});--%>
-                <%--},--%>
-                <%--error: function (xhr, status, error) {--%>
-                    <%--$this.popover({--%>
-                        <%--html:true,--%>
-                        <%--placement: "right",--%>
-                        <%--title: "节点论文",--%>
-                        <%--content: "加载失败！"--%>
-                    <%--});--%>
-                <%--}--%>
-            <%--});--%>
-        <%--}).click(function () {--%>
-            <%--$(".fancytree-title").popover("hide");--%>
-            <%--$(this).popover('show');--%>
-        <%--}).on('hidden.bs.popover',function () {--%>
-            <%--$(".fancytree-active").children(".fancytree-title").popover('show');--%>
-        <%--});--%>
     });
 </script>
 <%@include file="includes/header2.jsp" %>
