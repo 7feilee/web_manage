@@ -41,7 +41,7 @@
             $("select.clct").each(function () {
                 var $this = $(this);
                 var uid, pid;
-                uid = 0${sessionScope.user.id};
+                uid = ${sessionScope.user.id}+0;
                 if (uid == 0)
                     return;
                 $this.attr("disabled", true);
@@ -125,7 +125,7 @@
         $("select.clct").on("change", (function () {
             var $this = $(this);
             var uid, pid, state;
-            uid = 0${sessionScope.user.id};
+            uid = ${sessionScope.user.id}+0;
             if (uid == 0)
                 return;
             $this.attr("disabled", true);
@@ -175,7 +175,7 @@
                         result.papers.forEach(function (paper) {
                             context+="<a href='<s:url action="showPaperDetails"/>?id="+paper.id+"'>"+paper.title+"</a>, ";
                         });
-                    context += "<a class='btn btn-primary btn-block btn-sm' href='<s:url action="zip2Download"/>?label_id="+node.key+"'>下载</a>";
+                    context += "<a class='btn btn-primary btn-block btn-sm' href='<s:url action="zip2Download"><s:param name="user_id" value="%{id}"/></s:url>&label_id="+node.key+"'>下载</a>";
                     $this.popover({
                         html:true,
                         placement: "right",

@@ -58,7 +58,7 @@
         $("select.clct").on("change", (function () {
             var $this = $(this);
             var uid, pid, state;
-            uid = 0${sessionScope.user.id};
+            uid = ${sessionScope.user.id}+0;
             if (uid == 0)
                 return;
             $this.attr("disabled", true);
@@ -111,7 +111,7 @@
             $("select.clct").each(function () {
                 var $this = $(this);
                 var uid, pid;
-                uid = 0${sessionScope.user.id};
+                uid = ${sessionScope.user.id}+0;
                 if (uid == 0)
                     return;
                 $this.attr("disabled", true);
